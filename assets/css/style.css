@@ -459,3 +459,51 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
     font-weight: 700;
     color: var(--color-text);
 }
+
+/* 12. Report Section */
+.report-section {
+    margin-top: var(--space-2xl);
+}
+
+.report-table {
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    border: 1px solid var(--color-border);
+    background-color: var(--color-surface);
+}
+
+.report-table th {
+    background-color: var(--color-surface-alt);
+    font-weight: 600;
+    color: var(--color-text-secondary);
+    border-bottom: 2px solid var(--color-border);
+    padding: var(--space-md);
+}
+
+.report-table td {
+    padding: var(--space-md);
+    border-bottom: 1px solid var(--color-border);
+    vertical-align: middle;
+}
+
+.report-table tr:last-child td {
+    border-bottom: none;
+}
+
+.save-option {
+    border-top: 1px solid var(--color-border);
+    padding-top: var(--space-md);
+}
+
+.save-name-field {
+    padding-left: 1.5rem;
+}
+
+.report-empty-state {
+    text-align: center;
+    padding: var(--space-2xl);
+    color: var(--color-text-muted);
+    background-color: var(--color-surface-alt);
+    border-radius: var(--radius-lg);
+    border: 1px dashed var(--color-border);
+}
