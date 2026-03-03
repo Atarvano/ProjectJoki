@@ -565,6 +565,22 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
     100% { transform: translateY(0); }
 }
 
+@keyframes spinSlow {
+    from { rotate: 0deg; }
+    to { rotate: 360deg; }
+}
+
+@keyframes logoPulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.08); }
+    100% { transform: scale(1); }
+}
+
+.logo-animated {
+    animation: logoPulse 3s ease-in-out infinite;
+    transform-origin: center;
+}
+
 @keyframes meshShift {
     0% { background-position: 0% 50%; }
     33% { background-position: 100% 100%; }
@@ -586,7 +602,10 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
     width: clamp(60px, 12vw, 120px);
     height: auto;
 }
-.page-landing .float-1 { animation: float 6s ease-in-out infinite; }
+.page-landing .float-1 { 
+    animation: float 6s ease-in-out infinite, spinSlow 15s linear infinite; 
+    transform-origin: center;
+}
 .page-landing .float-2 { animation: float 8s ease-in-out infinite 1s; }
 .page-landing .float-3 { animation: float 7s ease-in-out infinite 2.5s; }
 

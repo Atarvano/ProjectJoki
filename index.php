@@ -8,7 +8,7 @@ include 'includes/header.php';
 <nav class="navbar navbar-landing py-3">
     <div class="container">
         <a class="navbar-brand fw-bold d-flex align-items-center gap-2" href="index.php" style="color: var(--color-primary-dark); font-family: var(--font-display); font-size: 1.5rem;">
-            <svg viewBox="0 0 40 40" width="36" height="36" aria-hidden="true">
+            <svg class="logo-animated" viewBox="0 0 40 40" width="36" height="36" aria-hidden="true">
                 <rect x="4" y="4" width="32" height="32" rx="8" fill="var(--color-primary)" />
                 <path d="M12,24 L20,12 L28,24" stroke="var(--color-accent)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none" />
                 <circle cx="20" cy="28" r="2" fill="var(--color-accent)" />
@@ -113,10 +113,10 @@ include 'includes/header.php';
                     </g>
 
                     <!-- Decorative accents -->
-                    <circle cx="430" cy="50" r="8" fill="var(--color-accent)" opacity="0.6" />
-                    <circle cx="80" cy="340" r="12" fill="var(--color-primary)" opacity="0.2" />
+                    <circle cx="430" cy="50" r="8" fill="var(--color-accent)" opacity="0.6" class="decorative-float float-3" />
+                    <circle cx="80" cy="340" r="12" fill="var(--color-primary)" opacity="0.2" class="decorative-float float-2" />
                     <rect x="200" y="330" width="40" height="40" rx="8" fill="var(--color-accent)" opacity="0.1"
-                        transform="rotate(15 220 350)" />
+                        class="decorative-float float-1" />
                 </svg>
             </div>
         </div>
