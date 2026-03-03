@@ -1,0 +1,300 @@
+:root {
+    /* 1. CSS Custom Properties on :root */
+    
+    /* Typography */
+    --font-display: 'Outfit', sans-serif;
+    --font-body: 'Plus Jakarta Sans', sans-serif;
+
+    /* Color Story */
+    /* Primary: Deep Teal */
+    --color-primary: #0F4C5C;
+    --color-primary-light: #1A6B7A;
+    --color-primary-dark: #0A3640;
+    --color-primary-subtle: #E8F4F7;
+
+    /* Accent: Warm Amber */
+    --color-accent: #E8A838;
+    --color-accent-light: #F2C56B;
+    --color-accent-dark: #C48A20;
+
+    /* Neutrals: Warm Slate */
+    --color-text: #1E293B;
+    --color-text-secondary: #475569;
+    --color-text-muted: #94A3B8;
+    --color-border: #E2E8F0;
+    --color-surface: #FFFFFF;
+    --color-surface-alt: #F8FAFC;
+    --color-background: #F1F5F9;
+
+    /* Semantic */
+    --color-success: #059669;
+    --color-warning: #D97706;
+    --color-danger: #DC2626;
+    --color-info: var(--color-primary-light);
+
+    /* Spacing Rhythm (8px base) */
+    --space-xs: 0.25rem;
+    --space-sm: 0.5rem;
+    --space-md: 1rem;
+    --space-lg: 1.5rem;
+    --space-xl: 2rem;
+    --space-2xl: 3rem;
+    --space-3xl: 4rem;
+    --space-4xl: 6rem;
+
+    /* Border Radius */
+    --radius-sm: 0.25rem;
+    --radius-md: 0.5rem;
+    --radius-lg: 0.75rem;
+    --radius-xl: 1rem;
+
+    /* Shadows (Teal Tint) */
+    --shadow-sm: 0 1px 2px 0 rgba(15, 76, 92, 0.05);
+    --shadow-md: 0 4px 6px -1px rgba(15, 76, 92, 0.1), 0 2px 4px -1px rgba(15, 76, 92, 0.06);
+    --shadow-lg: 0 10px 15px -3px rgba(15, 76, 92, 0.1), 0 4px 6px -2px rgba(15, 76, 92, 0.05);
+
+    /* Accent Bar */
+    --accent-bar-width: 3px;
+    --accent-bar-color: var(--color-accent);
+
+    /* Transitions */
+    --transition-fast: 150ms ease;
+    --transition-base: 250ms ease;
+
+    /* Default Role Color (can be overridden) */
+    --color-role: var(--color-primary);
+    --color-role-light: var(--color-primary-light);
+    --color-role-subtle: var(--color-primary-subtle);
+}
+
+/* 2. Role Overrides */
+.role-hr {
+    --color-role: var(--color-primary);
+    --color-role-light: var(--color-primary-light);
+    --color-role-subtle: var(--color-primary-subtle);
+}
+
+.role-employee {
+    --color-role: #2D6A4F;
+    --color-role-light: #40916C;
+    --color-role-subtle: #E9F5EE;
+}
+
+/* 3. Global Typography */
+body {
+    font-family: var(--font-body);
+    color: var(--color-text);
+    background-color: var(--color-background);
+    line-height: 1.6;
+}
+
+h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
+    font-family: var(--font-display);
+    font-weight: 700;
+    color: var(--color-primary-dark);
+}
+
+/* 4. Bootstrap Overrides */
+.btn-primary {
+    --bs-btn-bg: var(--color-primary);
+    --bs-btn-border-color: var(--color-primary);
+    --bs-btn-hover-bg: var(--color-primary-light);
+    --bs-btn-hover-border-color: var(--color-primary-light);
+    --bs-btn-active-bg: var(--color-primary-dark);
+    --bs-btn-active-border-color: var(--color-primary-dark);
+}
+
+.btn-outline-primary {
+    --bs-btn-color: var(--color-primary);
+    --bs-btn-border-color: var(--color-primary);
+    --bs-btn-hover-bg: var(--color-primary);
+    --bs-btn-hover-border-color: var(--color-primary);
+    --bs-btn-active-bg: var(--color-primary);
+    --bs-btn-active-border-color: var(--color-primary);
+}
+
+.bg-light {
+    background-color: var(--color-surface-alt) !important;
+}
+
+.text-muted {
+    color: var(--color-text-muted) !important;
+}
+
+/* 5. Design Anchor: .accent-bar */
+.accent-bar {
+    position: relative;
+    padding-left: var(--space-lg);
+}
+
+.accent-bar::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.15em;
+    bottom: 0.15em;
+    width: var(--accent-bar-width);
+    background-color: var(--accent-bar-color);
+    border-radius: 2px;
+}
+
+/* 6. Component Styles */
+.site-footer {
+    background-color: var(--color-surface-alt);
+    border-top: 1px solid var(--color-border);
+    font-size: 0.875rem;
+}
+
+/* Sections */
+.hero-section,
+.benefits-section,
+.demo-info-section,
+.cta-section {
+    padding: var(--space-3xl) 0;
+}
+
+.hero-section {
+    min-height: 75vh;
+    display: flex;
+    align-items: center;
+    background-color: var(--color-surface);
+}
+
+.benefits-section {
+    background-color: var(--color-surface-alt);
+}
+
+.demo-info-section {
+    background-color: var(--color-background);
+}
+
+.cta-section {
+    background-color: var(--color-surface);
+    text-align: center;
+}
+
+/* Cards */
+.card {
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    background-color: var(--color-surface);
+    transition: transform var(--transition-base), box-shadow var(--transition-base);
+}
+
+.benefit-card {
+    height: 100%;
+    padding: var(--space-xl);
+    border: none;
+    box-shadow: var(--shadow-sm);
+    background-color: var(--color-surface);
+    border-radius: var(--radius-xl);
+    transition: transform var(--transition-base), box-shadow var(--transition-base);
+}
+
+.benefit-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-md);
+}
+
+.benefit-icon {
+    font-size: 2rem;
+    color: var(--color-primary);
+    margin-bottom: var(--space-md);
+    display: block;
+}
+
+.demo-info-card {
+    background-color: var(--color-primary-subtle);
+    border: 1px solid var(--color-info);
+    border-radius: var(--radius-lg);
+    padding: var(--space-xl);
+}
+
+/* Badges */
+.demo-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: var(--space-xs) var(--space-sm);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    font-size: 0.75rem;
+    color: var(--color-text-muted);
+    background-color: var(--color-surface);
+}
+
+.role-badge {
+    background-color: var(--color-role-subtle);
+    color: var(--color-role);
+    font-weight: 600;
+    padding: var(--space-xs) var(--space-sm);
+    border-radius: var(--radius-sm);
+}
+
+/* Typography Helpers */
+.hero-title {
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    line-height: 1.1;
+    margin-bottom: var(--space-lg);
+    color: var(--color-primary-dark);
+}
+
+.hero-subtitle {
+    font-size: 1.25rem;
+    color: var(--color-text-secondary);
+    max-width: 600px;
+    margin-bottom: var(--space-xl);
+}
+
+.text-accent {
+    color: var(--color-accent);
+}
+
+/* 7. Hero Animation */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.hero-section .container {
+    animation: fadeInUp 0.6s ease-out;
+}
+
+/* 8. Responsive Adjustments */
+@media (max-width: 768px) {
+    .hero-section {
+        min-height: auto;
+        padding: var(--space-2xl) 0;
+        text-align: center;
+    }
+    
+    .hero-section .col-lg-5 {
+        display: none; /* Hide decorative column on mobile */
+    }
+    
+    .hero-title {
+        font-size: 2.5rem;
+    }
+    
+    .hero-subtitle {
+        margin-left: auto;
+        margin-right: auto;
+    }
+    
+    .accent-bar {
+        padding-left: 0;
+        padding-top: var(--space-lg); /* Move accent to top on mobile center alignment if needed, or keep side */
+    }
+    
+    /* Keep side accent even on center? Or adjust? 
+       Design says "Design Anchor .accent-bar: position relative, padding-left... ::before: absolute left 0..."
+       Let's keep it consistent. If centered text, side bar looks weird. 
+       Let's assume left alignment for accent-bar elements even on mobile, or adjust padding.
+       For now, let's keep the defined style.
+    */
+}
