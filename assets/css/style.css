@@ -506,6 +506,10 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
 
 /* 13. Landing Page Redesign */
 
+.page-landing section {
+    padding: var(--space-4xl) 0;
+}
+
 /* Navbar Landing */
 .page-landing .navbar-landing {
     background-color: transparent;
@@ -660,6 +664,7 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
     font-size: clamp(2.5rem, 6vw, 4.5rem);
     font-weight: 800;
     line-height: 1.05;
+    margin-top: var(--space-xl);
 }
 .page-landing .hero-subtitle {
     font-size: 1.35rem;
@@ -669,6 +674,7 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
     font-weight: 800;
     letter-spacing: -0.02em;
     color: var(--color-primary-dark);
+    margin-top: var(--space-xl);
 }
 
 /* G. Hero Illustration Container */
