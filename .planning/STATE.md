@@ -47,6 +47,8 @@ Progress: [███████░░░] 75% (Estimated)
 - Trend: Consistent
 | Phase 02-hr-entitlement-calculator P01 | 15min | 3 tasks | 3 files |
 | Phase 04-reports-excel-compatible-export P01 | 3m | 2 tasks | 5 files |
+| Phase 04-reports-excel-compatible-export P02 | 15m | 2 tasks | 1 files |
+| Phase 04.1-ini-kenapa-malah-ada-composer-sih P01 | 2m | 2 tasks | 4 files |
 
 ## Accumulated Context
 
@@ -70,6 +72,13 @@ Recent decisions affecting current work:
 - [Phase 04-reports-excel-compatible-export]: Used pure PHP session storage for report data to keep demo mode lightweight and stateful without a database.
 - [Phase 04-reports-excel-compatible-export]: Implemented a POST-Redirect-GET pattern for the report save flow to prevent duplicate submissions on page refresh.
 - [Phase 04-reports-excel-compatible-export]: Leveraged existing cuti-calculator.php functions for dynamic computation of total leave and entitlement tables within detail modals.
+- [Phase 04-reports-excel-compatible-export]: Used PhpSpreadsheet to generate a multi-sheet XLSX file with branded styling
+- [Phase 04-reports-excel-compatible-export]: Streamed output directly to php://output instead of writing temp files
+- [Phase 04.1-ini-kenapa-malah-ada-composer-sih]: Composer/PhpSpreadsheet kept for XLSX export: Pure PHP cannot produce branded multi-sheet XLSX; PhpSpreadsheet is isolated to hr/export.php only
+
+### Roadmap Evolution
+
+- Phase 04.1 inserted after Phase 4: ini kenapa malah ada composer sih ??? (URGENT)
 
 ### Pending Todos
 

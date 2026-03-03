@@ -77,3 +77,13 @@ Plans:
 | 2. HR Entitlement Calculator | 1/1 | Complete | 2026-03-03 |
 | 3. Employee Entitlement View | 0/1 | Planned | - |
 | 4. Reports & Excel-Compatible Export | 0/TBD | Not started | - |
+
+### Phase 04.1: ini kenapa malah ada composer sih ??? (INSERTED)
+
+**Goal:** Resolve Composer/PhpSpreadsheet repo hygiene — fix .gitignore, track composer.lock, and document the justified dependency exception in PROJECT.md.
+**Depends on:** Phase 4
+**Requirements:** RPT-03
+**Plans:** 1 plan
+
+Plans:
+- [ ] 04.1-01-PLAN.md — Git hygiene (.gitignore, composer.lock) + document Composer exception in PROJECT.md + annotate export.php
