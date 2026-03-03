@@ -52,11 +52,10 @@ include 'includes/header.php';
 
         <div class="role-switch text-center pt-3 border-top">
             <span class="text-muted small d-block mb-2">Atau</span>
-            <a href="login.php?role=<?php echo htmlspecialchars($switch_role); ?>" class="text-decoration-none fw-medium">
+            <a href="login.php?role=<?php echo htmlspecialchars($switch_role); ?>"
+                class="text-decoration-none fw-medium">
                 <?php echo htmlspecialchars($switch_label); ?> <i class="bi bi-arrow-right ms-1"></i>
             </a>
         </div>
     </div>
 </div>
-
-<?php include 'includes/footer.php'; ?>
