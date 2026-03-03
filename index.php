@@ -6,10 +6,25 @@ include 'includes/header.php';
 
 <!-- Section 1: Hero -->
 <section class="hero-section">
-    <div class="container">
-        <div class="row align-items-center">
-            <div class="col-lg-7">
-                <h1 class="hero-title accent-bar">
+    <!-- Floating decorative SVG elements (positioned absolute, behind content) -->
+    <svg viewBox="0 0 80 80" class="decorative-float float-1" style="top: 15%; left: 8%;" aria-hidden="true">
+        <!-- Small geometric shape: circle + triangle composition in brand colors -->
+        <circle cx="40" cy="40" r="20" fill="var(--color-primary-light)" opacity="0.6"/>
+        <polygon points="40,10 70,70 10,70" fill="var(--color-primary)" opacity="0.8"/>
+    </svg>
+    <svg viewBox="0 0 60 60" class="decorative-float float-2" style="top: 60%; right: 5%;" aria-hidden="true">
+        <!-- Small geometric shape: rotated square in accent color -->
+        <rect x="15" y="15" width="30" height="30" fill="var(--color-accent)" opacity="0.7" transform="rotate(45 30 30)"/>
+    </svg>
+    <svg viewBox="0 0 50 50" class="decorative-float float-3" style="bottom: 10%; left: 20%;" aria-hidden="true">
+        <!-- Small geometric shape: diamond in primary-subtle -->
+        <polygon points="25,5 45,25 25,45 5,25" fill="var(--color-primary-subtle)" opacity="0.9"/>
+    </svg>
+
+    <div class="container" style="position: relative; z-index: 1;">
+        <div class="row align-items-center g-4">
+            <div class="col-lg-6">
+                <h1 class="hero-title">
                     Kelola Hak Cuti <br>
                     <span class="text-accent">Karyawan Anda</span>
                 </h1>
@@ -17,28 +32,73 @@ include 'includes/header.php';
                     Sistem manajemen cuti yang transparan, akurat, dan mudah digunakan. 
                     Hitung hak cuti secara otomatis berdasarkan tanggal bergabung.
                 </p>
-                <div class="d-flex gap-3">
-                    <a href="login.php" class="btn btn-primary btn-lg px-4 py-3 fw-semibold">
+                <div class="d-flex gap-3 flex-wrap">
+                    <a href="login.php" class="btn-cta">
                         Coba Demo <i class="bi bi-arrow-right ms-2"></i>
                     </a>
                 </div>
             </div>
-            <div class="col-lg-5 d-none d-lg-block">
-                <!-- Decorative space / abstract element -->
-                <div class="p-5 bg-white rounded-4 shadow-lg opacity-75" style="transform: rotate(-3deg);">
-                    <div class="d-flex align-items-center mb-3">
-                        <div class="rounded-circle bg-success bg-opacity-10 p-2 me-3">
-                            <i class="bi bi-check-lg text-success fs-4"></i>
-                        </div>
-                        <div>
-                            <h6 class="mb-0 fw-bold">Hak Cuti 2024</h6>
-                            <small class="text-muted">Diperbarui Otomatis</small>
-                        </div>
-                    </div>
-                    <div class="progress" style="height: 8px;">
-                        <div class="progress-bar bg-success" role="progressbar" style="width: 75%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
-                    </div>
-                </div>
+            <div class="col-lg-6 text-center">
+                <!-- HERO ILLUSTRATION: Large inline SVG, flat geometric style -->
+                <svg viewBox="0 0 500 400" class="hero-illustration" aria-hidden="true">
+                    <!-- Base dashboard screen -->
+                    <rect x="25" y="25" width="450" height="350" rx="12" fill="var(--color-primary)" opacity="0.05" />
+                    <rect x="40" y="40" width="420" height="320" rx="8" fill="var(--color-surface)" filter="drop-shadow(0 10px 15px rgba(15, 76, 92, 0.1))" />
+                    
+                    <!-- Header of dashboard -->
+                    <rect x="40" y="40" width="420" height="60" rx="8" fill="var(--color-primary)" />
+                    <rect x="40" y="90" width="420" height="10" fill="var(--color-primary)" /> <!-- cover bottom radius -->
+                    <circle cx="75" cy="70" r="15" fill="var(--color-accent)" />
+                    <rect x="105" y="65" width="120" height="10" rx="5" fill="var(--color-surface)" opacity="0.8" />
+                    
+                    <!-- Table rows -->
+                    <g transform="translate(60, 120)">
+                        <!-- Row 1 -->
+                        <rect x="0" y="0" width="380" height="40" rx="6" fill="var(--color-primary-subtle)" />
+                        <rect x="15" y="15" width="80" height="10" rx="5" fill="var(--color-primary-light)" opacity="0.7" />
+                        <rect x="120" y="15" width="40" height="10" rx="5" fill="var(--color-primary)" />
+                        <rect x="250" y="15" width="100" height="10" rx="5" fill="var(--color-text-muted)" opacity="0.3" />
+                        
+                        <!-- Row 2 -->
+                        <rect x="0" y="50" width="380" height="40" rx="6" fill="var(--color-primary-subtle)" opacity="0.5" />
+                        <rect x="15" y="65" width="60" height="10" rx="5" fill="var(--color-primary-light)" opacity="0.7" />
+                        <rect x="120" y="65" width="40" height="10" rx="5" fill="var(--color-primary)" />
+                        
+                        <!-- Row 3 -->
+                        <rect x="0" y="100" width="380" height="40" rx="6" fill="var(--color-primary-subtle)" opacity="0.5" />
+                        <rect x="15" y="115" width="70" height="10" rx="5" fill="var(--color-primary-light)" opacity="0.7" />
+                        <rect x="120" y="115" width="40" height="10" rx="5" fill="var(--color-accent)" />
+                        
+                        <!-- Row 4 -->
+                        <rect x="0" y="150" width="380" height="40" rx="6" fill="var(--color-primary-subtle)" opacity="0.5" />
+                        <rect x="15" y="165" width="90" height="10" rx="5" fill="var(--color-primary-light)" opacity="0.7" />
+                        <rect x="120" y="165" width="40" height="10" rx="5" fill="var(--color-primary)" />
+                        <rect x="250" y="165" width="80" height="10" rx="5" fill="var(--color-text-muted)" opacity="0.3" />
+                    </g>
+                    
+                    <!-- Floating Calendar/Date element -->
+                    <g transform="translate(340, 260)">
+                        <rect x="0" y="0" width="120" height="110" rx="8" fill="var(--color-surface)" filter="drop-shadow(0 4px 6px rgba(15, 76, 92, 0.1))" />
+                        <rect x="0" y="0" width="120" height="35" rx="8" fill="var(--color-accent)" />
+                        <rect x="0" y="25" width="120" height="10" fill="var(--color-accent)" /> <!-- cover bottom radius -->
+                        <rect x="35" y="60" width="20" height="25" rx="4" fill="var(--color-primary-light)" />
+                        <rect x="65" y="55" width="20" height="30" rx="4" fill="var(--color-primary)" />
+                    </g>
+                    
+                    <!-- Floating Export/Doc element -->
+                    <g transform="translate(10, 240)">
+                        <rect x="0" y="0" width="80" height="100" rx="6" fill="var(--color-primary-light)" filter="drop-shadow(0 4px 6px rgba(15, 76, 92, 0.15))" />
+                        <rect x="15" y="25" width="30" height="6" rx="3" fill="var(--color-surface)" />
+                        <rect x="15" y="45" width="50" height="6" rx="3" fill="var(--color-surface)" opacity="0.7" />
+                        <rect x="15" y="65" width="40" height="6" rx="3" fill="var(--color-surface)" opacity="0.7" />
+                        <polygon points="55,0 80,0 80,25 55,25" fill="var(--color-surface)" opacity="0.3" />
+                    </g>
+                    
+                    <!-- Decorative accents -->
+                    <circle cx="430" cy="50" r="8" fill="var(--color-accent)" opacity="0.6" />
+                    <circle cx="80" cy="340" r="12" fill="var(--color-primary)" opacity="0.2" />
+                    <rect x="200" y="330" width="40" height="40" rx="8" fill="var(--color-accent)" opacity="0.1" transform="rotate(15 220 350)" />
+                </svg>
             </div>
         </div>
     </div>
