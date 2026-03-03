@@ -11,7 +11,7 @@ This roadmap delivers a frontend-first v1 demo in native procedural PHP, startin
 - Decimal phases (2.1, 2.2): Urgent insertions (marked with INSERTED)
 
 - [x] **Phase 1: Foundation, Landing & Demo Access** - Establish project/UI foundation and deliver the top-priority landing plus visual-only role-based login entry. (completed 2026-03-03)
-- [ ] **Phase 2: HR Entitlement Calculator** - Deliver deterministic 8-year leave calculation flow for HR from join year input.
+- [x] **Phase 2: HR Entitlement Calculator** - Deliver deterministic 8-year leave calculation flow for HR from join year input. (completed 2026-03-03)
 - [ ] **Phase 3: Employee Entitlement View** - Deliver employee self-view using the same entitlement output rules as HR.
 - [ ] **Phase 4: Reports & Excel-Compatible Export** - Deliver local-array report storage, consolidated reporting table, and full export of all employee reports.
 
@@ -39,7 +39,9 @@ This roadmap delivers a frontend-first v1 demo in native procedural PHP, startin
   2. System displays a full 8-year entitlement table derived from the provided join year.
   3. Each row in the 8-year output shows a visible status label/badge for that year.
   4. Year 7 and Year 8 rows always display fixed entitlement values of 6 leave days each.
-**Plans**: TBD
+**Plans**: 1 plan
+Plans:
+- [x] 02-01-PLAN.md — Calculator engine + dashboard form/table + visual verification
 
 ### Phase 3: Employee Entitlement View
 **Goal**: Employees can view their own entitlement result in a dedicated dashboard that stays consistent with HR calculation outputs.
@@ -67,6 +69,6 @@ This roadmap delivers a frontend-first v1 demo in native procedural PHP, startin
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Foundation, Landing & Demo Access | 2/2 | Complete   | 2026-03-03 |
-| 2. HR Entitlement Calculator | 0/TBD | Not started | - |
+| 2. HR Entitlement Calculator | 1/1 | Complete | 2026-03-03 |
 | 3. Employee Entitlement View | 0/TBD | Not started | - |
 | 4. Reports & Excel-Compatible Export | 0/TBD | Not started | - |

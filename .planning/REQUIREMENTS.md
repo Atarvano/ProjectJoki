@@ -19,11 +19,11 @@
 
 ### HR Leave Calculator
 
-- [ ] **HRC-01**: HR can input employee join year and run leave entitlement calculation.
-- [ ] **HRC-02**: System shows an 8-year entitlement table derived from the join year.
-- [ ] **HRC-03**: Table shows per-row status for each year in the 8-year output.
-- [ ] **HRC-04**: Year 7 entitlement is fixed at 6 leave days.
-- [ ] **HRC-05**: Year 8 entitlement is fixed at 6 leave days.
+- [x] **HRC-01**: HR can input employee join year and run leave entitlement calculation.
+- [x] **HRC-02**: System shows an 8-year entitlement table derived from the join year.
+- [x] **HRC-03**: Table shows per-row status for each year in the 8-year output.
+- [x] **HRC-04**: Year 7 entitlement is fixed at 6 leave days.
+- [x] **HRC-05**: Year 8 entitlement is fixed at 6 leave days.
 
 ### Employee Self View
 
@@ -73,11 +73,11 @@
 | ACCS-01 | Phase 1 | Complete |
 | ACCS-02 | Phase 1 | Complete |
 | ACCS-03 | Phase 1 | Complete |
-| HRC-01 | Phase 2 | Pending |
-| HRC-02 | Phase 2 | Pending |
-| HRC-03 | Phase 2 | Pending |
-| HRC-04 | Phase 2 | Pending |
-| HRC-05 | Phase 2 | Pending |
+| HRC-01 | Phase 2 | Complete |
+| HRC-02 | Phase 2 | Complete |
+| HRC-03 | Phase 2 | Complete |
+| HRC-04 | Phase 2 | Complete |
+| HRC-05 | Phase 2 | Complete |
 | EMP-01 | Phase 3 | Pending |
 | EMP-02 | Phase 3 | Pending |
 | RPT-01 | Phase 4 | Pending |
