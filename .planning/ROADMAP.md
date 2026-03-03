@@ -51,7 +51,9 @@ Plans:
   1. Employee can open a dedicated self-view dashboard for entitlement results.
   2. For the same input data, employee entitlement output matches the same calculation rules shown in HR view.
   3. Employee-facing result presents the 8-year entitlement output in a readable, verification-friendly format.
-**Plans**: TBD
+**Plans**: 1 plan
+Plans:
+- [ ] 03-01-PLAN.md — Employee entitlement dashboard with preset profiles, 3-state UI, and shared calculator engine
 
 ### Phase 4: Reports & Excel-Compatible Export
 **Goal**: HR can persist demo reports in local arrays, review consolidated employee leave reports, and export all reports to an Excel-compatible file.
@@ -70,5 +72,5 @@ Plans:
 |-------|----------------|--------|-----------|
 | 1. Foundation, Landing & Demo Access | 2/2 | Complete   | 2026-03-03 |
 | 2. HR Entitlement Calculator | 1/1 | Complete | 2026-03-03 |
-| 3. Employee Entitlement View | 0/TBD | Not started | - |
+| 3. Employee Entitlement View | 0/1 | Planned | - |
 | 4. Reports & Excel-Compatible Export | 0/TBD | Not started | - |
