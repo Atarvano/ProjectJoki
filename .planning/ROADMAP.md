@@ -64,7 +64,10 @@ Plans:
   2. HR can view a consolidated report table containing leave report records across employees.
   3. HR can export all employee leave reports in one action to an Excel-compatible output file.
   4. Exported report columns and values are consistent with what HR sees in the consolidated report table.
-**Plans**: TBD
+**Plans**: 2 plans
+Plans:
+- [ ] 04-01-PLAN.md — Report data layer, save flow, consolidated table, filters, modals, stat cards
+- [ ] 04-02-PLAN.md — XLSX export endpoint with branded multi-sheet output + visual verification
 
 ## Progress
 
