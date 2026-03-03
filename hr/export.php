@@ -4,6 +4,9 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
+// PhpSpreadsheet via Composer — the only Composer dependency in this project.
+// Used here because PHP has no native capability for multi-sheet branded XLSX generation.
+// Autoload is intentionally isolated to this file only. See PROJECT.md constraints.
 require_once __DIR__ . '/../vendor/autoload.php';
 require_once __DIR__ . '/../includes/cuti-calculator.php';
 require_once __DIR__ . '/../includes/reports-data.php';
