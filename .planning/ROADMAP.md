@@ -10,7 +10,7 @@ This roadmap delivers a frontend-first v1 demo in native procedural PHP, startin
 - Integer phases (1, 2, 3): Planned milestone work
 - Decimal phases (2.1, 2.2): Urgent insertions (marked with INSERTED)
 
-- [ ] **Phase 1: Foundation, Landing & Demo Access** - Establish project/UI foundation and deliver the top-priority landing plus visual-only role-based login entry.
+- [x] **Phase 1: Foundation, Landing & Demo Access** - Establish project/UI foundation and deliver the top-priority landing plus visual-only role-based login entry. (completed 2026-03-03)
 - [ ] **Phase 2: HR Entitlement Calculator** - Deliver deterministic 8-year leave calculation flow for HR from join year input.
 - [ ] **Phase 3: Employee Entitlement View** - Deliver employee self-view using the same entitlement output rules as HR.
 - [ ] **Phase 4: Reports & Excel-Compatible Export** - Deliver local-array report storage, consolidated reporting table, and full export of all employee reports.
@@ -66,7 +66,7 @@ This roadmap delivers a frontend-first v1 demo in native procedural PHP, startin
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Foundation, Landing & Demo Access | 1/2 | In Progress | - |
+| 1. Foundation, Landing & Demo Access | 2/2 | Complete   | 2026-03-03 |
 | 2. HR Entitlement Calculator | 0/TBD | Not started | - |
 | 3. Employee Entitlement View | 0/TBD | Not started | - |
 | 4. Reports & Excel-Compatible Export | 0/TBD | Not started | - |

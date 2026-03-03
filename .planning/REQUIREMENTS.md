@@ -13,9 +13,9 @@
 
 ### Access Flow
 
-- [ ] **ACCS-01**: User can open a visual-only login page without backend authentication.
-- [ ] **ACCS-02**: HR and employee demo access flows are visually distinct and route to the correct dashboard.
-- [ ] **ACCS-03**: Application clearly indicates that v1 login is demo-only.
+- [x] **ACCS-01**: User can open a visual-only login page without backend authentication.
+- [x] **ACCS-02**: HR and employee demo access flows are visually distinct and route to the correct dashboard.
+- [x] **ACCS-03**: Application clearly indicates that v1 login is demo-only.
 
 ### HR Leave Calculator
 
@@ -70,9 +70,9 @@
 | PUB-01 | Phase 1 | Complete |
 | PUB-02 | Phase 1 | Complete |
 | PUB-03 | Phase 1 | Complete |
-| ACCS-01 | Phase 1 | Pending |
-| ACCS-02 | Phase 1 | Pending |
-| ACCS-03 | Phase 1 | Pending |
+| ACCS-01 | Phase 1 | Complete |
+| ACCS-02 | Phase 1 | Complete |
+| ACCS-03 | Phase 1 | Complete |
 | HRC-01 | Phase 2 | Pending |
 | HRC-02 | Phase 2 | Pending |
 | HRC-03 | Phase 2 | Pending |
