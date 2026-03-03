@@ -673,3 +673,67 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
         transition-duration: 0.01ms !important;
     }
 }
+
+/* Step cards for How It Works */
+.page-landing .step-card {
+    padding: var(--space-xl);
+}
+
+.page-landing .step-number {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--color-primary), var(--color-primary-light));
+    color: white;
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 1.125rem;
+    margin-bottom: var(--space-md);
+}
+
+.page-landing .step-illustration svg {
+    width: 100%;
+    max-width: 120px;
+    height: auto;
+    margin: 0 auto;
+    display: block;
+}
+
+/* Stats section */
+.page-landing .stat-block {
+    padding: var(--space-xl);
+}
+
+.page-landing .stat-number {
+    font-family: var(--font-display);
+    font-size: clamp(2.5rem, 5vw, 3.5rem);
+    font-weight: 800;
+    color: var(--color-primary);
+    line-height: 1;
+    margin-bottom: var(--space-sm);
+}
+
+.page-landing .stat-block .stat-label {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 1rem;
+    color: var(--color-text);
+    text-transform: none;
+    letter-spacing: normal;
+    margin-bottom: var(--space-xs);
+}
+
+/* Override any .stat-label from section 11 (calculator) — scoped to landing */
+
+.page-landing .stat-desc {
+    max-width: 200px;
+    margin: 0 auto;
+}
+
+/* Benefit icon wrap */
+.page-landing .benefit-icon-wrap svg {
+    display: block;
+}

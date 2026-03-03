@@ -8,9 +8,8 @@ include 'includes/header.php';
 <section class="hero-section">
     <!-- Floating decorative SVG elements (positioned absolute, behind content) -->
     <svg viewBox="0 0 80 80" class="decorative-float float-1" style="top: 15%; left: 8%;" aria-hidden="true">
-        <!-- Small geometric shape: circle + triangle composition in brand colors -->
-        <circle cx="40" cy="40" r="20" fill="var(--color-primary-light)" opacity="0.6"/>
-        <polygon points="40,10 70,70 10,70" fill="var(--color-primary)" opacity="0.8"/>
+        <!-- User requested a triangle background behind the hero text. I'll change the float-1 SVG to just be a large triangle. -->
+        <polygon points="40,10 70,70 10,70" fill="var(--color-primary-light)" opacity="0.4"/>
     </svg>
     <svg viewBox="0 0 60 60" class="decorative-float float-2" style="top: 60%; right: 5%;" aria-hidden="true">
         <!-- Small geometric shape: rotated square in accent color -->
@@ -108,45 +107,75 @@ include 'includes/header.php';
 <section class="benefits-section">
     <div class="container">
         <div class="row mb-5">
-            <div class="col-12">
-                <h2 class="h3 fw-bold text-center">Mengapa Sicuti HRD?</h2>
+            <div class="col-12 text-center">
+                <h2 class="section-heading">Mengapa Sicuti HRD?</h2>
+                <p class="text-muted mt-3" style="max-width: 600px; margin: 0 auto;">
+                    Dirancang khusus untuk kebutuhan pengelolaan cuti di Indonesia.
+                </p>
             </div>
         </div>
         <div class="row g-4">
-            <!-- Benefit 1 -->
+            <!-- Benefit 1: Hitung Otomatis -->
             <div class="col-md-4">
-                <div class="card benefit-card accent-bar h-100">
+                <div class="gradient-card h-100">
                     <div class="card-body">
-                        <i class="bi bi-calculator benefit-icon"></i>
-                        <h3 class="h4 card-title mb-3">Hitung Otomatis</h3>
-                        <p class="card-text text-muted">
-                            Tidak perlu menghitung manual. Sistem otomatis mengkalkulasi hak cuti tahunan, cuti besar, dan sisa cuti berdasarkan masa kerja.
+                        <div class="benefit-icon-wrap mb-3">
+                            <!-- Small inline SVG icon: calculator/abacus geometric shape, ~40x40 viewBox -->
+                            <svg viewBox="0 0 40 40" width="48" height="48" aria-hidden="true">
+                                <rect x="5" y="5" width="30" height="30" rx="4" fill="var(--color-primary-subtle)" />
+                                <rect x="10" y="10" width="20" height="8" rx="2" fill="var(--color-primary)" />
+                                <circle cx="13" cy="24" r="2" fill="var(--color-accent)" />
+                                <circle cx="20" cy="24" r="2" fill="var(--color-accent)" />
+                                <circle cx="27" cy="24" r="2" fill="var(--color-accent)" />
+                                <circle cx="13" cy="30" r="2" fill="var(--color-primary-light)" />
+                                <circle cx="20" cy="30" r="2" fill="var(--color-primary-light)" />
+                                <circle cx="27" cy="30" r="2" fill="var(--color-primary-light)" />
+                            </svg>
+                        </div>
+                        <h3 class="h5 fw-bold mb-2">Hitung Otomatis</h3>
+                        <p class="text-muted mb-0">
+                            Tidak perlu menghitung manual. Sistem otomatis mengkalkulasi hak cuti tahunan dan cuti besar berdasarkan masa kerja.
                         </p>
                     </div>
                 </div>
             </div>
-            
-            <!-- Benefit 2 -->
+            <!-- Benefit 2: Laporan Jelas -->
             <div class="col-md-4">
-                <div class="card benefit-card accent-bar h-100">
+                <div class="gradient-card h-100">
                     <div class="card-body">
-                        <i class="bi bi-table benefit-icon"></i>
-                        <h3 class="h4 card-title mb-3">Laporan Jelas</h3>
-                        <p class="card-text text-muted">
-                            Tabel hak cuti 8 tahun yang mudah dibaca. Transparansi penuh untuk HR dan karyawan mengenai jatah cuti mereka.
+                        <div class="benefit-icon-wrap mb-3">
+                            <!-- Small inline SVG icon: table/chart geometric shape -->
+                            <svg viewBox="0 0 40 40" width="48" height="48" aria-hidden="true">
+                                <rect x="4" y="8" width="32" height="24" rx="2" fill="var(--color-primary-subtle)" />
+                                <rect x="4" y="8" width="32" height="6" rx="2" fill="var(--color-primary)" />
+                                <rect x="6" y="16" width="28" height="4" rx="1" fill="var(--color-accent)" opacity="0.8" />
+                                <rect x="6" y="22" width="28" height="4" rx="1" fill="var(--color-primary-light)" opacity="0.5" />
+                            </svg>
+                        </div>
+                        <h3 class="h5 fw-bold mb-2">Laporan Jelas</h3>
+                        <p class="text-muted mb-0">
+                            Tabel hak cuti 8 tahun yang mudah dibaca. Transparansi penuh untuk HR dan karyawan.
                         </p>
                     </div>
                 </div>
             </div>
-            
-            <!-- Benefit 3 -->
+            <!-- Benefit 3: Ekspor Excel -->
             <div class="col-md-4">
-                <div class="card benefit-card accent-bar h-100">
+                <div class="gradient-card h-100">
                     <div class="card-body">
-                        <i class="bi bi-file-earmark-excel benefit-icon"></i>
-                        <h3 class="h4 card-title mb-3">Ekspor Excel</h3>
-                        <p class="card-text text-muted">
-                            Unduh laporan lengkap dalam format Excel untuk keperluan arsip, audit, atau pemrosesan lebih lanjut dengan satu klik.
+                        <div class="benefit-icon-wrap mb-3">
+                            <!-- Small inline SVG icon: document/spreadsheet with download arrow -->
+                            <svg viewBox="0 0 40 40" width="48" height="48" aria-hidden="true">
+                                <rect x="8" y="4" width="24" height="32" rx="3" fill="var(--color-primary-subtle)" />
+                                <polygon points="32,4 32,12 24,4" fill="var(--color-primary-light)" opacity="0.5" />
+                                <rect x="14" y="14" width="12" height="3" rx="1" fill="var(--color-primary)" />
+                                <rect x="14" y="20" width="12" height="3" rx="1" fill="var(--color-primary)" />
+                                <path d="M20,26 L20,32 M17,29 L20,32 L23,29" stroke="var(--color-accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none" />
+                            </svg>
+                        </div>
+                        <h3 class="h5 fw-bold mb-2">Ekspor Excel</h3>
+                        <p class="text-muted mb-0">
+                            Unduh laporan lengkap dalam format Excel untuk arsip, audit, atau pemrosesan lebih lanjut.
                         </p>
                     </div>
                 </div>
@@ -155,18 +184,134 @@ include 'includes/header.php';
     </div>
 </section>
 
-<!-- Section 3: Demo Info -->
+<!-- Section 3: How It Works (NEW) -->
+<section class="how-it-works-section">
+    <div class="container">
+        <div class="row mb-5">
+            <div class="col-12 text-center">
+                <h2 class="section-heading">Cara Kerja</h2>
+                <p class="text-muted mt-3" style="max-width: 600px; margin: 0 auto;">
+                    Tiga langkah sederhana untuk mengelola hak cuti karyawan.
+                </p>
+            </div>
+        </div>
+        <div class="row g-4">
+            <!-- Step 1 -->
+            <div class="col-md-4">
+                <div class="step-card text-center">
+                    <div class="step-number">1</div>
+                    <div class="step-illustration mb-3">
+                        <svg viewBox="0 0 120 100" aria-hidden="true">
+                            <rect x="20" y="20" width="80" height="60" rx="6" fill="var(--color-primary-subtle)" />
+                            <rect x="20" y="20" width="80" height="15" rx="4" fill="var(--color-primary)" />
+                            <rect x="30" y="45" width="60" height="8" rx="2" fill="var(--color-surface)" />
+                            <circle cx="40" cy="49" r="2" fill="var(--color-text-muted)" />
+                            <!-- cursor -->
+                            <polygon points="65,55 75,70 70,72 75,80 72,82 67,73 60,78" fill="var(--color-accent)" />
+                        </svg>
+                    </div>
+                    <h3 class="h5 fw-bold mb-2">Masukkan Tahun Bergabung</h3>
+                    <p class="text-muted small mb-0">HR memasukkan tahun bergabung karyawan ke dalam kalkulator.</p>
+                </div>
+            </div>
+            <!-- Step 2 -->
+            <div class="col-md-4">
+                <div class="step-card text-center">
+                    <div class="step-number">2</div>
+                    <div class="step-illustration mb-3">
+                        <svg viewBox="0 0 120 100" aria-hidden="true">
+                            <rect x="10" y="15" width="100" height="70" rx="4" fill="var(--color-primary-subtle)" />
+                            <rect x="15" y="25" width="90" height="8" rx="2" fill="var(--color-primary-light)" opacity="0.3" />
+                            <rect x="15" y="38" width="90" height="8" rx="2" fill="var(--color-accent)" opacity="0.8" />
+                            <rect x="15" y="51" width="90" height="8" rx="2" fill="var(--color-primary-light)" opacity="0.3" />
+                            <rect x="15" y="64" width="90" height="8" rx="2" fill="var(--color-primary-light)" opacity="0.3" />
+                        </svg>
+                    </div>
+                    <h3 class="h5 fw-bold mb-2">Lihat Tabel 8 Tahun</h3>
+                    <p class="text-muted small mb-0">Sistem menampilkan tabel hak cuti lengkap dari tahun ke-1 hingga ke-8.</p>
+                </div>
+            </div>
+            <!-- Step 3 -->
+            <div class="col-md-4">
+                <div class="step-card text-center">
+                    <div class="step-number">3</div>
+                    <div class="step-illustration mb-3">
+                        <svg viewBox="0 0 120 100" aria-hidden="true">
+                            <rect x="35" y="15" width="50" height="70" rx="4" fill="var(--color-primary-subtle)" />
+                            <path d="M45,45 L55,55 L75,35" stroke="var(--color-primary)" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round" />
+                            <rect x="45" y="65" width="30" height="4" rx="2" fill="var(--color-primary-light)" opacity="0.5" />
+                            <circle cx="85" cy="75" r="15" fill="var(--color-accent)" />
+                            <path d="M85,68 L85,82 M80,77 L85,82 L90,77" stroke="white" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                    </div>
+                    <h3 class="h5 fw-bold mb-2">Ekspor Laporan</h3>
+                    <p class="text-muted small mb-0">Simpan dan ekspor laporan cuti ke format Excel dengan satu klik.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Section 4: Stats / Trust Indicators (NEW) -->
+<section class="stats-section">
+    <div class="container">
+        <div class="row g-4 justify-content-center">
+            <!-- Stat 1 -->
+            <div class="col-sm-6 col-lg-3">
+                <div class="stat-block text-center">
+                    <div class="stat-number">8</div>
+                    <div class="stat-label">Tahun Cakupan</div>
+                    <p class="stat-desc text-muted small">Perhitungan lengkap dari tahun pertama hingga kedelapan</p>
+                </div>
+            </div>
+            <!-- Stat 2 -->
+            <div class="col-sm-6 col-lg-3">
+                <div class="stat-block text-center">
+                    <div class="stat-number">2</div>
+                    <div class="stat-label">Akses Peran</div>
+                    <p class="stat-desc text-muted small">Tampilan khusus untuk HR dan karyawan</p>
+                </div>
+            </div>
+            <!-- Stat 3 -->
+            <div class="col-sm-6 col-lg-3">
+                <div class="stat-block text-center">
+                    <div class="stat-number">.xlsx</div>
+                    <div class="stat-label">Format Ekspor</div>
+                    <p class="stat-desc text-muted small">Laporan siap pakai dalam format Excel standar</p>
+                </div>
+            </div>
+            <!-- Stat 4 -->
+            <div class="col-sm-6 col-lg-3">
+                <div class="stat-block text-center">
+                    <div class="stat-number">100%</div>
+                    <div class="stat-label">Transparan</div>
+                    <p class="stat-desc text-muted small">Karyawan dapat memverifikasi perhitungan cuti mereka sendiri</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Section 5: Demo Info (redesigned) -->
 <section class="demo-info-section">
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-lg-8">
-                <div class="card demo-info-card border-0 shadow-sm">
-                    <div class="card-body">
-                        <h2 class="h4 accent-bar mb-3">Tentang Demo Ini</h2>
-                        <p class="mb-0 text-muted">
-                            Ini adalah prototipe v1 dari Sicuti HRD. Aplikasi ini berjalan dalam mode simulasi tanpa database persisten. 
-                            Anda dapat mencoba semua fitur layaknya di lingkungan produksi, namun data akan di-reset setiap sesi. 
-                            Gunakan ini untuk mengevaluasi alur kerja dan kenyamanan antarmuka.
+                <div class="gradient-card">
+                    <div class="card-body text-center">
+                        <div class="mb-3">
+                            <svg viewBox="0 0 40 40" width="48" height="48" aria-hidden="true">
+                                <circle cx="20" cy="20" r="16" fill="var(--color-primary-subtle)" />
+                                <circle cx="20" cy="20" r="10" fill="var(--color-accent)" opacity="0.2" />
+                                <path d="M20,12 L20,16 M20,24 L20,28" stroke="var(--color-accent)" stroke-width="2" stroke-linecap="round" />
+                                <path d="M12,20 L16,20 M24,20 L28,20" stroke="var(--color-accent)" stroke-width="2" stroke-linecap="round" />
+                                <circle cx="20" cy="20" r="4" fill="var(--color-accent)" />
+                            </svg>
+                        </div>
+                        <h2 class="h4 fw-bold mb-3">Tentang Demo Ini</h2>
+                        <p class="mb-0 text-muted" style="max-width: 540px; margin: 0 auto;">
+                            Ini adalah prototipe v1 dari Sicuti HRD. Aplikasi berjalan dalam mode simulasi tanpa database persisten. 
+                            Anda dapat mencoba semua fitur layaknya di lingkungan produksi — data akan di-reset setiap sesi.
                         </p>
                     </div>
                 </div>
@@ -175,17 +320,17 @@ include 'includes/header.php';
     </div>
 </section>
 
-<!-- Section 4: Bottom CTA -->
+<!-- Section 6: Bottom CTA (redesigned) -->
 <section class="cta-section">
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-lg-8 text-center">
-                <h2 class="display-6 fw-bold mb-3">Mulai Sekarang</h2>
-                <p class="lead text-muted mb-4">
-                    Pilih peran Anda untuk masuk ke simulasi demo.
+                <h2 class="section-heading mb-3">Siap Mencoba?</h2>
+                <p class="lead text-muted mb-4" style="max-width: 500px; margin: 0 auto;">
+                    Pilih peran Anda dan mulai jelajahi simulasi demo Sicuti HRD.
                 </p>
-                <a href="login.php" class="btn btn-primary btn-lg px-5 py-3 fw-bold shadow-lg">
-                    Masuk ke Demo
+                <a href="login.php" class="btn-cta">
+                    Masuk ke Demo <i class="bi bi-arrow-right ms-2"></i>
                 </a>
             </div>
         </div>
