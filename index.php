@@ -4,21 +4,26 @@ $page_class = 'page-landing';
 include 'includes/header.php';
 ?>
 
+<!-- Navbar -->
+<nav class="navbar navbar-landing py-3">
+    <div class="container">
+        <a class="navbar-brand fw-bold d-flex align-items-center gap-2" href="index.php" style="color: var(--color-primary-dark); font-family: var(--font-display); font-size: 1.5rem;">
+            <svg viewBox="0 0 40 40" width="36" height="36" aria-hidden="true">
+                <rect x="4" y="4" width="32" height="32" rx="8" fill="var(--color-primary)" />
+                <path d="M12,24 L20,12 L28,24" stroke="var(--color-accent)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none" />
+                <circle cx="20" cy="28" r="2" fill="var(--color-accent)" />
+            </svg>
+            Sicuti HRD
+        </a>
+        <div class="d-flex">
+            <a href="login.php" class="btn btn-outline-primary fw-bold px-4" style="border-radius: var(--radius-lg);">Masuk</a>
+        </div>
+    </div>
+</nav>
+
 <!-- Section 1: Hero -->
 <section class="hero-section">
-    <!-- Floating decorative SVG elements (positioned absolute, behind content) -->
-    <svg viewBox="0 0 80 80" class="decorative-float float-1" style="top: 15%; left: 8%;" aria-hidden="true">
-        <!-- User requested a triangle background behind the hero text. I'll change the float-1 SVG to just be a large triangle. -->
-        <polygon points="40,10 70,70 10,70" fill="var(--color-primary-light)" opacity="0.4"/>
-    </svg>
-    <svg viewBox="0 0 60 60" class="decorative-float float-2" style="top: 60%; right: 5%;" aria-hidden="true">
-        <!-- Small geometric shape: rotated square in accent color -->
-        <rect x="15" y="15" width="30" height="30" fill="var(--color-accent)" opacity="0.7" transform="rotate(45 30 30)"/>
-    </svg>
-    <svg viewBox="0 0 50 50" class="decorative-float float-3" style="bottom: 10%; left: 20%;" aria-hidden="true">
-        <!-- Small geometric shape: diamond in primary-subtle -->
-        <polygon points="25,5 45,25 25,45 5,25" fill="var(--color-primary-subtle)" opacity="0.9"/>
-    </svg>
+
 
     <div class="container" style="position: relative; z-index: 1;">
         <div class="row align-items-center g-4">
@@ -28,7 +33,7 @@ include 'includes/header.php';
                     <span class="text-accent">Karyawan Anda</span>
                 </h1>
                 <p class="hero-subtitle">
-                    Sistem manajemen cuti yang transparan, akurat, dan mudah digunakan. 
+                    Sistem manajemen cuti yang transparan, akurat, dan mudah digunakan.
                     Hitung hak cuti secara otomatis berdasarkan tanggal bergabung.
                 </p>
                 <div class="d-flex gap-3 flex-wrap">
@@ -42,61 +47,76 @@ include 'includes/header.php';
                 <svg viewBox="0 0 500 400" class="hero-illustration" aria-hidden="true">
                     <!-- Base dashboard screen -->
                     <rect x="25" y="25" width="450" height="350" rx="12" fill="var(--color-primary)" opacity="0.05" />
-                    <rect x="40" y="40" width="420" height="320" rx="8" fill="var(--color-surface)" filter="drop-shadow(0 10px 15px rgba(15, 76, 92, 0.1))" />
-                    
+                    <rect x="40" y="40" width="420" height="320" rx="8" fill="var(--color-surface)"
+                        filter="drop-shadow(0 10px 15px rgba(15, 76, 92, 0.1))" />
+
                     <!-- Header of dashboard -->
                     <rect x="40" y="40" width="420" height="60" rx="8" fill="var(--color-primary)" />
-                    <rect x="40" y="90" width="420" height="10" fill="var(--color-primary)" /> <!-- cover bottom radius -->
+                    <rect x="40" y="90" width="420" height="10" fill="var(--color-primary)" />
+                    <!-- cover bottom radius -->
                     <circle cx="75" cy="70" r="15" fill="var(--color-accent)" />
                     <rect x="105" y="65" width="120" height="10" rx="5" fill="var(--color-surface)" opacity="0.8" />
-                    
+
                     <!-- Table rows -->
                     <g transform="translate(60, 120)">
                         <!-- Row 1 -->
                         <rect x="0" y="0" width="380" height="40" rx="6" fill="var(--color-primary-subtle)" />
-                        <rect x="15" y="15" width="80" height="10" rx="5" fill="var(--color-primary-light)" opacity="0.7" />
+                        <rect x="15" y="15" width="80" height="10" rx="5" fill="var(--color-primary-light)"
+                            opacity="0.7" />
                         <rect x="120" y="15" width="40" height="10" rx="5" fill="var(--color-primary)" />
-                        <rect x="250" y="15" width="100" height="10" rx="5" fill="var(--color-text-muted)" opacity="0.3" />
-                        
+                        <rect x="250" y="15" width="100" height="10" rx="5" fill="var(--color-text-muted)"
+                            opacity="0.3" />
+
                         <!-- Row 2 -->
-                        <rect x="0" y="50" width="380" height="40" rx="6" fill="var(--color-primary-subtle)" opacity="0.5" />
-                        <rect x="15" y="65" width="60" height="10" rx="5" fill="var(--color-primary-light)" opacity="0.7" />
+                        <rect x="0" y="50" width="380" height="40" rx="6" fill="var(--color-primary-subtle)"
+                            opacity="0.5" />
+                        <rect x="15" y="65" width="60" height="10" rx="5" fill="var(--color-primary-light)"
+                            opacity="0.7" />
                         <rect x="120" y="65" width="40" height="10" rx="5" fill="var(--color-primary)" />
-                        
+
                         <!-- Row 3 -->
-                        <rect x="0" y="100" width="380" height="40" rx="6" fill="var(--color-primary-subtle)" opacity="0.5" />
-                        <rect x="15" y="115" width="70" height="10" rx="5" fill="var(--color-primary-light)" opacity="0.7" />
+                        <rect x="0" y="100" width="380" height="40" rx="6" fill="var(--color-primary-subtle)"
+                            opacity="0.5" />
+                        <rect x="15" y="115" width="70" height="10" rx="5" fill="var(--color-primary-light)"
+                            opacity="0.7" />
                         <rect x="120" y="115" width="40" height="10" rx="5" fill="var(--color-accent)" />
-                        
+
                         <!-- Row 4 -->
-                        <rect x="0" y="150" width="380" height="40" rx="6" fill="var(--color-primary-subtle)" opacity="0.5" />
-                        <rect x="15" y="165" width="90" height="10" rx="5" fill="var(--color-primary-light)" opacity="0.7" />
+                        <rect x="0" y="150" width="380" height="40" rx="6" fill="var(--color-primary-subtle)"
+                            opacity="0.5" />
+                        <rect x="15" y="165" width="90" height="10" rx="5" fill="var(--color-primary-light)"
+                            opacity="0.7" />
                         <rect x="120" y="165" width="40" height="10" rx="5" fill="var(--color-primary)" />
-                        <rect x="250" y="165" width="80" height="10" rx="5" fill="var(--color-text-muted)" opacity="0.3" />
+                        <rect x="250" y="165" width="80" height="10" rx="5" fill="var(--color-text-muted)"
+                            opacity="0.3" />
                     </g>
-                    
+
                     <!-- Floating Calendar/Date element -->
                     <g transform="translate(340, 260)">
-                        <rect x="0" y="0" width="120" height="110" rx="8" fill="var(--color-surface)" filter="drop-shadow(0 4px 6px rgba(15, 76, 92, 0.1))" />
+                        <rect x="0" y="0" width="120" height="110" rx="8" fill="var(--color-surface)"
+                            filter="drop-shadow(0 4px 6px rgba(15, 76, 92, 0.1))" />
                         <rect x="0" y="0" width="120" height="35" rx="8" fill="var(--color-accent)" />
-                        <rect x="0" y="25" width="120" height="10" fill="var(--color-accent)" /> <!-- cover bottom radius -->
+                        <rect x="0" y="25" width="120" height="10" fill="var(--color-accent)" />
+                        <!-- cover bottom radius -->
                         <rect x="35" y="60" width="20" height="25" rx="4" fill="var(--color-primary-light)" />
                         <rect x="65" y="55" width="20" height="30" rx="4" fill="var(--color-primary)" />
                     </g>
-                    
+
                     <!-- Floating Export/Doc element -->
                     <g transform="translate(10, 240)">
-                        <rect x="0" y="0" width="80" height="100" rx="6" fill="var(--color-primary-light)" filter="drop-shadow(0 4px 6px rgba(15, 76, 92, 0.15))" />
+                        <rect x="0" y="0" width="80" height="100" rx="6" fill="var(--color-primary-light)"
+                            filter="drop-shadow(0 4px 6px rgba(15, 76, 92, 0.15))" />
                         <rect x="15" y="25" width="30" height="6" rx="3" fill="var(--color-surface)" />
                         <rect x="15" y="45" width="50" height="6" rx="3" fill="var(--color-surface)" opacity="0.7" />
                         <rect x="15" y="65" width="40" height="6" rx="3" fill="var(--color-surface)" opacity="0.7" />
                         <polygon points="55,0 80,0 80,25 55,25" fill="var(--color-surface)" opacity="0.3" />
                     </g>
-                    
+
                     <!-- Decorative accents -->
                     <circle cx="430" cy="50" r="8" fill="var(--color-accent)" opacity="0.6" />
                     <circle cx="80" cy="340" r="12" fill="var(--color-primary)" opacity="0.2" />
-                    <rect x="200" y="330" width="40" height="40" rx="8" fill="var(--color-accent)" opacity="0.1" transform="rotate(15 220 350)" />
+                    <rect x="200" y="330" width="40" height="40" rx="8" fill="var(--color-accent)" opacity="0.1"
+                        transform="rotate(15 220 350)" />
                 </svg>
             </div>
         </div>
@@ -134,7 +154,8 @@ include 'includes/header.php';
                         </div>
                         <h3 class="h5 fw-bold mb-2">Hitung Otomatis</h3>
                         <p class="text-muted mb-0">
-                            Tidak perlu menghitung manual. Sistem otomatis mengkalkulasi hak cuti tahunan dan cuti besar berdasarkan masa kerja.
+                            Tidak perlu menghitung manual. Sistem otomatis mengkalkulasi hak cuti tahunan dan cuti besar
+                            berdasarkan masa kerja.
                         </p>
                     </div>
                 </div>
@@ -148,8 +169,10 @@ include 'includes/header.php';
                             <svg viewBox="0 0 40 40" width="48" height="48" aria-hidden="true">
                                 <rect x="4" y="8" width="32" height="24" rx="2" fill="var(--color-primary-subtle)" />
                                 <rect x="4" y="8" width="32" height="6" rx="2" fill="var(--color-primary)" />
-                                <rect x="6" y="16" width="28" height="4" rx="1" fill="var(--color-accent)" opacity="0.8" />
-                                <rect x="6" y="22" width="28" height="4" rx="1" fill="var(--color-primary-light)" opacity="0.5" />
+                                <rect x="6" y="16" width="28" height="4" rx="1" fill="var(--color-accent)"
+                                    opacity="0.8" />
+                                <rect x="6" y="22" width="28" height="4" rx="1" fill="var(--color-primary-light)"
+                                    opacity="0.5" />
                             </svg>
                         </div>
                         <h3 class="h5 fw-bold mb-2">Laporan Jelas</h3>
@@ -170,7 +193,8 @@ include 'includes/header.php';
                                 <polygon points="32,4 32,12 24,4" fill="var(--color-primary-light)" opacity="0.5" />
                                 <rect x="14" y="14" width="12" height="3" rx="1" fill="var(--color-primary)" />
                                 <rect x="14" y="20" width="12" height="3" rx="1" fill="var(--color-primary)" />
-                                <path d="M20,26 L20,32 M17,29 L20,32 L23,29" stroke="var(--color-accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none" />
+                                <path d="M20,26 L20,32 M17,29 L20,32 L23,29" stroke="var(--color-accent)"
+                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none" />
                             </svg>
                         </div>
                         <h3 class="h5 fw-bold mb-2">Ekspor Excel</h3>
@@ -221,14 +245,18 @@ include 'includes/header.php';
                     <div class="step-illustration mb-3">
                         <svg viewBox="0 0 120 100" aria-hidden="true">
                             <rect x="10" y="15" width="100" height="70" rx="4" fill="var(--color-primary-subtle)" />
-                            <rect x="15" y="25" width="90" height="8" rx="2" fill="var(--color-primary-light)" opacity="0.3" />
+                            <rect x="15" y="25" width="90" height="8" rx="2" fill="var(--color-primary-light)"
+                                opacity="0.3" />
                             <rect x="15" y="38" width="90" height="8" rx="2" fill="var(--color-accent)" opacity="0.8" />
-                            <rect x="15" y="51" width="90" height="8" rx="2" fill="var(--color-primary-light)" opacity="0.3" />
-                            <rect x="15" y="64" width="90" height="8" rx="2" fill="var(--color-primary-light)" opacity="0.3" />
+                            <rect x="15" y="51" width="90" height="8" rx="2" fill="var(--color-primary-light)"
+                                opacity="0.3" />
+                            <rect x="15" y="64" width="90" height="8" rx="2" fill="var(--color-primary-light)"
+                                opacity="0.3" />
                         </svg>
                     </div>
                     <h3 class="h5 fw-bold mb-2">Lihat Tabel 8 Tahun</h3>
-                    <p class="text-muted small mb-0">Sistem menampilkan tabel hak cuti lengkap dari tahun ke-1 hingga ke-8.</p>
+                    <p class="text-muted small mb-0">Sistem menampilkan tabel hak cuti lengkap dari tahun ke-1 hingga
+                        ke-8.</p>
                 </div>
             </div>
             <!-- Step 3 -->
@@ -238,14 +266,18 @@ include 'includes/header.php';
                     <div class="step-illustration mb-3">
                         <svg viewBox="0 0 120 100" aria-hidden="true">
                             <rect x="35" y="15" width="50" height="70" rx="4" fill="var(--color-primary-subtle)" />
-                            <path d="M45,45 L55,55 L75,35" stroke="var(--color-primary)" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round" />
-                            <rect x="45" y="65" width="30" height="4" rx="2" fill="var(--color-primary-light)" opacity="0.5" />
+                            <path d="M45,45 L55,55 L75,35" stroke="var(--color-primary)" stroke-width="4" fill="none"
+                                stroke-linecap="round" stroke-linejoin="round" />
+                            <rect x="45" y="65" width="30" height="4" rx="2" fill="var(--color-primary-light)"
+                                opacity="0.5" />
                             <circle cx="85" cy="75" r="15" fill="var(--color-accent)" />
-                            <path d="M85,68 L85,82 M80,77 L85,82 L90,77" stroke="white" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" />
+                            <path d="M85,68 L85,82 M80,77 L85,82 L90,77" stroke="white" stroke-width="2" fill="none"
+                                stroke-linecap="round" stroke-linejoin="round" />
                         </svg>
                     </div>
                     <h3 class="h5 fw-bold mb-2">Ekspor Laporan</h3>
-                    <p class="text-muted small mb-0">Simpan dan ekspor laporan cuti ke format Excel dengan satu klik.</p>
+                    <p class="text-muted small mb-0">Simpan dan ekspor laporan cuti ke format Excel dengan satu klik.
+                    </p>
                 </div>
             </div>
         </div>
@@ -285,7 +317,8 @@ include 'includes/header.php';
                 <div class="stat-block text-center">
                     <div class="stat-number">100%</div>
                     <div class="stat-label">Transparan</div>
-                    <p class="stat-desc text-muted small">Karyawan dapat memverifikasi perhitungan cuti mereka sendiri</p>
+                    <p class="stat-desc text-muted small">Karyawan dapat memverifikasi perhitungan cuti mereka sendiri
+                    </p>
                 </div>
             </div>
         </div>
@@ -303,15 +336,19 @@ include 'includes/header.php';
                             <svg viewBox="0 0 40 40" width="48" height="48" aria-hidden="true">
                                 <circle cx="20" cy="20" r="16" fill="var(--color-primary-subtle)" />
                                 <circle cx="20" cy="20" r="10" fill="var(--color-accent)" opacity="0.2" />
-                                <path d="M20,12 L20,16 M20,24 L20,28" stroke="var(--color-accent)" stroke-width="2" stroke-linecap="round" />
-                                <path d="M12,20 L16,20 M24,20 L28,20" stroke="var(--color-accent)" stroke-width="2" stroke-linecap="round" />
+                                <path d="M20,12 L20,16 M20,24 L20,28" stroke="var(--color-accent)" stroke-width="2"
+                                    stroke-linecap="round" />
+                                <path d="M12,20 L16,20 M24,20 L28,20" stroke="var(--color-accent)" stroke-width="2"
+                                    stroke-linecap="round" />
                                 <circle cx="20" cy="20" r="4" fill="var(--color-accent)" />
                             </svg>
                         </div>
                         <h2 class="h4 fw-bold mb-3">Tentang Demo Ini</h2>
                         <p class="mb-0 text-muted" style="max-width: 540px; margin: 0 auto;">
-                            Ini adalah prototipe v1 dari Sicuti HRD. Aplikasi berjalan dalam mode simulasi tanpa database persisten. 
-                            Anda dapat mencoba semua fitur layaknya di lingkungan produksi — data akan di-reset setiap sesi.
+                            Ini adalah prototipe v1 dari Sicuti HRD. Aplikasi berjalan dalam mode simulasi tanpa
+                            database persisten.
+                            Anda dapat mencoba semua fitur layaknya di lingkungan produksi — data akan di-reset setiap
+                            sesi.
                         </p>
                     </div>
                 </div>

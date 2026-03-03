@@ -506,6 +506,21 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
 
 /* 13. Landing Page Redesign */
 
+/* Navbar Landing */
+.page-landing .navbar-landing {
+    background-color: transparent;
+    border-bottom: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+}
+
+.page-landing .hero-section {
+    padding-top: var(--space-4xl); /* Add extra padding to account for absolute navbar */
+}
+
 /* A. Gradient Mesh Backgrounds */
 .page-landing .hero-section {
     background: radial-gradient(circle at 20% 30%, rgba(15, 76, 92, 0.12) 0%, transparent 50%),
