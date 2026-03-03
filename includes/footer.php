@@ -1,6 +1,6 @@
-<footer class="site-footer mt-auto py-3 bg-light text-center text-muted border-top">
-    <div class="container">
-        <small>&copy; <?php echo date('Y'); ?> Sicuti HRD — Prototipe Demo v1</small>
+<footer class="site-footer mt-auto py-2 bg-white text-center text-secondary border-top small shadow-sm">
+    <div class="container d-flex justify-content-center align-items-center">
+        <span class="opacity-75">&copy; <?php echo date('Y'); ?> Sicuti HRD &middot; Prototipe Demo v1</span>
     </div>
 </footer>
 
