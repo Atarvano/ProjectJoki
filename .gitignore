@@ -9,5 +9,5 @@ vendor/
 Thumbs.db
 
 # GSD Planning
-.planning/*
-.opencode/vendor/
+.planning/
+.opencode
