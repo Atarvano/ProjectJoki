@@ -27,13 +27,13 @@
 
 ### Employee Self View
 
-- [ ] **EMP-01**: Employee can view their own leave entitlement result in a dedicated dashboard view.
-- [ ] **EMP-02**: Employee view uses the same calculation rule output as the HR dashboard.
+- [x] **EMP-01**: Employee can view their own leave entitlement result in a dedicated dashboard view.
+- [x] **EMP-02**: Employee view uses the same calculation rule output as the HR dashboard.
 
 ### Reports and Export
 
-- [ ] **RPT-01**: HR can save calculation outputs into a leave report list using local PHP array-based dummy data.
-- [ ] **RPT-02**: HR can view consolidated leave reports for all employees in a report table.
+- [x] **RPT-01**: HR can save calculation outputs into a leave report list using local PHP array-based dummy data.
+- [x] **RPT-02**: HR can view consolidated leave reports for all employees in a report table.
 - [ ] **RPT-03**: HR can export all employee leave reports to an Excel-compatible file.
 
 ## v2 Requirements
@@ -78,10 +78,10 @@
 | HRC-03 | Phase 2 | Complete |
 | HRC-04 | Phase 2 | Complete |
 | HRC-05 | Phase 2 | Complete |
-| EMP-01 | Phase 3 | Pending |
-| EMP-02 | Phase 3 | Pending |
-| RPT-01 | Phase 4 | Pending |
-| RPT-02 | Phase 4 | Pending |
+| EMP-01 | Phase 3 | Complete |
+| EMP-02 | Phase 3 | Complete |
+| RPT-01 | Phase 4 | Complete |
+| RPT-02 | Phase 4 | Complete |
 | RPT-03 | Phase 4 | Pending |
 
 **Coverage:**
