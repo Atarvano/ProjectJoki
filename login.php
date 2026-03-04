@@ -18,44 +18,109 @@ $page_class = "page-login role-$role";
 include 'includes/header.php';
 ?>
 
-<div class="login-container">
-    <div class="login-card">
-        <div class="text-center mb-4">
-            <span class="role-badge">
-                <i class="bi <?php echo $role_icon; ?> me-2"></i>
-                <?php echo htmlspecialchars($role_label); ?>
-            </span>
-        </div>
+<div class="login-split">
+    <div class="login-form-panel">
+        <div class="login-form-inner">
+            <div class="login-brand-block">
+                <div class="login-brand-logo d-flex align-items-center gap-2">
+                    <svg viewBox="0 0 40 40" width="36" height="36" aria-hidden="true">
+                        <rect x="4" y="4" width="32" height="32" rx="4" fill="var(--color-primary)" />
+                        <polygon points="12,12 28,12 20,28" fill="var(--color-accent)" />
+                    </svg>
+                    <span class="text-muted small fw-bold">PT X</span>
+                </div>
+                <div class="login-brand-divider"></div>
+                <div class="login-brand-logo d-flex align-items-center gap-2">
+                    <svg viewBox="0 0 40 40" width="36" height="36" aria-hidden="true">
+                      <rect x="4" y="4" width="32" height="32" rx="8" fill="var(--color-primary)" />
+                      <path d="M12,24 L20,12 L28,24" stroke="var(--color-accent)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none" />
+                      <circle cx="20" cy="28" r="2" fill="var(--color-accent)" />
+                    </svg>
+                    <span class="text-muted small fw-bold">Sicuti HRD</span>
+                </div>
+            </div>
 
-        <h1 class="h2 text-center mb-4 accent-bar d-inline-block mx-auto">
-            Selamat Datang, <?php echo htmlspecialchars($role_label); ?>
-        </h1>
+            <div class="text-center mb-4">
+                <span class="role-badge">
+                    <i class="bi <?php echo $role_icon; ?> me-2"></i>
+                    <?php echo htmlspecialchars($role_label); ?>
+                </span>
+            </div>
 
-        <div class="demo-notice mb-4 text-center">
-            <i class="bi bi-info-circle me-1"></i>
-            Ini adalah akses demo — tidak memerlukan autentikasi.
-        </div>
+            <h1 class="login-heading">
+                Selamat Datang, <?php echo htmlspecialchars($role_label); ?>
+            </h1>
 
-        <!-- Decorative Form Fields -->
-        <div class="mb-3">
-            <label class="form-label text-muted small">Email (Demo)</label>
-            <input type="email" class="form-control bg-light" value="demo@perusahaan.com" readonly>
-        </div>
-        <div class="mb-4">
-            <label class="form-label text-muted small">Password</label>
-            <input type="password" class="form-control bg-light" value="********" readonly>
-        </div>
+            <div class="demo-notice">
+                <i class="bi bi-info-circle me-1"></i>
+                Akses demo — tidak memerlukan autentikasi nyata.
+            </div>
 
-        <a href="<?php echo htmlspecialchars($role_dashboard); ?>" class="btn btn-primary btn-lg w-100 mb-4">
-            <?php echo htmlspecialchars($role_action); ?>
-        </a>
+            <div class="login-fields mb-3">
+                <div class="mb-3 text-start">
+                    <label class="form-label text-muted small">Email (Demo)</label>
+                    <input type="email" class="form-control bg-light" value="demo@perusahaan.com" readonly>
+                </div>
+                <div class="mb-4 text-start">
+                    <label class="form-label text-muted small">Password</label>
+                    <input type="password" class="form-control bg-light" value="********" readonly>
+                </div>
+            </div>
 
-        <div class="role-switch text-center pt-3 border-top">
-            <span class="text-muted small d-block mb-2">Atau</span>
-            <a href="login.php?role=<?php echo htmlspecialchars($switch_role); ?>"
-                class="text-decoration-none fw-medium">
-                <?php echo htmlspecialchars($switch_label); ?> <i class="bi bi-arrow-right ms-1"></i>
+            <a href="<?php echo htmlspecialchars($role_dashboard); ?>" class="btn-login mb-3">
+                <?php echo htmlspecialchars($role_action); ?>
             </a>
+
+            <ul class="login-value-list">
+                <li><i class="bi bi-check-circle-fill"></i> Perhitungan cuti otomatis & akurat</li>
+                <li><i class="bi bi-check-circle-fill"></i> Laporan transparan untuk semua karyawan</li>
+                <li><i class="bi bi-check-circle-fill"></i> Ekspor data ke Excel dalam satu klik</li>
+            </ul>
+
+            <div class="role-switch text-center pt-3 mt-4 border-top">
+                <span class="text-muted small d-block mb-2">Atau</span>
+                <a href="login.php?role=<?php echo htmlspecialchars($switch_role); ?>" class="text-decoration-none fw-medium">
+                    <?php echo htmlspecialchars($switch_label); ?> <i class="bi bi-arrow-right ms-1"></i>
+                </a>
+            </div>
         </div>
+    </div>
+    
+    <div class="login-illustration-panel">
+        <!-- Floating decorative elements -->
+        <svg class="login-float float-1 decorative-float" style="top: 15%; left: 15%;" viewBox="0 0 100 100">
+            <circle cx="50" cy="50" r="40" fill="var(--color-primary)" opacity="0.1" />
+        </svg>
+        <svg class="login-float float-2 decorative-float" style="bottom: 20%; right: 15%;" viewBox="0 0 100 100">
+            <rect x="20" y="20" width="60" height="60" rx="15" fill="var(--color-accent)" opacity="0.15" />
+        </svg>
+        
+        <!-- Main Character Scene -->
+        <svg class="login-illustration" viewBox="0 0 600 500" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+            <!-- Background element (screen/dashboard) -->
+            <rect x="150" y="100" width="300" height="200" rx="10" fill="var(--color-surface-alt)" stroke="var(--color-border)" stroke-width="2"/>
+            <rect x="150" y="300" width="300" height="20" rx="5" fill="var(--color-primary-subtle)"/>
+            <rect x="270" y="320" width="60" height="30" fill="var(--color-primary-subtle)"/>
+            <rect x="220" y="350" width="160" height="10" rx="5" fill="var(--color-primary-subtle)"/>
+            
+            <!-- Screen content -->
+            <rect x="170" y="120" width="80" height="20" rx="4" fill="var(--color-primary-light)" opacity="0.5"/>
+            <rect x="170" y="160" width="260" height="100" rx="5" fill="var(--color-surface)"/>
+            <path d="M180 240 L220 180 L280 220 L350 170 L410 210" fill="none" stroke="var(--color-accent)" stroke-width="4" stroke-linecap="round"/>
+            <circle cx="220" cy="180" r="5" fill="var(--color-primary)"/>
+            <circle cx="280" cy="220" r="5" fill="var(--color-primary)"/>
+            <circle cx="350" cy="170" r="5" fill="var(--color-primary)"/>
+            
+            <!-- Character body -->
+            <path d="M220 450 C220 380 260 360 300 360 C340 360 380 380 380 450" fill="var(--color-primary)"/>
+            <!-- Head -->
+            <circle cx="300" cy="310" r="40" fill="var(--color-accent-light)"/>
+            <!-- Desk -->
+            <rect x="100" y="450" width="400" height="50" rx="10" fill="var(--color-primary-dark)"/>
+            
+            <!-- Document prop on desk -->
+            <rect x="180" y="440" width="60" height="10" rx="2" fill="var(--color-surface)"/>
+            <rect x="190" y="435" width="40" height="5" rx="2" fill="var(--color-primary-subtle)"/>
+        </svg>
     </div>
 </div>
