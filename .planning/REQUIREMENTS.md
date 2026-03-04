@@ -78,8 +78,8 @@
 | HRC-03 | Phase 2 | Complete |
 | HRC-04 | Phase 2 | Complete |
 | HRC-05 | Phase 2 | Complete |
-| EMP-01 | Phase 13 | Pending |
-| EMP-02 | Phase 13 | Pending |
+| EMP-01 | Phase 13 | Complete |
+| EMP-02 | Phase 13 | Complete |
 | RPT-01 | Phase 12 | Complete |
 | RPT-02 | Phase 12 | Complete |
 | RPT-03 | Phase 12 | Complete |
@@ -87,9 +87,9 @@
 **Coverage:**
 - v1 requirements: 16 total
 - Mapped to phases: 16
-- Checked off: 13
+- Checked off: 16
 - Unmapped: 0 ✓
 
 ---
 *Requirements defined: 2026-03-03*
-*Last updated: 2026-03-04 after milestone gap-phase planning*
+*Last updated: 2026-03-04 after Phase 13 traceability closure*

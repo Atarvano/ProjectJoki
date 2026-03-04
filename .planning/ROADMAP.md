@@ -15,7 +15,7 @@ This roadmap delivers a frontend-first v1 demo in native procedural PHP, startin
 - [ ] **Phase 3: Employee Entitlement View** - Deliver employee self-view using the same entitlement output rules as HR.
 - [ ] **Phase 4: Reports & Excel-Compatible Export** - Deliver local-array report storage, consolidated reporting table, and full export of all employee reports.
 - [x] **Phase 12: Gap Closure - Reports Verification & Parity** - Close report blockers by aligning list/export data behavior and completing pending report verification evidence. (completed 2026-03-04)
-- [ ] **Phase 13: Gap Closure - Traceability & Navigation Consistency** - Close remaining traceability partials and shared navigation/include consistency debt.
+- [x] **Phase 13: Gap Closure - Traceability & Navigation Consistency** - Close remaining traceability partials and shared navigation/include consistency debt. (completed 2026-03-04)
 
 ## Phase Details
 
@@ -79,8 +79,8 @@ Plans:
 | 2. HR Entitlement Calculator | 1/1 | Complete | 2026-03-03 |
 | 3. Employee Entitlement View | 0/1 | Planned | - |
 | 4. Reports & Excel-Compatible Export | 0/TBD | Not started | - |
-| 12. Gap Closure - Reports Verification & Parity | 1/1 | Complete   | 2026-03-04 |
-| 13. Gap Closure - Traceability & Navigation Consistency | 0/1 | Planned | - |
+| 12. Gap Closure - Reports Verification & Parity | 1/1 | Complete    | 2026-03-04 |
+| 13. Gap Closure - Traceability & Navigation Consistency | 1/1 | Complete   | 2026-03-04 |
 
 ### Phase 04.1: ini kenapa malah ada composer sih ??? (INSERTED)
 
@@ -179,7 +179,7 @@ Plans:
 **Depends on:** Phase 12
 **Requirements:** EMP-01, EMP-02
 **Gap Closure:** Closes audit gaps for EMP traceability partials and shared navigation/include consistency debt.
-**Plans:** 1 plan
+**Plans:** 1/1 plans complete
 
 Plans:
 - [ ] 13-01-PLAN.md — Add missing requirements-completed metadata for Phase 3 summary, update footer HR route links, align login shared include usage, and re-verify wiring
