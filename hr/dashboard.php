@@ -34,18 +34,18 @@ ob_start();
 ?>
 <div class="row mb-4">
     <div class="col-12">
-        <div class="card bg-primary text-white border-0 shadow-sm overflow-hidden">
+        <div class="gradient-card border-0 overflow-hidden" style="background-color: var(--color-surface);">
             <div class="row g-0 align-items-center">
                 <div class="col-md-8 p-4 p-md-5">
-                    <h2 class="fw-bold mb-3">Selamat datang di Sicuti HRD</h2>
-                    <p class="mb-4 lead opacity-75">
+                    <h1 class="hero-title mb-2 text-primary-dark" style="font-size: clamp(2rem, 4vw, 3rem); font-weight: 800;">Selamat datang di <span class="text-accent">Sicuti HRD</span></h1>
+                    <p class="hero-subtitle mb-4 text-secondary" style="font-size: 1.125rem;">
                         Anda berada dalam Mode Demo. Kelola hak cuti karyawan, simpan laporan sesi, dan unduh rekap data dalam format Excel.
                     </p>
                     <div class="d-flex gap-3 flex-wrap">
-                        <a href="kalkulator.php" class="btn btn-light btn-lg px-4 fw-medium text-primary">
+                        <a href="kalkulator.php" class="btn btn-primary btn-lg px-4" style="background: linear-gradient(135deg, var(--color-primary), var(--color-primary-light)); border: none; box-shadow: 0 4px 15px rgba(15, 76, 92, 0.3); font-weight: 700;">
                             <i class="bi bi-calculator me-2"></i> Hitung Hak Cuti
                         </a>
-                        <a href="laporan.php" class="btn btn-outline-light btn-lg px-4 fw-medium">
+                        <a href="laporan.php" class="btn btn-outline-primary btn-lg px-4 fw-bold">
                             <i class="bi bi-journal-text me-2"></i> Kelola Laporan
                         </a>
                     </div>
@@ -67,11 +67,11 @@ ob_start();
 <div class="row g-4 mb-4">
     <!-- Stat Cards -->
     <div class="col-md-4">
-        <div class="card stat-card h-100 border-0 shadow-sm">
+        <div class="dashboard-stat-card">
             <div class="card-body p-4">
                 <div class="d-flex justify-content-between align-items-center mb-3">
                     <div class="text-muted fw-semibold text-uppercase tracking-wider small">Total Karyawan (Demo)</div>
-                    <div class="text-primary bg-primary bg-opacity-10 p-2 rounded-3">
+                    <div class="dashboard-stat-icon">
                         <i class="bi bi-people fs-4"></i>
                     </div>
                 </div>
@@ -80,11 +80,11 @@ ob_start();
         </div>
     </div>
     <div class="col-md-4">
-        <div class="card stat-card h-100 border-0 shadow-sm">
+        <div class="dashboard-stat-card">
             <div class="card-body p-4">
                 <div class="d-flex justify-content-between align-items-center mb-3">
                     <div class="text-muted fw-semibold text-uppercase tracking-wider small">Laporan Tersimpan</div>
-                    <div class="text-success bg-success bg-opacity-10 p-2 rounded-3">
+                    <div class="dashboard-stat-icon" style="color: var(--color-success); background-color: rgba(5, 150, 105, 0.1);">
                         <i class="bi bi-file-earmark-check fs-4"></i>
                     </div>
                 </div>
@@ -93,11 +93,11 @@ ob_start();
         </div>
     </div>
     <div class="col-md-4">
-        <div class="card stat-card h-100 border-0 shadow-sm">
+        <div class="dashboard-stat-card">
             <div class="card-body p-4">
                 <div class="d-flex justify-content-between align-items-center mb-3">
                     <div class="text-muted fw-semibold text-uppercase tracking-wider small">Tersedia Tahun Ini</div>
-                    <div class="text-warning bg-warning bg-opacity-10 p-2 rounded-3">
+                    <div class="dashboard-stat-icon" style="color: var(--color-warning); background-color: rgba(217, 119, 6, 0.1);">
                         <i class="bi bi-calendar-check fs-4"></i>
                     </div>
                 </div>
