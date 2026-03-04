@@ -9,7 +9,7 @@ $demo_badge = $dashboard_context['demo_badge'] ?? 'Demo v1';
     <div class="d-flex align-items-center">
         <!-- Mobile Toggle -->
         <button class="btn btn-light d-lg-none me-3" type="button" data-bs-toggle="offcanvas" data-bs-target="#dashboardSidebar" aria-controls="dashboardSidebar">
-            <i class="bi bi-list fs-4 text-primary"></i>
+            <i class="bi bi-list fs-4 text-muted"></i>
         </button>
 
         <div>
@@ -42,7 +42,7 @@ $demo_badge = $dashboard_context['demo_badge'] ?? 'Demo v1';
 
         <!-- Dummy Notification -->
         <button class="btn btn-light position-relative rounded-circle p-2 border-0 bg-light" type="button" disabled>
-            <i class="bi bi-bell text-primary" style="opacity: 0.7;"></i>
+            <i class="bi bi-bell text-muted"></i>
             <span class="position-absolute top-0 start-100 translate-middle p-1 bg-accent border border-light rounded-circle">
                 <span class="visually-hidden">New alerts</span>
             </span>
