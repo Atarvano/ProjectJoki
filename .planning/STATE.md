@@ -114,10 +114,12 @@ None yet.
 | 1 | footer toolong bagusin dong | 2026-03-03 | 0691bc3 | [1-footer-toolong-bagusin-dong](./quick/1-footer-toolong-bagusin-dong/) |
 | 2 | footer section improve bro. like enterprise level | 2026-03-03 | 70cbe3d | [2-footer-section-improve-bro-like-enterpri](./quick/2-footer-section-improve-bro-like-enterpri/) |
 | 3 | redesign dashboard to match landing page style, colors, fonts, and icons | 2026-03-04 | 1b2b390 | [3-redesign-dashboard-to-match-landing-page](./quick/3-redesign-dashboard-to-match-landing-page/) |
+| 4 | ini ganti warna sidebar kurang banget warna abu itu | 2026-03-04 | 25b85a5 | [4-ini-ganti-warna-sidebar-kurang-banget-wa](./quick/4-ini-ganti-warna-sidebar-kurang-banget-wa/) |
+| 5 | gunakan logo sicuti dari svg agar konsis | 2026-03-04 | 0800deb | [5-gunakan-logo-sicuti-dari-svg-agar-konsis](./quick/5-gunakan-logo-sicuti-dari-svg-agar-konsis/) |
 
 ## Session Continuity
 
 Last session: 2026-03-04
 Stopped at: Phase 3 context gathered, ready to plan
-Last activity: 2026-03-04 - Completed quick task 3: redesign dashboard to match landing page style, colors, fonts, and icons
+Last activity: 2026-03-04 - Completed quick task 5: gunakan logo sicuti dari svg agar konsis
 Resume file: .planning/phases/03-employee-entitlement-view/03-CONTEXT.md
