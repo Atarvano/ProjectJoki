@@ -1,5 +1,15 @@
 <?php
 // Shared dashboard layout shell
+
+// Ensure page title and class are set for the header
+$page_title = $dashboard_context['page_title'] ?? 'Dashboard - Sicuti HRD';
+if (!isset($page_class)) {
+    $role_class = isset($dashboard_context['role']) ? 'role-' . $dashboard_context['role'] : '';
+    $page_class = trim("page-dashboard $role_class");
+}
+
+// Include the standard header which contains all CSS and font links
+require_once __DIR__ . '/header.php';
 ?>
 <div class="dashboard-shell <?php echo isset($dashboard_context['sidebar_collapsed']) && $dashboard_context['sidebar_collapsed'] ? 'is-sidebar-collapsed' : ''; ?>">
     <!-- Sidebar -->

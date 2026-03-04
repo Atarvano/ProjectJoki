@@ -1299,3 +1299,81 @@ h6,
 .page-dashboard .dashboard-footer {
   background-color: var(--color-surface);
 }
+
+/* Quick Task 3: Unify Dashboard CSS with Landing Page */
+
+/* 1. Typography */
+.page-dashboard h1,
+.page-dashboard h2,
+.page-dashboard h3,
+.page-dashboard h4,
+.page-dashboard h5,
+.page-dashboard h6,
+.page-dashboard .dashboard-header {
+  font-family: var(--font-display);
+}
+
+/* 2. Stat Card matching gradient-card/feature cards */
+.page-dashboard .dashboard-stat-card {
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  transition: transform var(--transition-base), box-shadow var(--transition-base);
+}
+
+.page-dashboard .dashboard-stat-card:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-lg);
+}
+
+/* 3. Sidebar Colors */
+.page-dashboard .dashboard-sidebar {
+  background-color: var(--color-primary) !important;
+  color: var(--color-surface);
+  border-right: none;
+}
+
+.page-dashboard .dashboard-sidebar .text-primary-dark,
+.page-dashboard .dashboard-sidebar .text-secondary,
+.page-dashboard .dashboard-sidebar .text-primary,
+.page-dashboard .dashboard-sidebar .sidebar-nav-text,
+.page-dashboard .dashboard-sidebar .sidebar-brand-text {
+  color: var(--color-surface) !important;
+}
+
+.page-dashboard .dashboard-sidebar .role-badge {
+  background-color: var(--color-primary-dark) !important;
+  color: var(--color-surface) !important;
+}
+
+.page-dashboard .dashboard-sidebar .nav-link {
+  color: var(--color-surface) !important;
+}
+
+.page-dashboard .dashboard-sidebar .nav-link:hover {
+  background-color: var(--color-primary-light) !important;
+  color: var(--color-surface) !important;
+}
+
+.page-dashboard .dashboard-sidebar .nav-link.active {
+  background-color: var(--color-accent) !important;
+  color: var(--color-primary-dark) !important;
+}
+
+.page-dashboard .dashboard-sidebar .nav-link.active i,
+.page-dashboard .dashboard-sidebar .nav-link.active .sidebar-nav-text {
+  color: var(--color-primary-dark) !important;
+}
+
+.page-dashboard .dashboard-sidebar .nav-link i {
+  color: var(--color-surface) !important;
+}
+
+.page-dashboard .dashboard-sidebar .text-secondary.small {
+  color: var(--color-primary-subtle) !important;
+  opacity: 0.8;
+}
+
+.page-dashboard .dashboard-sidebar .btn-close {
+  filter: invert(1) grayscale(100%) brightness(200%);
+}
+

@@ -19,7 +19,7 @@ if ($role === 'hr') {
 ?>
 
 <!-- Mobile Offcanvas Sidebar -->
-<div class="offcanvas offcanvas-start dashboard-sidebar bg-white" tabindex="-1" id="dashboardSidebar" aria-labelledby="dashboardSidebarLabel">
+<div class="offcanvas offcanvas-start dashboard-sidebar" tabindex="-1" id="dashboardSidebar" aria-labelledby="dashboardSidebarLabel">
     <div class="offcanvas-header border-bottom">
         <h5 class="offcanvas-title fw-bold text-primary" id="dashboardSidebarLabel">
             <i class="bi bi-layers me-2"></i>Sicuti HRD
@@ -55,7 +55,7 @@ if ($role === 'hr') {
 </div>
 
 <!-- Desktop Sidebar (visible on lg up) -->
-<aside class="dashboard-sidebar bg-white border-end d-none d-lg-flex flex-column" id="desktopSidebar">
+<aside class="dashboard-sidebar border-end d-none d-lg-flex flex-column" id="desktopSidebar">
     <div class="sidebar-header p-3 border-bottom d-flex align-items-center">
         <i class="bi bi-layers text-primary fs-4 me-2"></i>
         <span class="fw-bold fs-5 text-primary sidebar-brand-text">Sicuti HRD</span>

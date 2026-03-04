@@ -83,15 +83,27 @@ ob_start();
 
 <div class="row mb-4">
     <div class="col-12">
-        <div class="p-4 rounded-4 text-white d-flex align-items-center mb-4 position-relative overflow-hidden" style="background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-light) 100%); box-shadow: var(--shadow-md);">
-            <div class="hero-content position-relative z-1">
-                <h1 class="h3 fw-bold mb-2" style="font-family: var(--font-display);">
-                    <i class="bi bi-calendar2-heart me-2"></i>Hak Cuti Saya
-                </h1>
-                <p class="mb-0 opacity-75">Periksa hak cuti tahunan Anda berdasarkan tanggal bergabung.</p>
-            </div>
-            <div class="hero-decoration position-absolute end-0 top-50 translate-middle-y opacity-10" style="right: -20px;">
-                <i class="bi bi-calendar-check" style="font-size: 8rem;"></i>
+        <div class="gradient-card border-0 mb-4 overflow-hidden" style="background-color: var(--color-surface);">
+            <div class="card-body p-4 p-md-5 position-relative z-1 d-flex flex-column flex-md-row align-items-center justify-content-between">
+                <div>
+                    <h1 class="hero-title mb-2 text-primary-dark" style="font-size: clamp(2rem, 4vw, 3rem); font-family: var(--font-display); font-weight: 800;">
+                        Hak Cuti <span class="text-accent">Saya</span>
+                    </h1>
+                    <p class="hero-subtitle mb-0 text-secondary" style="font-size: 1.125rem; max-width: 500px;">
+                        Periksa hak cuti tahunan Anda berdasarkan tanggal bergabung.
+                    </p>
+                </div>
+                
+                <!-- SVG Icon matching landing page style -->
+                <div class="d-none d-md-block mt-4 mt-md-0" style="opacity: 0.9;">
+                    <svg viewBox="0 0 120 100" width="120" height="100" aria-hidden="true">
+                        <rect x="20" y="20" width="80" height="60" rx="6" fill="var(--color-primary-subtle)" />
+                        <rect x="20" y="20" width="80" height="15" rx="4" fill="var(--color-primary)" />
+                        <rect x="30" y="45" width="60" height="8" rx="2" fill="var(--color-surface)" />
+                        <circle cx="40" cy="49" r="2" fill="var(--color-text-muted)" />
+                        <polygon points="65,55 75,70 70,72 75,80 72,82 67,73 60,78" fill="var(--color-accent)" />
+                    </svg>
+                </div>
             </div>
         </div>
     </div>
@@ -101,13 +113,14 @@ ob_start();
 
     <?php if ($hasil === null && $error === null): ?>
         <!-- State 1: Empty state -->
-        <div class="dashboard-form-card mb-5 text-center">
-            <h2 class="mb-3 text-primary" style="font-family: var(--font-display); font-weight: 700;">Lihat Hak Cuti Anda</h2>
-            <p class="text-muted mb-4" style="max-width: 600px; margin: 0 auto;">Silakan pilih profil Anda untuk melihat ringkasan hak cuti berdasarkan tahun bergabung. Anda juga dapat menggunakan tahun kustom untuk simulasi.</p>
+        <div class="dashboard-form-card mb-5 text-center p-5">
+            <h2 class="mb-3 text-primary-dark" style="font-family: var(--font-display); font-weight: 800; font-size: clamp(1.75rem, 3vw, 2.5rem);">Lihat Hak Cuti Anda</h2>
+            <p class="text-secondary mb-4" style="max-width: 600px; margin: 0 auto; font-size: 1.125rem;">Silakan pilih profil Anda untuk melihat ringkasan hak cuti berdasarkan tahun bergabung. Anda juga dapat menggunakan tahun kustom untuk simulasi.</p>
             
             <form action="" method="GET" class="mt-4 mx-auto" style="max-width: 500px;">
-                <div class="mb-3">
-                    <select name="preset" id="preset-select" class="form-select form-select-lg" required>
+                <div class="mb-4 text-start">
+                    <label for="preset-select" class="form-label text-muted fw-bold small text-uppercase tracking-wider">Pilih Profil Demo</label>
+                    <select name="preset" id="preset-select" class="form-select form-select-lg" style="border-radius: var(--radius-md);" required>
                         <option value="">-- Pilih Profil Karyawan --</option>
                         <?php foreach ($preset_karyawan as $preset): ?>
                             <option value="<?php echo $preset['tahun_bergabung']; ?>">
@@ -118,18 +131,19 @@ ob_start();
                     </select>
                 </div>
                 
-                <div id="custom-year-container" class="mb-3" style="display: none;">
-                    <label for="tahun_bergabung" class="form-label">Masukkan Tahun Bergabung:</label>
+                <div id="custom-year-container" class="mb-4 text-start" style="display: none;">
+                    <label for="tahun_bergabung" class="form-label text-muted fw-bold small text-uppercase tracking-wider">Masukkan Tahun Bergabung:</label>
                     <input type="number" 
                            id="tahun_bergabung"
                            name="tahun_bergabung" 
                            class="form-control form-control-lg" 
+                           style="border-radius: var(--radius-md);"
                            placeholder="Contoh: 2020" 
                            min="1990" 
                            max="<?php echo date('Y'); ?>">
                 </div>
                 
-                <button type="submit" class="btn btn-primary btn-lg w-100">
+                <button type="submit" class="btn btn-primary btn-lg w-100" style="background: linear-gradient(135deg, var(--color-primary), var(--color-primary-light)); border: none; box-shadow: 0 4px 15px rgba(15, 76, 92, 0.3); font-family: var(--font-display); font-weight: 700;">
                     <i class="bi bi-eye me-2"></i>Lihat Hak Cuti
                 </button>
             </form>
