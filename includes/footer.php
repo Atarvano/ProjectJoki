@@ -41,9 +41,9 @@ $is_dashboard = isset($page_class) && strpos($page_class, 'page-dashboard') !== 
                 <h6 class="fw-bold mb-3 text-uppercase" style="letter-spacing: 1px;">Quick Links</h6>
                 <ul class="list-unstyled mb-0">
                     <li class="mb-2"><a href="/hr/dashboard.php" class="text-light opacity-75 text-decoration-none small">Dashboard</a></li>
-                    <li class="mb-2"><a href="/hr/calculator.php" class="text-light opacity-75 text-decoration-none small">Leave Calculator</a></li>
-                    <li class="mb-2"><a href="/hr/reports.php" class="text-light opacity-75 text-decoration-none small">Reports</a></li>
-                    <li class="mb-0"><a href="/employee/dashboard.php" class="text-light opacity-75 text-decoration-none small">Employee Portal</a></li>
+                    <li class="mb-2"><a href="/hr/kalkulator.php" class="text-light opacity-75 text-decoration-none small">Kalkulator Cuti</a></li>
+                    <li class="mb-2"><a href="/hr/laporan.php" class="text-light opacity-75 text-decoration-none small">Laporan</a></li>
+                    <li class="mb-0"><a href="/employee/dashboard.php" class="text-light opacity-75 text-decoration-none small">Portal Karyawan</a></li>
                 </ul>
             </div>
             
