@@ -359,7 +359,7 @@ h6,
   color: var(--color-primary);
 }
 
-/* 10. Dashboard Specifics */
+/* 10. Dashboard Specifics (Legacy - Phase 8 replaces with .page-dashboard scope) */
 .dashboard-header {
   display: flex;
   justify-content: space-between;
@@ -1046,3 +1046,256 @@ h6,
   }
 }
 
+
+/* 15. Phase 8 Dashboard Shell and Enterprise Components */
+.page-dashboard {
+  background-color: var(--color-surface-alt);
+}
+
+.page-dashboard .dashboard-shell {
+  display: flex;
+  min-height: 100vh;
+  width: 100%;
+  overflow: hidden;
+}
+
+/* Sidebar */
+.page-dashboard .dashboard-sidebar {
+  width: 280px;
+  background-color: var(--color-surface);
+  border-right: 1px solid var(--color-border);
+  flex-shrink: 0;
+  transition: width var(--transition-base), transform var(--transition-base);
+  z-index: 1030;
+  box-shadow: var(--shadow-sm);
+}
+
+.page-dashboard .dashboard-shell.is-sidebar-collapsed .dashboard-sidebar {
+  width: 80px;
+}
+
+.page-dashboard .sidebar-header {
+  height: 64px;
+}
+
+.page-dashboard .dashboard-shell.is-sidebar-collapsed .sidebar-brand-text,
+.page-dashboard .dashboard-shell.is-sidebar-collapsed .sidebar-role-text,
+.page-dashboard .dashboard-shell.is-sidebar-collapsed .sidebar-nav-text {
+  display: none;
+}
+
+.page-dashboard .dashboard-shell.is-sidebar-collapsed .nav-link {
+  justify-content: center;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+
+.page-dashboard .dashboard-shell.is-sidebar-collapsed .nav-link i {
+  margin-right: 0 !important;
+  font-size: 1.5rem !important;
+}
+
+.page-dashboard .dashboard-shell.is-sidebar-collapsed .sidebar-role-container {
+  padding-left: var(--space-sm) !important;
+  padding-right: var(--space-sm) !important;
+}
+
+.page-dashboard .dashboard-shell.is-sidebar-collapsed .role-badge {
+  padding: var(--space-xs);
+  min-width: 0;
+}
+
+.page-dashboard .dashboard-shell.is-sidebar-collapsed .role-badge::before {
+  content: "\F52E"; /* bi-shield-check icon fallback */
+  font-family: bootstrap-icons;
+}
+
+.page-dashboard .role-employee .dashboard-shell.is-sidebar-collapsed .role-badge::before {
+  content: "\F4E1"; /* bi-person-badge icon fallback */
+}
+
+/* Main Content Area */
+.page-dashboard .dashboard-main {
+  flex-grow: 1;
+  min-width: 0; /* Prevents flex items from overflowing */
+  display: flex;
+  flex-direction: column;
+}
+
+/* Topbar */
+.page-dashboard .dashboard-topbar {
+  height: 64px;
+  background-color: var(--color-surface);
+  z-index: 1020;
+  box-shadow: 0 1px 2px rgba(15, 76, 92, 0.03);
+}
+
+.page-dashboard .dashboard-search input {
+  width: 260px;
+  transition: width var(--transition-base), box-shadow var(--transition-base);
+}
+
+.page-dashboard .dashboard-search input:focus {
+  width: 320px;
+  box-shadow: 0 0 0 0.25rem rgba(15, 76, 92, 0.1);
+}
+
+/* Content Area */
+.page-dashboard .dashboard-content {
+  background-color: var(--color-surface-alt);
+}
+
+/* Enterprise Components */
+.page-dashboard .dashboard-stat-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  padding: var(--space-xl);
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+  transition: transform var(--transition-base), box-shadow var(--transition-base);
+}
+
+.page-dashboard .dashboard-stat-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-md);
+}
+
+.page-dashboard .dashboard-stat-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: linear-gradient(90deg, var(--color-primary), var(--color-primary-light));
+  opacity: 0.8;
+}
+
+.page-dashboard .dashboard-stat-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-lg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  background-color: var(--color-primary-subtle);
+  color: var(--color-primary);
+  margin-bottom: var(--space-md);
+}
+
+.page-dashboard .role-employee .dashboard-stat-card::before {
+  background: linear-gradient(90deg, var(--color-role), var(--color-role-light));
+}
+
+.page-dashboard .role-employee .dashboard-stat-icon {
+  background-color: var(--color-role-subtle);
+  color: var(--color-role);
+}
+
+/* Table Shell */
+.page-dashboard .dashboard-table-shell {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+}
+
+.page-dashboard .dashboard-table-header {
+  padding: var(--space-lg) var(--space-xl);
+  border-bottom: 1px solid var(--color-border);
+  background: linear-gradient(to bottom, var(--color-surface) 0%, var(--color-surface-alt) 100%);
+}
+
+.page-dashboard .table {
+  margin-bottom: 0;
+}
+
+.page-dashboard .table th {
+  background-color: var(--color-surface-alt);
+  color: var(--color-text-secondary);
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  letter-spacing: 0.05em;
+  padding: var(--space-md) var(--space-xl);
+  border-bottom: 2px solid var(--color-border);
+}
+
+.page-dashboard .table td {
+  padding: var(--space-lg) var(--space-xl);
+  vertical-align: middle;
+  border-bottom: 1px solid var(--color-border);
+  color: var(--color-text);
+}
+
+.page-dashboard .table tbody tr {
+  transition: background-color var(--transition-fast);
+}
+
+.page-dashboard .table tbody tr:hover {
+  background-color: var(--color-surface-alt);
+}
+
+.page-dashboard .table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+/* Form Shell */
+.page-dashboard .dashboard-form-card {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  padding: var(--space-xl);
+  box-shadow: var(--shadow-sm);
+}
+
+.page-dashboard .dashboard-form-header {
+  margin-bottom: var(--space-xl);
+  padding-bottom: var(--space-md);
+  border-bottom: 1px solid var(--color-border);
+}
+
+/* Empty State */
+.page-dashboard .dashboard-empty-illustration {
+  padding: var(--space-4xl) var(--space-2xl);
+  text-align: center;
+  background-color: var(--color-surface-alt);
+  border: 1px dashed var(--color-border);
+  border-radius: var(--radius-xl);
+}
+
+.page-dashboard .dashboard-empty-icon {
+  font-size: 3rem;
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-md);
+}
+
+/* Ambient Motion & Accessible Motion */
+.page-dashboard .ambient-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .page-dashboard .ambient-float,
+  .page-dashboard .dashboard-sidebar,
+  .page-dashboard .dashboard-search input,
+  .page-dashboard .dashboard-stat-card {
+    animation: none !important;
+    transition: none !important;
+    transform: none !important;
+  }
+}
+
+/* Mobile Offcanvas adjustments */
+.page-dashboard .offcanvas-start {
+  width: 280px;
+}
+
+/* Footer override in dashboard */
+.page-dashboard .dashboard-footer {
+  background-color: var(--color-surface);
+}
