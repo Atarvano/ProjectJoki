@@ -95,7 +95,8 @@ include 'includes/header.php';
             <rect x="20" y="20" width="60" height="60" rx="15" fill="var(--color-accent)" opacity="0.15" />
         </svg>
         
-        <!-- Main Character Scene -->
+        <?php if ($is_hr): ?>
+        <!-- Main Character Scene HR -->
         <svg class="login-illustration" viewBox="0 0 600 500" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
             <!-- Background element (screen/dashboard) -->
             <rect x="150" y="100" width="300" height="200" rx="10" fill="var(--color-surface-alt)" stroke="var(--color-border)" stroke-width="2"/>
@@ -122,5 +123,41 @@ include 'includes/header.php';
             <rect x="180" y="440" width="60" height="10" rx="2" fill="var(--color-surface)"/>
             <rect x="190" y="435" width="40" height="5" rx="2" fill="var(--color-primary-subtle)"/>
         </svg>
+        <?php else: ?>
+        <!-- Main Character Scene Employee -->
+        <svg class="login-illustration" viewBox="0 0 600 500" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+            <!-- Background element (Large Calendar) -->
+            <rect x="180" y="120" width="240" height="240" rx="15" fill="var(--color-surface-alt)" stroke="var(--color-border)" stroke-width="2"/>
+            <rect x="180" y="120" width="240" height="60" rx="15" fill="var(--color-accent)"/>
+            <!-- Square off bottom corners of header -->
+            <rect x="180" y="160" width="240" height="20" fill="var(--color-accent)"/>
+            
+            <!-- Calendar Binder Rings -->
+            <rect x="220" y="100" width="10" height="40" rx="5" fill="var(--color-primary-dark)"/>
+            <rect x="370" y="100" width="10" height="40" rx="5" fill="var(--color-primary-dark)"/>
+            
+            <!-- Calendar Grid -->
+            <rect x="200" y="200" width="40" height="40" rx="4" fill="var(--color-surface)"/>
+            <rect x="250" y="200" width="40" height="40" rx="4" fill="var(--color-primary-subtle)"/>
+            <rect x="300" y="200" width="40" height="40" rx="4" fill="var(--color-surface)"/>
+            <rect x="350" y="200" width="40" height="40" rx="4" fill="var(--color-surface)"/>
+            
+            <rect x="200" y="250" width="40" height="40" rx="4" fill="var(--color-surface)"/>
+            <rect x="250" y="250" width="40" height="40" rx="4" fill="var(--color-surface)"/>
+            <rect x="300" y="250" width="40" height="40" rx="4" fill="var(--color-accent-light)"/>
+            <rect x="350" y="250" width="40" height="40" rx="4" fill="var(--color-surface)"/>
+            
+            <!-- Character body (Standing/Looking) -->
+            <path d="M120 480 C120 390 160 350 200 350 C240 350 280 390 280 480" fill="var(--color-primary)"/>
+            <!-- Head -->
+            <circle cx="200" cy="300" r="35" fill="var(--color-primary-light)"/>
+            
+            <!-- Hand pointing/holding -->
+            <path d="M250 380 L320 310" stroke="var(--color-primary)" stroke-width="15" stroke-linecap="round"/>
+            
+            <!-- Floor line -->
+            <line x1="80" y1="480" x2="520" y2="480" stroke="var(--color-primary-dark)" stroke-width="4" stroke-linecap="round"/>
+        </svg>
+        <?php endif; ?>
     </div>
 </div>
