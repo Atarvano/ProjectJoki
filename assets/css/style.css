@@ -1327,53 +1327,93 @@ h6,
 
 /* 3. Sidebar Colors */
 .page-dashboard .dashboard-sidebar {
-  background-color: var(--color-primary) !important;
+  background:
+    radial-gradient(circle at top left, rgba(232, 168, 56, 0.16), transparent 32%),
+    linear-gradient(180deg, #072b33 0%, #0a3640 18%, #0f4c5c 58%, #155f70 100%) !important;
   color: var(--color-surface);
-  border-right: none;
+  border-right: 1px solid rgba(232, 244, 247, 0.12);
+  box-shadow: 0 20px 45px rgba(7, 43, 51, 0.28);
 }
 
-.page-dashboard .dashboard-sidebar .text-primary-dark,
-.page-dashboard .dashboard-sidebar .text-secondary,
-.page-dashboard .dashboard-sidebar .text-primary,
-.page-dashboard .dashboard-sidebar .sidebar-nav-text,
-.page-dashboard .dashboard-sidebar .sidebar-brand-text {
+.page-dashboard .dashboard-sidebar .offcanvas-header,
+.page-dashboard .dashboard-sidebar .sidebar-header {
+  border-bottom-color: rgba(232, 244, 247, 0.14) !important;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0));
+}
+
+.page-dashboard .dashboard-sidebar .offcanvas-body,
+.page-dashboard .dashboard-sidebar .sidebar-role-container {
+  position: relative;
+}
+
+.page-dashboard .dashboard-sidebar .sidebar-panel-title,
+.page-dashboard .dashboard-sidebar .sidebar-brand-text,
+.page-dashboard .dashboard-sidebar .sidebar-brand-icon,
+.page-dashboard .dashboard-sidebar .sidebar-link-label,
+.page-dashboard .dashboard-sidebar .sidebar-link-icon,
+.page-dashboard .dashboard-sidebar .sidebar-nav-text {
   color: var(--color-surface) !important;
+}
+
+.page-dashboard .dashboard-sidebar .sidebar-panel-title,
+.page-dashboard .dashboard-sidebar .sidebar-brand-text {
+  letter-spacing: -0.02em;
+}
+
+.page-dashboard .dashboard-sidebar .sidebar-brand-icon,
+.page-dashboard .dashboard-sidebar .sidebar-link-icon {
+  color: rgba(255, 255, 255, 0.88) !important;
+}
+
+.page-dashboard .dashboard-sidebar .sidebar-helper-label {
+  color: rgba(232, 244, 247, 0.72) !important;
+  letter-spacing: 0.12em;
 }
 
 .page-dashboard .dashboard-sidebar .role-badge {
-  background-color: var(--color-primary-dark) !important;
+  background: linear-gradient(135deg, rgba(232, 244, 247, 0.14), rgba(232, 168, 56, 0.2)) !important;
+  border: 1px solid rgba(232, 244, 247, 0.2);
   color: var(--color-surface) !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
 }
 
 .page-dashboard .dashboard-sidebar .nav-link {
-  color: var(--color-surface) !important;
+  color: rgba(255, 255, 255, 0.94) !important;
+  border: 1px solid transparent;
+  background-color: rgba(255, 255, 255, 0.02);
+  transition:
+    background-color var(--transition-fast),
+    border-color var(--transition-fast),
+    transform var(--transition-fast),
+    box-shadow var(--transition-fast);
 }
 
 .page-dashboard .dashboard-sidebar .nav-link:hover {
-  background-color: var(--color-primary-light) !important;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.12), rgba(26, 107, 122, 0.32)) !important;
+  border-color: rgba(232, 244, 247, 0.12);
+  box-shadow: 0 10px 18px rgba(7, 43, 51, 0.18);
   color: var(--color-surface) !important;
+  transform: translateX(2px);
 }
 
 .page-dashboard .dashboard-sidebar .nav-link.active {
-  background-color: var(--color-accent) !important;
+  background: linear-gradient(135deg, #f2c56b 0%, #e8a838 100%) !important;
+  border-color: rgba(10, 54, 64, 0.16);
+  box-shadow: 0 14px 24px rgba(7, 43, 51, 0.24);
   color: var(--color-primary-dark) !important;
 }
 
-.page-dashboard .dashboard-sidebar .nav-link.active i,
+.page-dashboard .dashboard-sidebar .nav-link.active .sidebar-link-icon,
+.page-dashboard .dashboard-sidebar .nav-link.active .sidebar-link-label,
 .page-dashboard .dashboard-sidebar .nav-link.active .sidebar-nav-text {
   color: var(--color-primary-dark) !important;
 }
 
-.page-dashboard .dashboard-sidebar .nav-link i {
-  color: var(--color-surface) !important;
-}
-
 .page-dashboard .dashboard-sidebar .text-secondary.small {
-  color: var(--color-primary-subtle) !important;
-  opacity: 0.8;
+  color: rgba(232, 244, 247, 0.82) !important;
+  opacity: 1;
 }
 
 .page-dashboard .dashboard-sidebar .btn-close {
   filter: invert(1) grayscale(100%) brightness(200%);
 }
-
