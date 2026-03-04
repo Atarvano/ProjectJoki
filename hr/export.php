@@ -18,10 +18,19 @@ use PhpOffice\PhpSpreadsheet\Style\Alignment;
 use PhpOffice\PhpSpreadsheet\Style\Border;
 
 // Get reports
-$reports = initReports();
+$reports = getReports();
 
 if (count($reports) === 0) {
-    header('Location: dashboard.php?export_error=empty');
+    if (session_status() === PHP_SESSION_NONE) {
+        session_start();
+    }
+
+    $_SESSION['flash'] = [
+        'type' => 'info',
+        'message' => 'Tidak ada data untuk diekspor. Simpan hasil kalkulator terlebih dahulu.'
+    ];
+
+    header('Location: laporan.php');
     exit;
 }
 

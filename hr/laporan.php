@@ -72,16 +72,27 @@ ob_start();
             </select>
         </form>
         
-        <a href="export.php" class="btn btn-success">
-            <i class="bi bi-file-earmark-excel me-2"></i>Export Excel
-        </a>
-        
-        <form method="POST" class="d-inline-block" onsubmit="return confirm('Apakah Anda yakin ingin menghapus semua laporan? Laporan preset demo tidak akan terpengaruh.');">
-            <input type="hidden" name="action" value="reset_reports">
-            <button type="submit" class="btn btn-outline-danger">
-                <i class="bi bi-arrow-counterclockwise me-2"></i>Reset
-            </button>
-        </form>
+        <?php if (count($reports) > 0): ?>
+            <a href="export.php" class="btn btn-success">
+                <i class="bi bi-file-earmark-excel me-2"></i>Export Excel
+            </a>
+        <?php else: ?>
+            <span class="d-inline-block" tabindex="0" data-bs-toggle="tooltip"
+                  title="Simpan hasil kalkulator terlebih dahulu untuk mengekspor">
+                <a class="btn btn-success disabled" style="pointer-events: none;" aria-disabled="true">
+                    <i class="bi bi-file-earmark-excel me-2"></i>Export Excel
+                </a>
+            </span>
+        <?php endif; ?>
+
+        <?php if (count($reports) > 0): ?>
+            <form method="POST" class="d-inline-block" onsubmit="return confirm('Semua data laporan akan dihapus dan export tidak tersedia sampai Anda menyimpan hasil kalkulator baru. Lanjutkan?');">
+                <input type="hidden" name="action" value="reset_reports">
+                <button type="submit" class="btn btn-outline-danger">
+                    <i class="bi bi-arrow-counterclockwise me-2"></i>Reset
+                </button>
+            </form>
+        <?php endif; ?>
     </div>
 </div>
 
@@ -273,6 +284,13 @@ ob_start();
     </div>
 </div>
 <?php endforeach; ?>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+    tooltipTriggerList.forEach(function(el) { new bootstrap.Tooltip(el); });
+});
+</script>
 
 <?php
 $page_content = ob_get_clean();
