@@ -1,3 +1,27 @@
+<?php
+$is_dashboard = isset($page_class) && strpos($page_class, 'page-dashboard') !== false;
+?>
+
+<?php if ($is_dashboard): ?>
+<!-- Compact Dashboard Footer -->
+<footer class="dashboard-footer bg-white border-top py-3 mt-auto">
+    <div class="container-fluid px-4">
+        <div class="d-flex flex-column flex-md-row align-items-center justify-content-between text-muted small">
+            <div>
+                &copy; <?php echo date('Y'); ?> Sicuti HRD. Prototipe Demo v1.
+            </div>
+            <div class="mt-2 mt-md-0 d-flex gap-3 flex-wrap justify-content-center">
+                <a href="/hr/dashboard.php" class="text-decoration-none text-muted">HR Dashboard</a>
+                <a href="/hr/kalkulator.php" class="text-decoration-none text-muted">HR Kalkulator</a>
+                <a href="/hr/laporan.php" class="text-decoration-none text-muted">HR Laporan</a>
+                <a href="/employee/dashboard.php" class="text-decoration-none text-muted">Portal Karyawan</a>
+                <a href="/index.php" class="text-decoration-none text-danger">Logout</a>
+            </div>
+        </div>
+    </div>
+</footer>
+<?php else: ?>
+<!-- Marketing Footer (existing) -->
 <footer class="site-footer mt-auto py-5 bg-dark text-light border-top border-dark">
     <div class="container">
         <div class="row gy-4">
@@ -46,6 +70,7 @@
         </div>
     </div>
 </footer>
+<?php endif; ?>
 
 <!-- Bootstrap Bundle with Popper -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
