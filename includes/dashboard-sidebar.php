@@ -23,7 +23,7 @@ if ($role === 'hr') {
     aria-labelledby="dashboardSidebarLabel">
     <div class="offcanvas-header border-bottom">
         <h5 class="offcanvas-title fw-bold sidebar-panel-title" id="dashboardSidebarLabel">
-            <i class="bi bi-layers me-2 sidebar-brand-icon"></i>Sicuti HRD
+            <img src="/assets/icons/sicuti-logo.svg" class="sicuti-logo sicuti-logo-sm sidebar-brand-logo me-2" alt="Logo Sicuti HRD">Sicuti HRD
         </h5>
         <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
     </div>
@@ -60,7 +60,7 @@ if ($role === 'hr') {
 <!-- Desktop Sidebar (visible on lg up) -->
 <aside class="dashboard-sidebar border-end d-none d-lg-flex flex-column" id="desktopSidebar">
     <div class="sidebar-header p-3 border-bottom d-flex align-items-center">
-        <i class="bi bi-layers sidebar-brand-icon fs-4 me-2"></i>
+        <img src="/assets/icons/sicuti-logo.svg" class="sicuti-logo sicuti-logo-sidebar sidebar-brand-logo me-2" alt="Logo Sicuti HRD">
         <span class="fw-bold fs-5 sidebar-brand-text">Sicuti HRD</span>
     </div>
 

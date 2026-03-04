@@ -8,11 +8,7 @@ include 'includes/header.php';
 <nav class="navbar navbar-landing py-3">
     <div class="container">
         <a class="navbar-brand fw-bold d-flex align-items-center gap-2" href="index.php" style="color: var(--color-primary-dark); font-family: var(--font-display); font-size: 1.5rem;">
-            <svg class="logo-animated" viewBox="0 0 40 40" width="36" height="36" aria-hidden="true">
-                <rect x="4" y="4" width="32" height="32" rx="8" fill="var(--color-primary)" />
-                <path d="M12,24 L20,12 L28,24" stroke="var(--color-accent)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none" />
-                <circle cx="20" cy="28" r="2" fill="var(--color-accent)" />
-            </svg>
+            <img src="/assets/icons/sicuti-logo.svg" class="sicuti-logo" alt="Logo Sicuti HRD">
             Sicuti HRD
         </a>
         <div class="d-flex">
