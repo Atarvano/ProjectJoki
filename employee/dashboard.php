@@ -1,10 +1,19 @@
 <?php
-$current_role = 'employee';
-$role_label = 'Karyawan';
-$page_title = 'Dashboard Karyawan - Sicuti HRD';
-$page_class = 'page-dashboard role-employee';
-include __DIR__ . '/../includes/header.php';
 require_once __DIR__ . '/../includes/cuti-calculator.php';
+
+// Setup dashboard context
+$dashboard_context = [
+    'role' => 'employee',
+    'active_nav' => 'hak-cuti',
+    'page_title' => 'Hak Cuti Saya',
+    'breadcrumb' => [
+        ['label' => 'Dashboard'],
+        ['label' => 'Hak Cuti Saya'],
+    ],
+    'profile_label' => 'Karyawan',
+    'profile_initials' => 'KR',
+    'demo_badge' => 'Demo v1',
+];
 
 // Preset demo employees
 $preset_karyawan = [
@@ -67,20 +76,27 @@ if ($hasil) {
 }
 ?>
 
-<div class="container py-5">
-    <div class="dashboard-header">
-        <div class="d-flex align-items-center gap-3">
-            <span class="role-badge">
-                <i class="bi bi-person-badge me-2"></i>
-                Mode <?php echo htmlspecialchars($role_label); ?>
-            </span>
-            <span class="demo-badge">
-                <i class="bi bi-eye me-1"></i>
-                Demo
-            </span>
+<?php
+ob_start();
+?>
+
+<div class="row mb-4">
+    <div class="col-12">
+        <div class="dashboard-hero employee-hero p-4 rounded-4 text-white d-flex align-items-center mb-4 position-relative overflow-hidden" style="background: linear-gradient(135deg, var(--sicuti-teal) 0%, #155e59 100%);">
+            <div class="hero-content position-relative z-1">
+                <h1 class="h3 fw-bold mb-2">
+                    <i class="bi bi-calendar2-heart me-2"></i>Hak Cuti Saya
+                </h1>
+                <p class="mb-0 opacity-75">Periksa hak cuti tahunan Anda berdasarkan tanggal bergabung.</p>
+            </div>
+            <div class="hero-decoration position-absolute end-0 top-50 translate-middle-y opacity-10" style="right: -20px;">
+                <i class="bi bi-calendar-check" style="font-size: 8rem;"></i>
+            </div>
         </div>
-        <div class="text-muted small">Sicuti HRD</div>
     </div>
+</div>
+
+<div class="container-fluid px-0">
 
     <?php if ($hasil === null && $error === null): ?>
         <!-- State 1: Empty state -->
@@ -120,15 +136,25 @@ if ($hasil) {
         
         <div class="row g-4">
             <div class="col-md-6">
-                <div class="stat-card accent-bar">
-                    <div class="stat-label">Tahun Bergabung</div>
-                    <div class="stat-value">--</div>
+                <div class="dashboard-stat-card border-0 shadow-sm h-100 p-4 bg-white rounded-4">
+                    <div class="d-flex align-items-center mb-3">
+                        <div class="icon-wrapper bg-light text-primary rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 48px; height: 48px;">
+                            <i class="bi bi-calendar-event fs-5"></i>
+                        </div>
+                        <div class="text-muted fw-medium">Tahun Bergabung</div>
+                    </div>
+                    <div class="fs-2 fw-bold text-dark">--</div>
                 </div>
             </div>
             <div class="col-md-6">
-                <div class="stat-card accent-bar">
-                    <div class="stat-label">Status Hak Cuti</div>
-                    <div class="stat-value">--</div>
+                <div class="dashboard-stat-card border-0 shadow-sm h-100 p-4 bg-white rounded-4">
+                    <div class="d-flex align-items-center mb-3">
+                        <div class="icon-wrapper bg-light text-primary rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 48px; height: 48px;">
+                            <i class="bi bi-activity fs-5"></i>
+                        </div>
+                        <div class="text-muted fw-medium">Status Hak Cuti</div>
+                    </div>
+                    <div class="fs-2 fw-bold text-dark">--</div>
                 </div>
             </div>
         </div>
@@ -177,15 +203,25 @@ if ($hasil) {
         
         <div class="row g-4">
             <div class="col-md-6">
-                <div class="stat-card accent-bar">
-                    <div class="stat-label">Tahun Bergabung</div>
-                    <div class="stat-value">--</div>
+                <div class="dashboard-stat-card border-0 shadow-sm h-100 p-4 bg-white rounded-4">
+                    <div class="d-flex align-items-center mb-3">
+                        <div class="icon-wrapper bg-light text-primary rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 48px; height: 48px;">
+                            <i class="bi bi-calendar-event fs-5"></i>
+                        </div>
+                        <div class="text-muted fw-medium">Tahun Bergabung</div>
+                    </div>
+                    <div class="fs-2 fw-bold text-dark">--</div>
                 </div>
             </div>
             <div class="col-md-6">
-                <div class="stat-card accent-bar">
-                    <div class="stat-label">Status Hak Cuti</div>
-                    <div class="stat-value">--</div>
+                <div class="dashboard-stat-card border-0 shadow-sm h-100 p-4 bg-white rounded-4">
+                    <div class="d-flex align-items-center mb-3">
+                        <div class="icon-wrapper bg-light text-primary rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 48px; height: 48px;">
+                            <i class="bi bi-activity fs-5"></i>
+                        </div>
+                        <div class="text-muted fw-medium">Status Hak Cuti</div>
+                    </div>
+                    <div class="fs-2 fw-bold text-dark">--</div>
                 </div>
             </div>
         </div>
@@ -325,4 +361,7 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 </script>
 
-<?php include __DIR__ . '/../includes/footer.php'; ?>
+<?php
+$page_content = ob_get_clean();
+require __DIR__ . '/../includes/dashboard-layout.php';
+
