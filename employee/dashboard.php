@@ -2,6 +2,7 @@
 require_once __DIR__ . '/../includes/cuti-calculator.php';
 
 // Setup dashboard context
+$page_class = 'page-dashboard role-employee';
 $dashboard_context = [
     'role' => 'employee',
     'active_nav' => 'hak-cuti',
@@ -82,9 +83,9 @@ ob_start();
 
 <div class="row mb-4">
     <div class="col-12">
-        <div class="dashboard-hero employee-hero p-4 rounded-4 text-white d-flex align-items-center mb-4 position-relative overflow-hidden" style="background: linear-gradient(135deg, var(--sicuti-teal) 0%, #155e59 100%);">
+        <div class="p-4 rounded-4 text-white d-flex align-items-center mb-4 position-relative overflow-hidden" style="background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-light) 100%); box-shadow: var(--shadow-md);">
             <div class="hero-content position-relative z-1">
-                <h1 class="h3 fw-bold mb-2">
+                <h1 class="h3 fw-bold mb-2" style="font-family: var(--font-display);">
                     <i class="bi bi-calendar2-heart me-2"></i>Hak Cuti Saya
                 </h1>
                 <p class="mb-0 opacity-75">Periksa hak cuti tahunan Anda berdasarkan tanggal bergabung.</p>
@@ -100,11 +101,11 @@ ob_start();
 
     <?php if ($hasil === null && $error === null): ?>
         <!-- State 1: Empty state -->
-        <div class="guided-step mb-5">
-            <h2 class="accent-bar">Lihat Hak Cuti Anda</h2>
-            <p>Silakan pilih profil Anda untuk melihat ringkasan hak cuti berdasarkan tahun bergabung. Anda juga dapat menggunakan tahun kustom untuk simulasi.</p>
+        <div class="dashboard-form-card mb-5 text-center">
+            <h2 class="mb-3 text-primary" style="font-family: var(--font-display); font-weight: 700;">Lihat Hak Cuti Anda</h2>
+            <p class="text-muted mb-4" style="max-width: 600px; margin: 0 auto;">Silakan pilih profil Anda untuk melihat ringkasan hak cuti berdasarkan tahun bergabung. Anda juga dapat menggunakan tahun kustom untuk simulasi.</p>
             
-            <form action="" method="GET" class="calculator-form mt-4 mx-auto" style="max-width: 500px;">
+            <form action="" method="GET" class="mt-4 mx-auto" style="max-width: 500px;">
                 <div class="mb-3">
                     <select name="preset" id="preset-select" class="form-select form-select-lg" required>
                         <option value="">-- Pilih Profil Karyawan --</option>
@@ -161,16 +162,16 @@ ob_start();
         
     <?php elseif ($error !== null): ?>
         <!-- State 2: Error state -->
-        <div class="guided-step mb-5">
-            <h2 class="accent-bar">Lihat Hak Cuti Anda</h2>
-            <p>Silakan pilih profil Anda untuk melihat ringkasan hak cuti berdasarkan tahun bergabung. Anda juga dapat menggunakan tahun kustom untuk simulasi.</p>
+        <div class="dashboard-form-card mb-5 text-center">
+            <h2 class="mb-3 text-primary" style="font-family: var(--font-display); font-weight: 700;">Lihat Hak Cuti Anda</h2>
+            <p class="text-muted mb-4" style="max-width: 600px; margin: 0 auto;">Silakan pilih profil Anda untuk melihat ringkasan hak cuti berdasarkan tahun bergabung. Anda juga dapat menggunakan tahun kustom untuk simulasi.</p>
             
-            <div class="alert alert-danger d-inline-block mt-2 mb-4">
+            <div class="alert alert-danger d-inline-block mt-2 mb-4 text-start">
                 <i class="bi bi-exclamation-circle me-2"></i>
                 Mohon periksa kembali tahun yang dimasukkan. <?php echo htmlspecialchars($error); ?>
             </div>
             
-            <form action="" method="GET" class="calculator-form mx-auto" style="max-width: 500px;">
+            <form action="" method="GET" class="mx-auto" style="max-width: 500px;">
                 <div class="mb-3">
                     <select name="preset" id="preset-select" class="form-select form-select-lg" required>
                         <option value="">-- Pilih Profil Karyawan --</option>
@@ -228,25 +229,25 @@ ob_start();
         
     <?php else: ?>
         <!-- State 3: Result state -->
-        <div class="calculator-summary mb-4">
+        <div class="dashboard-stat-card mb-4" style="background-color: var(--color-primary-subtle); border-color: var(--color-info);">
             <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3">
                 <div class="d-flex align-items-center gap-3">
-                    <div class="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center" style="width: 48px; height: 48px;">
+                    <div class="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center" style="width: 48px; height: 48px; flex-shrink: 0;">
                         <i class="bi bi-person-badge fs-4"></i>
                     </div>
                     <div>
-                        <h4 class="mb-1"><?php echo htmlspecialchars($selected_name); ?></h4>
-                        <div class="text-muted">Bergabung: <strong><?php echo $hasil['tahun_bergabung']; ?></strong></div>
+                        <h4 class="mb-1 text-primary-dark fw-bold" style="font-family: var(--font-display);"><?php echo htmlspecialchars($selected_name); ?></h4>
+                        <div class="text-secondary">Bergabung: <strong><?php echo $hasil['tahun_bergabung']; ?></strong></div>
                     </div>
                 </div>
-                <div class="d-flex gap-3">
+                <div class="d-flex gap-4 align-items-center">
                     <div class="text-end">
-                        <div class="small text-muted mb-1">Status Tahun Ini</div>
-                        <span class="badge rounded-pill <?php echo $status_class_sekarang; ?>"><?php echo $status_sekarang; ?></span>
+                        <div class="small text-secondary fw-semibold mb-1 text-uppercase">Status Tahun Ini</div>
+                        <span class="badge rounded-pill <?php echo $status_class_sekarang; ?> fs-6"><?php echo $status_sekarang; ?></span>
                     </div>
-                    <div class="border-start ps-3 text-end">
-                        <div class="small text-muted mb-1">Sisa Cuti (8 thn)</div>
-                        <h4 class="mb-0 text-primary"><?php echo $total_sisa; ?> <small class="text-muted fs-6">hari</small></h4>
+                    <div class="border-start border-secondary border-opacity-25 ps-4 text-end">
+                        <div class="small text-secondary fw-semibold mb-1 text-uppercase">Sisa Cuti (8 thn)</div>
+                        <h3 class="mb-0 text-primary fw-bold" style="font-family: var(--font-display);"><?php echo $total_sisa; ?> <small class="text-secondary fs-6 fw-normal">hari</small></h3>
                     </div>
                 </div>
             </div>
@@ -260,9 +261,12 @@ ob_start();
             </div>
         <?php endif; ?>
 
-        <div class="calculator-result mt-0 pt-0 border-0 mb-4">
+        <div class="dashboard-table-shell mb-4">
+            <div class="dashboard-table-header">
+                <h5 class="mb-0 text-primary-dark fw-bold" style="font-family: var(--font-display);">Rincian Hak Cuti 8 Tahun</h5>
+            </div>
             <div class="table-responsive">
-                <table class="table entitlement-table table-hover mb-0">
+                <table class="table mb-0">
                     <thead>
                         <tr>
                             <th class="text-center" style="width: 80px;">No.</th>
@@ -280,7 +284,7 @@ ob_start();
                                     <span class="fs-5 text-primary fw-bold"><?php echo $row['hari_cuti']; ?></span>
                                 </td>
                                 <td class="text-center">
-                                    <span class="badge rounded-pill <?php echo $row['status_class']; ?>">
+                                    <span class="badge rounded-pill <?php echo $row['status_class']; ?> fw-semibold px-3 py-2">
                                         <?php echo $row['status']; ?>
                                     </span>
                                 </td>
@@ -289,14 +293,14 @@ ob_start();
                     </tbody>
                 </table>
             </div>
-            <div class="p-3 text-center border-top">
-                <p class="employee-support-hint text-muted small mb-0">
-                    <i class="bi bi-question-circle me-1"></i>Butuh klarifikasi? Hubungi tim HR untuk informasi lebih lanjut.
+            <div class="p-3 text-center border-top bg-light">
+                <p class="employee-support-hint text-muted small mb-0 fw-medium">
+                    <i class="bi bi-question-circle-fill me-1 text-primary"></i>Butuh klarifikasi? Hubungi tim HR untuk informasi lebih lanjut.
                 </p>
             </div>
         </div>
         
-        <div class="card bg-light border-0">
+        <div class="dashboard-form-card border-0 bg-white">
             <div class="card-body">
                 <form action="" method="GET" class="d-flex flex-column flex-md-row gap-3 align-items-md-end">
                     <div class="flex-grow-1">
