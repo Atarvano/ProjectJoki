@@ -22,7 +22,7 @@ See: .planning/PROJECT.md (updated 2026-03-03)
 
 ## Current Position
 
-Phase: 3 of 4 (Employee Entitlement View)
+Phase: 3 of 3 (Employee Entitlement View)
 Plan: Not started
 Status: Context gathered
 Last activity: 2026-03-04 — Phase 3 context captured
@@ -99,6 +99,8 @@ Recent decisions affecting current work:
 - Phase 6 added: redesign login page
 - Phase 7 added: redesign login page
 - Phase 8 added: redesign dashboard hr dan karyawan
+- Phase 9 added: 9 redesign/improve svg login page
+- Phase 10 added: redesign/improve svg login page
 
 ### Pending Todos
 
