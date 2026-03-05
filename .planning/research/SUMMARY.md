@@ -1,173 +1,176 @@
 # Project Research Summary
 
 **Project:** Sicuti HRD Cuti Tracker
-**Domain:** Internal HR leave tracker evolving from demo prototype to procedural PHP backend-backed HR app
-**Researched:** 2026-03-04
+**Domain:** Internal HR leave-management web app (procedural PHP backend modernization)
+**Researched:** 2026-03-05
 **Confidence:** HIGH
 
 ## Executive Summary
 
-This product is no longer just a leave-calculation demo; it is becoming a small internal HR system with a strict HR-first onboarding model. The research is unusually aligned on the core product shape: keep the app server-rendered, procedural, and page-based; introduce a minimal MySQL-backed persistence layer; and replace the current visual login with real session authentication tied to employee records. Experts would not rebuild this as a framework or SPA at this stage—they would harden the existing procedural app by adding one connection bootstrap, a few repository-style include files, and role/session guards around the current pages.
+This is an incremental backend hardening project, not a rewrite. The product is an internal HR/employee leave system where v1 already shipped a working UI and deterministic leave calculator, while v2 must add production-grade persistence, authentication, and authorization using native procedural PHP patterns. Across all research files, the strongest consensus is: keep the current page-controller structure, add a strict DB/repository layer, and enforce HR-first onboarding (employee master first, account activation second).
 
-The recommended approach is to treat v2.0 as a backend-foundation milestone, not a product expansion milestone. Build the database baseline first, then auth/session primitives, then HR-managed employee CRUD, then migrate existing report/session behavior onto the database, and only then wire the employee self-view and export paths to the new data model. This ordering matches both the product dependency chain and the architecture research: employee login only makes sense after HR creates canonical employee records, and DB-backed reports must become the single source of truth before dashboards and export can be trusted.
+The recommended approach is a phased migration from session-array demo data to a DB-canonical model (`employees`, `users`, `leave_reports`, `leave_report_rows`) with a compatibility facade during transition. Authentication should use native PHP sessions + `password_hash()`/`password_verify()` with server-side role guards at every protected endpoint. Reporting and export must read the same DB source to preserve parity, especially for the domain-critical year 6/7/8 leave outputs.
 
-The main risks are migration risks, not feature novelty. The biggest failure modes are split-brain data between legacy session arrays and MySQL, weak request/session lifecycle handling in old procedural pages, authorization gaps in CRUD actions, and incomplete onboarding writes that leave orphan user/employee records. Mitigation is clear: establish one canonical repository seam early, centralize bootstrap/session handling, enforce role guards on every protected endpoint, use prepared statements and transactions consistently, and validate parity as legacy session-based paths are retired.
+The key risks are migration split-brain (session vs DB), non-atomic provisioning, and auth/session hardening gaps. Mitigation is clear: enforce single source-of-truth ownership, require repeatable migrations, wrap provisioning in transactions, centralize auth guard utilities, and run parity fixtures for year 6/7/8 before cutover.
 
 ## Key Findings
 
 ### Recommended Stack
 
-The stack recommendation is conservative by design: stay on PHP 8.4.x in Laragon, use MySQL 8.0.x with InnoDB and `utf8mb4`, access the database through procedural MySQLi, and keep authentication entirely native with PHP sessions plus `password_hash()` / `password_verify()`. This is the smallest possible change that delivers real persistence and login while respecting the project constraint to remain native procedural PHP.
-
-The architecture and feature research reinforce the same principle: do not introduce framework migration, ORM abstraction, token auth, or frontend rewrites. Reuse the existing Bootstrap UI and isolated Composer/PhpSpreadsheet usage only for export. The only notable research conflict is that PITFALLS.md discusses PDO-oriented hardening examples, while STACK.md clearly recommends procedural MySQLi. For planning purposes, treat the underlying concern as the real requirement: one canonical DB API, strict error mode, prepared statements, transactions, and charset consistency. The implementation recommendation remains MySQLi.
+The stack is intentionally conservative and high-confidence: PHP 8.4.x (verified 8.4.10 locally), MySQL-compatible DB (MySQL 8.4 LTS preferred), MySQLi procedural + mysqlnd, and native PHP sessions. This aligns with project constraints (no framework, no ORM, no JWT) and minimizes regression risk while delivering v2 requirements quickly.
 
 **Core technologies:**
-- **PHP 8.4.x**: app runtime — matches the current Laragon environment and avoids migration cost.
-- **MySQL 8.0.x**: primary relational storage — supports transactions, foreign keys, InnoDB, and `utf8mb4`.
-- **Procedural MySQLi**: DB access layer — best fit for a procedural PHP codebase and supports prepared statements cleanly.
-- **Native PHP sessions**: login state and route protection — correct model for a local/internal server-rendered app.
-- **`password_hash()` / `password_verify()`**: credential handling — official, maintained password APIs with no custom crypto risk.
-- **PhpSpreadsheet ^5.5**: export only — keep existing Composer usage isolated to XLSX export.
+- **PHP 8.4.x:** Runtime for CRUD/auth/session — already active locally; supports modern password/session APIs.
+- **MySQL 8.4 LTS (or local compatible server):** Canonical storage — needed for transactions, FK integrity, and consistent reporting.
+- **MySQLi procedural + mysqlnd:** DB access layer — fits native procedural architecture and prepared-statement security baseline.
+- **Native PHP Session:** Login state + role enforcement — correct for server-rendered internal app.
+- **Password API (`password_hash`/`password_verify`):** Credential security baseline — official and requirement-aligned.
+- **PhpSpreadsheet 5.5.0 (existing only):** Keep only for export path; no new Composer footprint needed.
+
+**Critical version/runtime notes:**
+- Keep hash column flexible (`VARCHAR(255)`) for future algorithm changes.
+- Enforce `utf8mb4` + InnoDB defaults across all core tables.
+- Laragon runtime currently needs session-hardening ini alignment (`use_strict_mode=1`, `cookie_httponly=1`).
 
 ### Expected Features
 
-The feature research is tightly focused on HR-controlled onboarding rather than self-service account creation. The MVP is not “employee registration”; it is “HR creates the employee record, optionally enables linked credentials, and then the employee can log in to the existing self-view.” That makes employee master data, credential linkage, login persistence, status controls, and role guards the true table stakes.
-
-The most valuable non-MVP additions are operational improvements around onboarding readiness and auditability, but they should not delay v2.0. Invite-token activation is useful but higher complexity than this milestone needs. SSO, broad onboarding workflows, and open self-signup are explicitly poor fits for the current scope.
+v2 MVP is dominated by backend table-stakes, not net-new UX: DB foundation, HR employee CRUD, HR-first account provisioning, real login/session/role guards, and DB-backed leave/report parity focused on years 6/7/8. Security baselines (prepared statements, CSRF tokens, session hardening) are mandatory to consider backend “done.”
 
 **Must have (table stakes):**
-- **HR-created employee master record** — canonical source of truth before any employee access exists.
-- **Linked credential setup/enabling** — login lifecycle must be tied to employee status, not standalone accounts.
-- **Real session-backed login/logout with role guards** — replaces demo-only auth and protects HR/employee pages.
-- **Secure password and session baseline** — hashing, session regeneration, cookie hardening, generic login failures.
-- **Active/inactive account controls** — HR must be able to disable access immediately.
-- **Employee landing into existing self-view** — v2 should unlock value from v1, not recreate it.
+- DB foundation (`koneksi.php`, schema, repeatable migrations, migration tracking).
+- HR employee CRUD with safe deactivation/soft-delete semantics.
+- HR-first provisioning flow (`employee` first, then `user` activation).
+- Real DB login + native session + role guard + correct logout lifecycle.
+- DB-backed leave outputs/reporting/export parity, with year 6/7/8 focus.
+- CSRF protection for all state-changing actions.
 
 **Should have (competitive):**
-- **Onboarding readiness checklist/status** — lightweight operational visibility for HR.
-- **Minimal auth/onboarding audit trail** — useful for governance and troubleshooting.
-- **Simple HR onboarding metrics** — pending activation and first-login completion visibility.
+- Explicit account lifecycle states (`not_provisioned` → `active` → `suspended`).
+- Integrity guard rails when deactivating users/employees with historical reports.
+- Operational flash/error messaging (clear HR troubleshooting states).
 
-**Defer (v2+ / v3+):**
-- **Invite-token first-use activation** — strong improvement, but adds token lifecycle complexity.
-- **SSO/OIDC** — premature for a local/internal procedural app foundation.
-- **Expanded onboarding suite** — documents, provisioning, LMS, and similar modules are scope creep now.
-- **Self-signup/open registration** — directly conflicts with HR-first control of employee identity.
+**Defer (v2+):**
+- Forced first-login password reset flow.
+- Richer employee search/filter dimensions.
+- Full audit trail, anomaly analytics, SSO/OIDC.
 
 ### Architecture Approach
 
-The architecture recommendation is to preserve the existing page-controller pattern and add a thin procedural backend seam beneath it. The new design centers on `includes/koneksi.php` for the DB connection, `includes/auth.php` for session bootstrap and route guards, repository-style include files for employee/report data access, and a compatibility façade around existing report functions so pages can migrate incrementally without a risky rewrite.
+Architecture guidance is consistent and strong: guard-first page controllers, SQL confined to procedural repository modules, and a compatibility facade to migrate old report APIs safely. No framework migration; all integration stays in existing page structure plus new `includes/*-repo.php` files.
 
 **Major components:**
-1. **Page controllers (`login.php`, `hr/*.php`, `employee/dashboard.php`)** — accept request input, run guards, call repo/calculator functions, then render or redirect.
-2. **`includes/koneksi.php`** — single DB connection bootstrap with consistent charset and error behavior.
-3. **`includes/auth.php`** — session startup, login attempt, logout, and `requireRole()`/`requireSession()` guards.
-4. **`includes/employee-repo.php`** — employee CRUD, user lookup, and employee-to-user linkage queries.
-5. **`includes/report-repo.php`** — DB-backed save/list/detail/report-count functions for leave reports.
-6. **`includes/reports-data.php` compatibility shim** — preserves existing callers while moving storage internals to MySQL.
-7. **`hr/employees.php` + `logout.php`** — new entry points for HR-first onboarding and session teardown.
+1. **Page controllers (`login.php`, `hr/*.php`, `employee/dashboard.php`)** — validate input, invoke guards/repositories, render/redirect.
+2. **Auth/session module (`includes/auth.php`, `logout.php`)** — login verify, session lifecycle, role-based access control.
+3. **Data access layer (`koneksi.php`, `employee-repo.php`, `user-repo.php`, `report-repo.php`)** — single SQL boundary with prepared statements and transactions.
+4. **Compatibility facade (`includes/reports-data.php`)** — bridge v1 function contracts while moving storage to DB.
+5. **MySQL core schema** — canonical source for employees/users/reports and migration state.
 
 ### Critical Pitfalls
 
-The pitfall research shows that the hardest part of this milestone is safely migrating a demo-first codebase into a real authenticated one. The highest-risk mistakes are predictable and avoidable if the roadmap sequences the work correctly.
-
-1. **Split-brain data between session/demo arrays and MySQL** — avoid by establishing one canonical repository API early, using a deliberate migration mode, and cutting old reads once parity is verified.
-2. **Fragile bootstrap/session lifecycle** — avoid by centralizing include order, session start, and guard execution before any output; use `require_once` and `__DIR__`-based paths consistently.
-3. **Authorization gaps / IDOR in CRUD** — avoid by enforcing server-side role checks on every HR action and scoping employee access strictly to self-only data.
-4. **Partial onboarding writes / orphan records** — avoid by wrapping employee+credential creation in transactions and enforcing foreign keys and unique constraints.
-5. **Weak auth hardening** — avoid by hashing passwords, regenerating session IDs after login, configuring secure cookie/session settings, and adding generic errors plus throttling.
+1. **Split-brain data (session + DB both writable)** — freeze legacy write paths and enforce DB ownership per entity from day one.
+2. **Manual schema drift** — require versioned, repeatable migrations with `schema_migrations`; no ad-hoc phpMyAdmin edits.
+3. **Non-atomic provisioning** — wrap employee/user provisioning in transactions with rollback and unique constraints.
+4. **Delete-policy mismatch (hard delete vs history integrity)** — default to deactivate/soft-delete for employees/users; keep report history immutable.
+5. **Auth/session implementation gaps** — centralize guard checks, regenerate session ID on login, and fully invalidate cookie/session on logout.
 
 ## Implications for Roadmap
 
 Based on research, suggested phase structure:
 
-### Phase 1: Database Foundation and Bootstrap
-**Rationale:** Everything else depends on a trustworthy persistence and bootstrap layer. This is where the project either stays coherent or becomes split-brain.
-**Delivers:** Schema baseline (`users`, `employees`, report tables), `includes/koneksi.php`, DB configuration conventions, seed data strategy, and migration/cutover rules for legacy session data.
-**Addresses:** HR-first source-of-truth requirement, credential linkage preconditions, report persistence prerequisites.
-**Avoids:** Split-brain data, fragile bootstrap, charset drift, inconsistent DB APIs.
+### Phase 1: Environment & DB Foundation
+**Rationale:** Every v2 feature depends on deterministic DB/runtime behavior.
+**Delivers:** `koneksi.php`, canonical schema, repeatable migrations, migration visibility checks, Laragon/XAMPP baseline.
+**Addresses:** DB foundation feature set (P1), security preconditions.
+**Avoids:** Schema drift, runtime misconfiguration, charset/FK inconsistency.
 
-### Phase 2: Authentication Core and Route Protection
-**Rationale:** Once the DB exists, the next hard dependency is real identity. Route protection must exist before CRUD and page integrations are trusted.
-**Delivers:** `includes/auth.php`, `login.php` POST flow, `logout.php`, session hardening, role-aware redirects, shared guard pattern for protected pages.
-**Uses:** Native PHP sessions, password APIs, prepared statements, role fields in `users`.
-**Implements:** Guard-then-work page entry pattern.
-**Avoids:** Output-before-header bugs, plaintext/reversible password handling, session fixation, URL-based role bypass.
+### Phase 2: Auth Core & Access Boundaries
+**Rationale:** Access control must be correct before expanding CRUD/reporting surfaces.
+**Delivers:** Real login, logout, session bootstrap/hardening, centralized role guards on protected routes.
+**Uses:** Native session + password API + MySQLi user lookup.
+**Implements:** Guard-first controller pattern.
+**Avoids:** UI-only auth, fixation, partial logout bugs.
 
-### Phase 3: HR Employee Onboarding and Credential Lifecycle
-**Rationale:** The product’s defining business rule is HR-first onboarding. This should be explicit and complete before employee self-service is integrated.
-**Delivers:** `hr/employees.php`, employee CRUD, linked credential enable/disable flow, active/inactive state handling, transactional employee+user creation, self-consistent employee directory.
-**Addresses:** Table-stakes HR master record, linked credential setup, account state controls.
-**Avoids:** IDOR in CRUD, orphan employee/user records, premature employee access.
+### Phase 3: HR Employee Master CRUD
+**Rationale:** HR-first business flow requires stable employee master data before provisioning.
+**Delivers:** Employee create/list/update/deactivate endpoints + page integration.
+**Addresses:** EMPCRUD P1 requirements.
+**Implements:** Repository boundary for employee operations.
+**Avoids:** Hard-delete history breakage, raw SQL regressions.
 
-### Phase 4: Report Persistence Migration and HR Module Integration
-**Rationale:** Existing HR pages already provide value; they should be rewired onto the database once identity and employee records are stable.
-**Delivers:** `report-repo.php`, `reports-data.php` compatibility shim, DB-backed `hr/dashboard.php`, `hr/kalkulator.php`, and `hr/laporan.php`, consistent report counts and storage.
-**Addresses:** HR workflow continuity and report parity with the new backend.
-**Uses:** Repository boundary + compatibility façade migration pattern.
-**Avoids:** Dashboard/export/report count mismatches, mixed session/DB data paths, SQL-in-page sprawl.
+### Phase 4: HR-First Provisioning Lifecycle
+**Rationale:** Converts employee records into controlled login accounts; core domain differentiator.
+**Delivers:** Provisioning page/flow, employee-user linkage, lifecycle states, transactional onboarding.
+**Addresses:** FLOW-01..03 + AUTH dependency chain.
+**Avoids:** Orphan accounts, duplicate credential states, ambiguous login failures.
 
-### Phase 5: Employee Self-View Integration and Export Parity
-**Rationale:** Employee-facing value should come after HR identity and report data are canonical. Export should be last because it must read the exact same persisted dataset as the UI.
-**Delivers:** `employee/dashboard.php` driven by authenticated employee identity, removal of preset demo identity selection, DB-backed `hr/export.php` with parity against report listings.
-**Addresses:** First-login handoff to existing self-view, stable report export behavior.
-**Avoids:** Self-view identity mismatches, export parity failures, stale session-derived data.
+### Phase 5: Report Storage Migration & Year 6/7/8 Parity
+**Rationale:** Business trust depends on unchanged cuti outcomes while data source changes.
+**Delivers:** DB-backed report persistence/read, facade migration, year 6/7/8 focused presentation.
+**Addresses:** P1 reporting parity and domain output focus.
+**Implements:** Compatibility-facade migration pattern.
+**Avoids:** Output regression, split-brain reporting, export mismatch.
+
+### Phase 6: Export/Employee Self-View Parity + Hardening Gate
+**Rationale:** Finalize end-to-end consistency across HR list, export, and employee self-view.
+**Delivers:** DB-canonical export parity, authenticated employee dashboard mapping, CSRF completion, readiness checks.
+**Addresses:** End-to-end launch quality.
+**Avoids:** Last-mile consistency/security defects.
 
 ### Phase Ordering Rationale
 
-- **The dependency chain is explicit:** DB connection -> auth/session -> HR employee CRUD -> report persistence -> HR page integration -> employee page integration -> export parity.
-- **The grouping matches the architecture seams:** bootstrap/auth/repositories first, page rewiring second.
-- **This order minimizes migration risk:** it removes dummy/session data incrementally instead of mixing old and new sources indefinitely.
-- **It also matches product reality:** employees cannot log in safely until HR-managed records and account states exist.
+- Dependencies are strict: DB foundation → auth boundary → employee master → provisioning → reporting migration → parity hardening.
+- Grouping follows architecture seams (auth module, repos, facade), reducing cross-file churn and regression surface.
+- This order directly neutralizes top pitfalls early (schema drift, split-brain, non-atomic onboarding) before user-facing expansion.
 
 ### Research Flags
 
 Phases likely needing deeper research during planning:
-- **Phase 3:** credential issuance UX and transaction boundaries need precise implementation choices, especially if password setup is created by HR initially.
-- **Phase 4:** report-table design and migration from current session-backed report structures may need a focused reconciliation plan.
-- **Future invite-token activation phase:** definitely needs dedicated research because token lifecycle, expiry, and recovery design are not yet settled.
+- **Phase 4 (Provisioning lifecycle):** Needs precise state model + transaction/failure semantics and operator UX messaging.
+- **Phase 5 (Report parity migration):** Needs parity fixture design for year 6/7/8 and adapter verification against v1 behavior.
+- **Phase 6 (Hardening gate):** Needs environment-specific validation matrix (Laragon/XAMPP, cookie path/domain behavior, session lock edge cases).
 
 Phases with standard patterns (skip research-phase):
-- **Phase 1:** DB connection/bootstrap, schema basics, and charset/index conventions are well-documented and already strongly researched.
-- **Phase 2:** native PHP session auth with password hashing and role guards follows established patterns.
-- **Phase 5:** export parity and employee self-view wiring are mostly integration work on top of already-known patterns.
+- **Phase 1 (DB foundation):** Established MySQLi/migration patterns with high-confidence references.
+- **Phase 2 (Auth baseline):** Well-documented PHP session/password primitives.
+- **Phase 3 (CRUD baseline):** Standard procedural CRUD with prepared statements and known implementation patterns.
 
 ## Confidence Assessment
 
 | Area | Confidence | Notes |
 |------|------------|-------|
-| Stack | HIGH | Based primarily on official PHP/MySQL/Laragon docs and tightly aligned with existing project constraints. |
-| Features | MEDIUM | Strong product logic and credible sources, but competitor/process guidance is less authoritative than technical docs. |
-| Architecture | HIGH | Derived from direct reading of the current codebase plus standard procedural PHP integration patterns. |
-| Pitfalls | MEDIUM | Risks are credible and useful, but one document uses PDO examples that conflict with the recommended MySQLi implementation. |
+| Stack | HIGH | Strong alignment with local runtime verification + official PHP/MySQL docs; low ambiguity. |
+| Features | MEDIUM | Clear P1 priorities, but some differentiator details (lifecycle UX, error semantics) still need product-level finalization. |
+| Architecture | HIGH | Concrete file-level integration plan and migration pattern are explicit and consistent with constraints. |
+| Pitfalls | HIGH | Risks are well-mapped to phases with concrete prevention and verification criteria. |
 
 **Overall confidence:** HIGH
 
 ### Gaps to Address
 
-- **DB API inconsistency in research:** PITFALLS.md frames some guidance through PDO while STACK.md recommends MySQLi. Planning should normalize this to one rule set: MySQLi only, with strict errors, prepared statements, transactions, and charset discipline.
-- **Credential issuance workflow:** research supports HR-linked credentials, but the exact v2.0 UX for initial password creation/reset still needs a planning decision.
-- **Migration/cutover mechanics:** the codebase currently uses session-backed report/demo flows; planning should specify whether rollout is direct cutover or temporary dual-read parity validation.
-- **Secrets/config handling:** stack research focuses local Laragon defaults, but implementation planning should define how credentials are kept out of committed runtime config.
-- **Security depth beyond baseline:** CSRF protection, brute-force throttling details, and audit logging are identified as important, but need concrete acceptance criteria in phase planning.
+- **Provisioning state semantics:** finalize exact status transitions and HR operational rules (suspend/reactivate/reprovision).
+- **Delete/deactivate policy detail:** lock entity-level rules (employees/users/reports) in requirements + schema constraints before implementation.
+- **Parity test fixtures:** define golden datasets for year 6/7/8 outputs and export matching before report cutover.
+- **CSRF scope discipline:** enumerate all state-changing endpoints (including hidden form actions) to avoid partial coverage.
+- **Environment consistency:** standardize one base URL per environment and align Apache vs CLI `php.ini` settings.
 
 ## Sources
 
 ### Primary (HIGH confidence)
-- PHP Manual — MySQLi, prepared statements, sessions, password APIs — stack, auth, and query conventions
-- MySQL Reference Manual — InnoDB and `utf8mb4` — schema/storage baseline
-- Laragon documentation — local runtime/tooling compatibility
-- Existing project files (`.planning/PROJECT.md`, current PHP pages/includes) — architecture fit and migration constraints
+- Internal planning docs: `.planning/PROJECT.md`, `.planning/REQUIREMENTS.md`, current code structure references.
+- `.planning/research/STACK.md`
+- `.planning/research/ARCHITECTURE.md`
+- `.planning/research/PITFALLS.md`
+- `.planning/research/LARAGON.md`
+- PHP official docs (sessions, password APIs, MySQLi prepared statements/transactions).
+- MySQL official docs (release model, implicit commit behavior).
 
 ### Secondary (MEDIUM confidence)
-- OrangeHRM Help Center — employee-first onboarding flow with optional login linkage
-- ADP onboarding guidance (updated 2026-02-20) — process framing for HR-controlled onboarding readiness
-- OWASP Authentication / Session Management / SQL Injection cheat sheets — security hardening and abuse-control expectations
-- phpMyAdmin requirements/news — local tooling compatibility notes for PHP 8.4+
+- `.planning/research/FEATURES.md` (includes official references plus interpreted prioritization).
+- OWASP CSRF Prevention Cheat Sheet.
 
 ### Tertiary (LOW confidence)
-- None material. The main uncertainty is not source scarcity but implementation choice reconciliation around DB API and migration rollout details.
+- Tutorial/reference repos and blog patterns cited in research docs (useful directional examples, not normative standards).
 
 ---
-*Research completed: 2026-03-04*
+*Research completed: 2026-03-05*
 *Ready for roadmap: yes*

@@ -1,7 +1,7 @@
 # Architecture Research
 
-**Domain:** Integrating DB + auth into existing procedural PHP leave app
-**Researched:** 2026-03-04
+**Domain:** Integrasi fitur backend v2.0 pada aplikasi procedural PHP existing
+**Researched:** 2026-03-05
 **Confidence:** HIGH
 
 ## Standard Architecture
@@ -9,320 +9,256 @@
 ### System Overview
 
 ```text
-┌─────────────────────────────────────────────────────────────────────────────┐
-│                               HTTP Page Layer                              │
-├─────────────────────────────────────────────────────────────────────────────┤
-│  index.php   login.php   hr/*.php (dashboard/kalkulator/laporan/export)   │
-│  employee/dashboard.php                                                     │
-└───────────────┬───────────────────────────────┬─────────────────────────────┘
+┌──────────────────────────────────────────────────────────────────────────────┐
+│                           HTTP / Page Controllers                           │
+├──────────────────────────────────────────────────────────────────────────────┤
+│ index.php  login.php  logout.php  hr/*.php  employee/dashboard.php          │
+└───────────────┬───────────────────────────────┬──────────────────────────────┘
                 │                               │
                 ▼                               ▼
-┌──────────────────────────────────┐   ┌──────────────────────────────────────┐
-│         Request Guards           │   │        Existing Domain Logic         │
-│  includes/auth.php              │   │  includes/cuti-calculator.php        │
-│  - requireSession()             │   │  (kept as-is, reused)                │
-│  - requireRole('hr'|'employee') │   └──────────────────────────────────────┘
+┌──────────────────────────────────┐   ┌───────────────────────────────────────┐
+│         Access + Session         │   │       Existing Domain Engine          │
+│ includes/auth.php (NEW)          │   │ includes/cuti-calculator.php          │
+│ - session bootstrap               │   │ (tetap dipakai; logic inti tidak      │
+│ - login/logout                    │   │ dipecah)                              │
+│ - role guard                      │   └───────────────────────────────────────┘
 └──────────────────┬───────────────┘
                    │
                    ▼
-┌─────────────────────────────────────────────────────────────────────────────┐
-│                  Data Access (procedural repositories)                     │
-├─────────────────────────────────────────────────────────────────────────────┤
-│ includes/koneksi.php  -> mysqli connection                                │
-│ includes/employee-repo.php -> employee CRUD + lookup for auth             │
-│ includes/report-repo.php    -> persisted reports CRUD/list/export         │
-└──────────────────┬──────────────────────────────────────────────────────────┘
+┌──────────────────────────────────────────────────────────────────────────────┐
+│                    Procedural Data Access (Repository)                      │
+├──────────────────────────────────────────────────────────────────────────────┤
+│ includes/koneksi.php (NEW)                                                   │
+│ includes/employee-repo.php (NEW)                                             │
+│ includes/user-repo.php (NEW)                                                 │
+│ includes/report-repo.php (NEW)                                               │
+│ includes/reports-data.php (MODIFIED compatibility facade)                    │
+└──────────────────┬───────────────────────────────────────────────────────────┘
                    ▼
-┌─────────────────────────────────────────────────────────────────────────────┐
-│                                MySQL Tables                                │
-├─────────────────────────────────────────────────────────────────────────────┤
-│ users (credentials, role, active)                                          │
-│ employees (profile, join year, user_id nullable->required by flow)         │
-│ leave_reports (summary/report metadata), leave_report_rows (8-year rows)   │
-└─────────────────────────────────────────────────────────────────────────────┘
+┌──────────────────────────────────────────────────────────────────────────────┐
+│                               MySQL Core Tables                              │
+├──────────────────────────────────────────────────────────────────────────────┤
+│ employees | users | leave_reports | leave_report_rows | schema_migrations    │
+└──────────────────────────────────────────────────────────────────────────────┘
 ```
 
 ### Component Responsibilities
 
 | Component | Responsibility | Typical Implementation |
 |-----------|----------------|------------------------|
-| Page controllers (`hr/*.php`, `employee/dashboard.php`, `login.php`) | Handle request input, call guards + repositories + calculator, render HTML/redirect | Keep current top-of-file procedural controller block pattern |
-| `includes/koneksi.php` | Single DB connect primitive for app | Build `mysqli` connection once per request (and charset) |
-| `includes/auth.php` (new) | Session bootstrap, login/logout, route guards | Procedural helpers around `$_SESSION` + `session_start()` |
-| `includes/employee-repo.php` (new) | Employee CRUD + auth lookups | `mysqli` prepared statements for select/insert/update/delete |
-| `includes/report-repo.php` (new) | Replace session report store with DB-backed report storage | write/read report headers + rows via prepared statements |
-| `includes/reports-data.php` (existing) | Transitional compatibility façade | Keep function names, rewire internals to call DB repo |
+| Page controllers (`hr/*.php`, `employee/dashboard.php`, `login.php`) | Terima request, validasi input, panggil guard + repo, render/redirect | Procedural top-of-file controller block (pattern existing) |
+| `includes/auth.php` | Session lifecycle, login verify, role guard, logout | `session_start()`, `session_regenerate_id()`, session helpers |
+| `includes/koneksi.php` | Single source DB connection | MySQLi procedural connect + charset utf8mb4 |
+| `includes/employee-repo.php` | CRUD master karyawan | Prepared statements untuk seluruh input user |
+| `includes/user-repo.php` | Provisioning akun + lookup login | `password_hash()` / `password_verify()` |
+| `includes/report-repo.php` | Persist/report list/detail/export dataset | Header + rows transactional write |
+| `includes/reports-data.php` | Bridge dari API v1 ke DB v2 | Fungsi lama (`getReports`, `saveReport`) delegasi ke repo |
 
 ## Recommended Project Structure
 
 ```text
 .
-├── index.php                         # existing landing
-├── login.php                         # MODIFIED: real credential POST + role redirect
-├── logout.php                        # NEW: session destroy + redirect
+├── login.php                                # MODIFIED: real auth POST
+├── logout.php                               # NEW: terminate session safely
 ├── hr/
-│   ├── dashboard.php                 # MODIFIED: metrics from DB, require HR session
-│   ├── kalkulator.php                # MODIFIED: save report against employee_id
-│   ├── laporan.php                   # MODIFIED: report listing from DB
-│   ├── export.php                    # MODIFIED: export DB-backed reports
-│   └── employees.php                 # NEW: employee list/create/update/delete (HR only)
+│   ├── dashboard.php                        # MODIFIED: DB metrics + HR guard
+│   ├── kalkulator.php                       # MODIFIED: save DB report by employee
+│   ├── laporan.php                          # MODIFIED: DB list/filter
+│   ├── export.php                           # MODIFIED: DB source parity
+│   ├── employees.php                        # NEW: HR employee CRUD
+│   └── provisioning.php                     # NEW: HR provision/activate account
 ├── employee/
-│   └── dashboard.php                 # MODIFIED: derive employee from session user_id
+│   └── dashboard.php                        # MODIFIED: authenticated self-view
 └── includes/
-    ├── koneksi.php                   # NEW: DB connection (Laragon/phpMyAdmin pattern)
-    ├── auth.php                      # NEW: auth/session helpers + guards
-    ├── employee-repo.php             # NEW: employee CRUD + auth queries
-    ├── report-repo.php               # NEW: persistent report queries
-    ├── reports-data.php              # MODIFIED: legacy API delegates to report-repo
-    ├── cuti-calculator.php           # existing canonical engine (unchanged logic)
-    ├── dashboard-sidebar.php          # MODIFIED: add HR employee management nav link
-    └── dashboard-topbar.php          # MODIFIED: real user label + logout link target
+    ├── koneksi.php                          # NEW
+    ├── auth.php                             # NEW
+    ├── employee-repo.php                    # NEW
+    ├── user-repo.php                        # NEW
+    ├── report-repo.php                      # NEW
+    ├── reports-data.php                     # MODIFIED (facade)
+    ├── dashboard-sidebar.php                # MODIFIED (add HR nav)
+    └── dashboard-topbar.php                 # MODIFIED (real profile/logout)
 ```
 
 ### Structure Rationale
 
-- **Keep `/includes` as integration seam:** Current app already uses shared includes; adding DB/auth/repo there preserves architecture and minimizes rewrite risk.
-- **Introduce new pages only where flow requires it:** `hr/employees.php` is the new HR-first onboarding center; rest are modifications to existing pages.
+- **No framework rewrite:** semua tambahan ditempatkan di `includes/` + page controller existing agar tetap procedural native.
+- **Bridge-first migration:** `reports-data.php` dipertahankan sebagai facade supaya migrasi session-array -> DB tidak memaksa rewrite serentak.
+- **Flow-aligned pages:** onboarding HR-first dipisah eksplisit (`employees.php` + `provisioning.php`) agar dependency bisnis terlihat jelas.
 
-## Integration Points (Explicit New vs Modified)
+## Integration Points (Focus v2.0)
 
-### New Components/Files
+### New vs Modified Components (Explicit)
 
-1. **`includes/koneksi.php`**
-   - Exposes one function (e.g., `db()` or `getDbConnection()`) returning configured `mysqli`.
-   - Required by all repo modules, never called directly in view templates.
+| File/Module | New/Modified | Integration Point | Notes |
+|-------------|--------------|-------------------|-------|
+| `includes/koneksi.php` | **NEW** | Semua repo include ini | Satu entrypoint koneksi MySQLi |
+| `includes/auth.php` | **NEW** | `login.php`, `logout.php`, semua halaman protected | Menjadi guard standar role HR/employee |
+| `includes/employee-repo.php` | **NEW** | `hr/employees.php`, `employee/dashboard.php` | Master data karyawan DB canonical |
+| `includes/user-repo.php` | **NEW** | `login.php`, `hr/provisioning.php` | Provisioning + lookup credential |
+| `includes/report-repo.php` | **NEW** | `hr/kalkulator.php`, `hr/laporan.php`, `hr/export.php` | Single source laporan |
+| `hr/employees.php` | **NEW** | Sidebar HR + repo employee | CRUD karyawan |
+| `hr/provisioning.php` | **NEW** | Dari list employee ke provisioning akun | Enforce HR-first activation |
+| `logout.php` | **NEW** | Topbar logout link | Destroy session + redirect login |
+| `login.php` | **MODIFIED** | Replaces demo role switch | POST auth DB + redirect by role |
+| `employee/dashboard.php` | **MODIFIED** | Reads session identity | Hilangkan preset demo sebagai source utama |
+| `hr/kalkulator.php` | **MODIFIED** | Save hasil ke DB report tables | Tetap pakai engine kalkulasi existing |
+| `hr/laporan.php` | **MODIFIED** | List/filter DB data | No more mixed session data |
+| `hr/export.php` | **MODIFIED** | Export dataset from same DB source | Parity list vs export |
+| `includes/reports-data.php` | **MODIFIED** | Compatibility API layer | Minimalkan breakage caller lama |
+| `includes/dashboard-sidebar.php` | **MODIFIED** | Tambah nav karyawan/provisioning | Navigasi flow baru |
+| `includes/dashboard-topbar.php` | **MODIFIED** | Real user label + `/logout.php` | Hapus demo-only behavior |
 
-2. **`includes/auth.php`**
-   - `startAppSession()`
-   - `attemptLogin($email, $password)` -> verifies `password_verify()` against stored hash
-   - `requireSession()` / `requireRole('hr'|'employee')`
-   - `logoutUser()`
+### Route/Data Flow Updates
 
-3. **`includes/employee-repo.php`**
-   - `createEmployee(...)`, `updateEmployee(...)`, `deleteEmployee(...)`
-   - `findEmployeeByUserId(...)`, `findUserByEmail(...)`, `listEmployees(...)`
-
-4. **`includes/report-repo.php`**
-   - `saveLeaveReport(...)`, `listReports(...)`, `getReportDetail(...)`, `countReports()`
-
-5. **`hr/employees.php`**
-   - HR-only CRUD page to satisfy “HR creates employee first” flow.
-
-6. **`logout.php`**
-   - Session teardown and redirect to `login.php`.
-
-### Modified Existing Modules
-
-1. **`login.php`**
-   - From `?role=` visual switcher to POST login controller.
-   - Role redirect based on authenticated user role in DB/session, not URL parameter.
-
-2. **`hr/dashboard.php`**
-   - Add `requireRole('hr')` guard.
-   - Replace session report counters with DB query-backed counts.
-
-3. **`hr/kalkulator.php`**
-   - Preserve existing calculator behavior/UI.
-   - Save report linked to persisted employee/user identities (not free-text-only session entry).
-
-4. **`hr/laporan.php` + `hr/export.php`**
-   - Read report list/details from DB repository.
-   - Keep PhpSpreadsheet isolation in `hr/export.php` (existing decision preserved).
-
-5. **`employee/dashboard.php`**
-   - Add `requireRole('employee')`.
-   - Replace preset demo selection with logged-in employee’s own profile/records.
-
-6. **`includes/reports-data.php`**
-   - Convert into compatibility shim so existing page calls still work while internals use DB.
-   - This lowers migration risk and enables stepwise replacement.
+| Route | Old Flow | New Flow |
+|-------|----------|----------|
+| `/login.php` | `?role=` visual-only -> direct dashboard | POST email/password -> verify DB -> session role -> redirect |
+| `/hr/dashboard.php` | Open demo page | `requireRole('hr')` -> DB metrics |
+| `/hr/kalkulator.php` | Save to `$_SESSION['reports']` | Save to `leave_reports` + `leave_report_rows` |
+| `/hr/laporan.php` | Read from session-array | Read from report repo (DB) |
+| `/hr/export.php` | Export session dataset | Export exact same DB dataset as laporan |
+| `/employee/dashboard.php` | Preset dropdown simulation | Self-view by logged-in user/employee mapping |
 
 ## Architectural Patterns
 
-### Pattern 1: Guard-Then-Work Page Entry
+### Pattern 1: Guard-First Controller
+**What:** semua halaman protected memanggil guard sebelum logic lain.
+**When to use:** seluruh route HR/employee/export.
+**Trade-offs:** sedikit boilerplate, tetapi mencegah akses lintas-role.
 
-**What:** Every protected page starts session + role guard before business logic.
-**When to use:** All `/hr/*`, `/employee/*`, and export endpoints.
-**Trade-offs:** Slight boilerplate per page; major clarity and access safety.
-
-**Example:**
 ```php
 <?php
 require_once __DIR__ . '/../includes/auth.php';
 requireRole('hr');
-// ...page controller logic...
+// lanjut controller logic
 ```
 
-### Pattern 2: Procedural Repository Boundary
+### Pattern 2: Repository Boundary (Procedural)
+**What:** SQL hanya di `includes/*-repo.php`, bukan di page file.
+**When to use:** auth, CRUD, reporting.
+**Trade-offs:** tambah file, tapi mengurangi duplikasi SQL dan bug integrasi.
 
-**What:** SQL lives in repo includes, not in page files.
-**When to use:** Any DB interaction (auth, employee CRUD, reports).
-**Trade-offs:** More files/functions; big gain in maintainability and easier testing.
-
-**Example:**
 ```php
-function findUserByEmail(string $email): ?array {
-    $db = db();
-    $stmt = $db->prepare('SELECT id, email, password_hash, role FROM users WHERE email = ? LIMIT 1');
-    $stmt->bind_param('s', $email);
-    $stmt->execute();
-    $res = $stmt->get_result()->fetch_assoc();
-    return $res ?: null;
+function findUserByEmail(mysqli $conn, string $email): ?array {
+    $stmt = mysqli_prepare($conn, 'SELECT id,email,password_hash,role,is_active FROM users WHERE email=? LIMIT 1');
+    mysqli_stmt_bind_param($stmt, 's', $email);
+    mysqli_stmt_execute($stmt);
+    $res = mysqli_stmt_get_result($stmt);
+    return mysqli_fetch_assoc($res) ?: null;
 }
 ```
 
-### Pattern 3: Compatibility Façade Migration
-
-**What:** Keep existing function entry points (`getReports()`, `saveReport()`) but replace storage internals.
-**When to use:** During v1->v2 migration to avoid touching every caller at once.
-**Trade-offs:** Temporary indirection layer; significantly safer rollout.
+### Pattern 3: Compatibility Facade Migration
+**What:** API lama tetap ada, storage backend diubah ke DB.
+**When to use:** transisi dari v1 session-array ke v2 DB.
+**Trade-offs:** layer sementara tambahan, tetapi rollout lebih aman.
 
 ## Data Flow
 
-### Request Flow (new auth-aware)
+### Request Flow (v2 integration)
 
 ```text
-[User request]
+[User Action]
     ↓
-[Page controller]
+[Page Controller]
     ↓
-[auth guard + input validation]
+[auth guard + validation]
     ↓
-[repo call(s)] → [koneksi.php mysqli] → [MySQL]
+[repo function(s)] → [koneksi.php] → [MySQL]
     ↓
-[existing cuti-calculator when needed]
+[cuti-calculator.php for entitlement computation]
     ↓
-[render HTML or redirect]
+[render/redirect]
 ```
 
-### Key Data Flows (updated from v1)
+### Key Data Flows
 
-1. **Login + session establishment**
-   - `login.php` POST -> `findUserByEmail()` -> `password_verify()` -> `session_regenerate_id()` -> set `$_SESSION['user_id']`, `$_SESSION['role']` -> redirect by role.
+1. **HR-first onboarding**  
+   HR login -> create employee (`employees`) -> provision account (`users` linked ke employee) -> account active.
 
-2. **HR onboarding before employee access**
-   - HR session -> `hr/employees.php` create employee + user credentials (or activate existing) -> employee can then log in.
+2. **Native login/session role**  
+   Login POST -> `user-repo` lookup -> `password_verify` -> `session_regenerate_id` -> session store `{user_id, role}`.
 
-3. **Employee self-view from identity (no presets)**
-   - Employee session -> resolve `employee` by `user_id` -> calculate/render entitlement from persisted join year and/or latest stored report.
+3. **Report persistence parity**  
+   Kalkulator compute -> save summary + rows ke DB -> laporan read DB -> export read DB yang sama.
 
-4. **Report persistence + export**
-   - HR kalkulator saves report rows in DB -> laporan lists from DB -> export reads same dataset to guarantee parity.
+4. **Cuti output focus tahun 6/7/8**  
+   Engine tetap hitung 8 tahun penuh; layer laporan/UI menampilkan default fokus tahun ke-6/7/8 (derived from row `tahun_ke IN (6,7,8)`), tanpa mengubah rumus inti.
 
-## Suggested Database Baseline (for integration planning)
+## Safe Build Order (Minimize Breakage)
 
-```sql
-users (
-  id PK,
-  email UNIQUE,
-  password_hash,
-  role ENUM('hr','employee'),
-  is_active,
-  created_at
-)
+1. **Phase A — DB Foundation (non-invasive)**
+   - Tambah migration + `koneksi.php`.
+   - Verifikasi connect + table creation idempotent.
+   - Tidak menyentuh route existing dulu.
 
-employees (
-  id PK,
-  user_id UNIQUE NULL,  -- nullable during onboarding, then linked
-  nama,
-  tahun_bergabung,
-  created_by_hr_user_id,
-  created_at,
-  updated_at
-)
+2. **Phase B — Auth Core + Guards**
+   - Tambah `auth.php`, `user-repo.php`, `logout.php`.
+   - Upgrade `login.php` ke auth DB.
+   - Guard di halaman HR/employee (read-only changes dulu).
 
-leave_reports (
-  id PK,
-  employee_id FK,
-  generated_by_hr_user_id FK,
-  tahun_bergabung_snapshot,
-  total_cuti,
-  created_at
-)
+3. **Phase C — HR Employee CRUD**
+   - Tambah `employee-repo.php` + `hr/employees.php`.
+   - Integrasi nav sidebar.
+   - Pastikan data master jalan sebelum provisioning.
 
-leave_report_rows (
-  id PK,
-  report_id FK,
-  tahun_ke,
-  tahun_kalender,
-  hari_cuti,
-  status
-)
+4. **Phase D — HR-First Provisioning**
+   - Tambah `hr/provisioning.php` + relasi employee-user.
+   - Enforce rule: employee tanpa provisioning tidak bisa login.
+
+5. **Phase E — Reporting Storage Migration (Bridge)**
+   - Tambah `report-repo.php`.
+   - Modifikasi `reports-data.php` jadi facade DB.
+   - Keep signature fungsi lama agar `hr/kalkulator.php`/`laporan.php` tetap hidup selama transisi.
+
+6. **Phase F — Route Parity Hardening**
+   - Update `hr/laporan.php` + `hr/export.php` ke DB canonical.
+   - Update `employee/dashboard.php` ke self-view auth.
+   - Implement filter/focus tahun 6/7/8 pada presentasi output.
+
+### Dependency Chain
+
+```text
+koneksi.php
+  -> auth core
+  -> employee CRUD
+  -> provisioning
+  -> report repo + facade migration
+  -> laporan/export parity
+  -> employee self-view finalization
 ```
 
-## Anti-Patterns to Avoid
+## Anti-Patterns
 
-### Anti-Pattern 1: Keeping auth decisions in query params (`?role=`)
-**What people do:** Continue relying on URL role switches.
-**Why it's wrong:** Bypasses real auth boundary and conflicts with session-backed flow.
-**Do this instead:** Resolve role strictly from authenticated session state.
+### Anti-Pattern 1: Mixed canonical data (session + DB in production path)
+**What people do:** sebagian route pakai `$_SESSION['reports']`, sebagian DB.  
+**Why it's wrong:** mismatch angka di dashboard/laporan/export.  
+**Do this instead:** semua read/write laporan lewat `report-repo` (langsung atau via facade transisional).
 
-### Anti-Pattern 2: Mixing session demo data and DB data in same feature path
-**What people do:** Some pages read `$_SESSION['reports']`, others read DB.
-**Why it's wrong:** Inconsistent counts/export parity and debugging chaos.
-**Do this instead:** Route all report read/write through one repo API.
+### Anti-Pattern 2: Role from URL/query
+**What people do:** mempertahankan `login.php?role=...` sebagai akses.  
+**Why it's wrong:** bypass auth boundary dan tidak memenuhi AUTH requirements.  
+**Do this instead:** role hanya dari session hasil login DB.
 
 ### Anti-Pattern 3: SQL in page templates
-**What people do:** Add ad-hoc mysqli queries directly in `hr/*.php`.
-**Why it's wrong:** Duplicated SQL + harder migration/testing.
-**Do this instead:** Keep SQL inside repo includes with prepared statements.
-
-## Build Order (Dependency-Aware, Procedural Constraints Preserved)
-
-1. **DB foundation first**
-   - Add migration SQL + `includes/koneksi.php`.
-   - Verify simple connectivity in Laragon/phpMyAdmin environment.
-
-2. **Auth core second**
-   - Implement `includes/auth.php` and `logout.php`.
-   - Seed one HR user account and verify login/logout/guard behavior.
-
-3. **Employee master data third (HR-only)**
-   - Build `employee-repo.php` + `hr/employees.php` CRUD.
-   - This enforces required flow dependency: employee accounts originate from HR.
-
-4. **Report persistence layer fourth**
-   - Build `report-repo.php`; adapt `includes/reports-data.php` as compatibility façade.
-   - Keep existing page contracts stable while changing storage backend.
-
-5. **Integrate HR modules fifth**
-   - Update `hr/dashboard.php`, `hr/kalkulator.php`, `hr/laporan.php` to DB-backed repos + role guard.
-
-6. **Integrate employee module sixth**
-   - Update `employee/dashboard.php` to session identity model (remove preset selection path).
-
-7. **Export + parity hardening last**
-   - Update `hr/export.php` to read DB-backed reports and verify parity with laporan listing.
-
-Dependency chain:
-
-```text
-DB connection -> Auth/session -> HR employee CRUD -> Report repo -> HR pages -> Employee page -> Export parity
-```
-
-## Scaling Considerations
-
-| Scale | Architecture Adjustments |
-|-------|--------------------------|
-| 0-1k users | Current procedural monolith + mysqli + shared includes is sufficient |
-| 1k-100k users | Add DB indexes (`users.email`, `employees.user_id`, `leave_reports.employee_id`) and pagination in laporan |
-| 100k+ users | Consider background export jobs and eventually framework migration; not needed for this milestone |
+**What people do:** query langsung di `hr/*.php`.  
+**Why it's wrong:** sulit audit prepared statement dan meningkat risiko regresi.  
+**Do this instead:** query dipusatkan di repo include procedural.
 
 ## Sources
 
-- Project context: `.planning/PROJECT.md`, `.planning/STATE.md` (read 2026-03-04)
-- Existing code architecture: `index.php`, `login.php`, `hr/*.php`, `employee/dashboard.php`, `includes/*.php` (read 2026-03-04)
-- PHP sessions (`session_start`, `session_regenerate_id`, `session_set_cookie_params`):
-  - https://www.php.net/manual/en/function.session-start.php
-  - https://www.php.net/manual/en/function.session-regenerate-id.php
-  - https://www.php.net/manual/en/function.session-set-cookie-params.php
-- PHP password hashing:
+- Internal project context & current codebase (HIGH):
+  - `.planning/PROJECT.md`
+  - `.planning/REQUIREMENTS.md`
+  - `.planning/ROADMAP.md`
+  - `login.php`, `hr/*.php`, `employee/dashboard.php`, `includes/*.php`
+- PHP official docs (HIGH):
   - https://www.php.net/manual/en/function.password-hash.php
   - https://www.php.net/manual/en/function.password-verify.php
-- PHP MySQLi + prepared statements:
-  - https://www.php.net/manual/en/book.mysqli.php
+  - https://www.php.net/manual/en/function.session-regenerate-id.php
   - https://www.php.net/manual/en/mysqli.quickstart.prepared-statements.php
 
 ---
-*Architecture research for: v2.0 backend procedural foundation integration*
-*Researched: 2026-03-04*
+*Architecture research for: v2.0 backend integration in procedural PHP app*
+*Researched: 2026-03-05*

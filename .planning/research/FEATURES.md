@@ -1,127 +1,140 @@
 # Feature Research
 
-**Domain:** Small internal HR web app (HR-first employee onboarding + employee login)
-**Researched:** 2026-03-04
+**Domain:** Native procedural PHP HR leave backend (milestone v2.0)
+**Researched:** 2026-03-05
 **Confidence:** MEDIUM
 
 ## Feature Landscape
 
 ### Table Stakes (Users Expect These)
 
-Features users assume exist for this milestone. Missing these = onboarding/auth feels incomplete.
+Features users assume exist for this milestone. Missing these = backend dianggap belum jadi.
 
 | Feature | Why Expected | Complexity | Notes |
 |---------|--------------|------------|-------|
-| HR creates employee master record first (name, employee ID, work email, join date, status) | Internal HR systems are employer-controlled systems of record; account lifecycle starts from HR data entry | MEDIUM | Must be the gating step before employee access. Aligns with OrangeHRM-style flow where employee is added before/with login details. |
-| Optional/linked login credential setup per employee record | HR expects ability to enable/disable login tied to employee status, not standalone user account | MEDIUM | Implement as one-to-one linkage between `employees` and `user_credentials` (or equivalent). Prevent orphan logins. |
-| Real backend login (replace visual-only demo) with session persistence | Users expect login to protect pages and preserve authenticated state across pages | MEDIUM | Use PHP native sessions + route/page guards. Preserve role split: HR vs Employee. |
-| Secure password handling (`password_hash`, `password_verify`) | Baseline security expectation even in internal apps | LOW | Use PHP-native password APIs, never plaintext/reversible storage. |
-| Session hardening at login/logout (`session_regenerate_id`, secure cookie params) | Standard practice to reduce session fixation/hijacking risk | MEDIUM | Set cookie flags (`HttpOnly`, `Secure` in HTTPS env, `SameSite`), regenerate session ID on successful login, destroy session on logout. |
-| Account state controls (active/inactive) with clear login failure behavior | HR needs to disable access immediately (termination/leave/etc.) | LOW | Login must check employee/account status each attempt; return generic invalid credentials messaging to avoid user enumeration detail leakage. |
-| First-login handoff to existing employee self-view | New login must immediately unlock value from existing v1 features | LOW | After auth, employee lands on existing self-view entitlement page; no duplicate entitlement logic. |
+| DB foundation terpusat (`koneksi.php` + schema inti + setup repeatable) | Tanpa DB canonical, CRUD/auth tidak bisa dipercaya | MEDIUM | Harus jadi single source of truth untuk `employees`, `users`, `leave_reports`, `leave_report_rows`, `schema_migrations`. Dependensi langsung untuk semua fitur v2. |
+| HR Employee CRUD lengkap (create/list/update + delete/nonaktif sesuai aturan bisnis) | Ini fungsi inti HR sebelum login employee diaktifkan | MEDIUM | Gunakan prepared statements untuk input user. Untuk “delete”, default aman: nonaktif/soft delete agar histori laporan tidak rusak. |
+| HR-first provisioning akun (employee master dulu, akun login setelahnya) | Sesuai alur bisnis HR internal; mencegah akun liar | MEDIUM | Practical behavior: akun belum diprovision = login ditolak dengan pesan jelas. Mapping `users.employee_id` wajib valid. |
+| Login real DB + password hash + native session | v1 sudah demo visual; v2 wajib autentikasi nyata | MEDIUM | `password_hash()` saat set/reset password, `password_verify()` saat login. Setelah login sukses, regenerate session ID lalu simpan `user_id` + `role` di `$_SESSION`. |
+| Role guard server-side untuk area HR vs Employee + logout benar | Akses langsung URL tanpa guard adalah celah umum di PHP native | LOW | Semua endpoint sensitif wajib cek session+role sebelum render/proses. Logout harus `session_unset()` + `session_destroy()` + invalidasi cookie session. |
+| Cuti output fokus tahun ke-6/7/8 dari data DB (bukan session-array demo) | Milestone minta output fokus ini dan konsistensi hasil | MEDIUM | Reuse engine kalkulator existing (v1), tapi source data dan penyimpanan report harus DB agar parity HR/employee + export konsisten. |
+| Baseline CSRF untuk semua aksi state-changing (login/CRUD/provisioning) | Session auth tanpa CSRF rawan request palsu | MEDIUM | Hidden token per form + verifikasi server. Minimal untuk POST/PUT-like actions. Ini bukan “nice to have” untuk app internal yang pakai cookie session. |
 
 ### Differentiators (Competitive Advantage)
 
-Not mandatory for v2.0 launch, but high value for internal HR usability.
+Features that improve quality/safety beyond tutorial CRUD biasa, tetap realistis untuk v2.
 
 | Feature | Value Proposition | Complexity | Notes |
 |---------|-------------------|------------|-------|
-| Onboarding readiness checklist (per employee) | Gives HR operational visibility: "record complete, credential created, first login done" | MEDIUM | Lightweight status model (not full workflow engine). Great fit for procedural PHP + simple DB tables. |
-| Invite-first activation flow (HR creates employee, employee sets password via first-use token) | Avoids HR setting reusable passwords and improves security posture | HIGH | Token lifecycle, expiry, one-time use, and audit trail needed. Good v2.x candidate if v2.0 time is tight. |
-| HR onboarding dashboard metrics (pending activation, first-login completion rate) | Converts onboarding from admin task into measurable process | MEDIUM | Can reuse session-backed/reporting UI patterns but now DB-backed. Keep metrics simple initially. |
-| Minimal auth audit trail (created by HR, login success/fail, disabled account attempts) | Improves traceability for internal governance and troubleshooting | MEDIUM | Start with append-only events table; avoid full SIEM ambitions. |
+| Provisioning status lifecycle yang eksplisit (`not_provisioned` → `active` → `suspended`) | HR bisa kontrol kesiapan akun tanpa bikin data karyawan ganda | MEDIUM | Lebih kuat daripada pola “langsung insert user”. Membantu operasi HR harian (joiner, hold, resign). |
+| Guard rails untuk data integrity saat nonaktifkan karyawan | Mencegah report lama putus relasi atau orphan data | MEDIUM | Nonaktifkan employee/user tanpa hapus histori `leave_reports`. Tampilkan badge status di list supaya HR tidak salah operasi. |
+| Preset output “Tahun 6/7/8” sebagai view terfokus HR | Sesuai use-case domain, mempercepat review kebijakan cuti matang | LOW | Bukan engine baru; ini penyajian/filter terfokus di atas kalkulator existing + data DB canonical. |
+| Flash message + error states yang operasional (bukan debug dump) | Memudahkan HR menjalankan flow provisioning tanpa ambigu | LOW | Contoh: “Akun belum diprovision”, “NIP sudah digunakan”, “Data karyawan nonaktif”. Mengurangi salah langkah user internal. |
 
 ### Anti-Features (Commonly Requested, Often Problematic)
 
-Features that sound attractive but are poor fit for this milestone/scope.
-
 | Feature | Why Requested | Why Problematic | Alternative |
 |---------|---------------|-----------------|-------------|
-| Self-signup / open employee registration | Feels "faster" for account creation | Conflicts with HR-first requirement and creates identity/data integrity risk | Keep HR-provisioned accounts only; employee access enabled only after HR record exists |
-| Social login / SSO integration (Google/Microsoft/OIDC) in v2.0 | Perceived convenience | High integration/security complexity; out of proportion for procedural internal v2.0 foundation | Defer to later milestone after stable local auth + role model |
-| Full onboarding suite (e-signatures, LMS, hardware provisioning, 30-60-90 workflows) | Mimics enterprise HR platforms | Massive scope expansion; delays core backend/auth foundation | Keep v2.0 to HR record + auth + enablement lifecycle; add modules incrementally |
-| Aggressive account lockout without recovery design | Security-driven request | Can create internal lockout incidents and HR support burden | Use modest throttling + admin reset path + clear support process |
-| Password rules that prioritize complexity over length/usability (legacy regex-heavy policies) | Traditional security habit | Poor UX, weak real-world outcomes, higher reset/support overhead | Use reasonable minimum length, block weak/common passwords if possible, and secure hashing/session controls |
+| Self-signup karyawan publik | Terlihat cepat agar employee daftar sendiri | Bertentangan langsung dengan FLOW-01..03 (HR-first), membuka akun tak tervalidasi | Tetap HR-first: HR buat master employee lalu provisioning akun |
+| JWT/token auth untuk app server-rendered native PHP | Dianggap “modern” | Menambah kompleksitas token lifecycle tanpa nilai besar di scope ini | Session native PHP yang di-hardening (strict mode, regenerate id, cookie flags) |
+| Hard delete employee + cascade delete histori | DB terlihat “bersih” | Risiko kehilangan histori cuti/laporan dan inkonsistensi audit | Soft delete/nonaktif + pembatasan akses login |
+| Refactor besar ke framework/OOP di milestone ini | “Sekalian rapikan arsitektur” | Melanggar constraint proyek, memecah fokus deliverable v2 | Pertahankan procedural; rapikan via modul file/konvensi fungsi |
+| Menambah fitur deferred (SSO, full audit trail, policy engine dinamis) dalam satu fase | Terlihat strategis | Scope creep tinggi, menghambat landing fitur inti backend | Simpan sebagai backlog setelah v2 stabil |
 
 ## Feature Dependencies
 
 ```text
-[Existing v1 Employee Self-View]
-    └──requires login context from──> [Session-backed Employee Authentication]
-                                            └──requires──> [Credential record linked to employee]
-                                                                └──requires──> [HR creates employee master record]
+[DB Foundation: koneksi + schema + migrations]
+    └──requires──> [HR Employee CRUD]
+                        └──requires──> [HR-first provisioning akun]
+                                             └──requires──> [Login DB + Session Auth]
+                                                                  └──requires──> [Role Guard + Logout]
 
-[Existing v1 Report Save/List/Export]
-    └──enhances──> [HR role login + page guards]
+[Calculator core v1 + employee view parity]
+    └──enhances──> [Cuti output fokus tahun 6/7/8 dari DB]
 
-[Open self-signup] ──conflicts──> [HR-first onboarding gate]
+[Session cookie auth]
+    └──requires security──> [CSRF token + secure session settings]
+
+[Hard delete employee]
+    └──conflicts──> [Konsistensi histori leave_reports/export]
 ```
 
 ### Dependency Notes
 
-- **Session-backed employee authentication requires linked credential record:** employee access must resolve to a valid employee entity, otherwise self-view/report attribution breaks.
-- **Linked credential record requires HR-created employee record:** this enforces milestone requirement that onboarding data precedes employee login.
-- **Existing self-view requires authentication context:** v1 already has entitlement rendering; v2.0 should reuse it, now gated by authenticated employee identity.
-- **Existing report flows are enhanced by HR role login:** report list/export should be tied to authenticated HR sessions instead of demo entry points.
-- **Open self-signup conflicts with HR-first onboarding:** it bypasses source-of-truth employee creation and should stay out of scope.
+- **CRUD dan provisioning wajib menunggu DB foundation:** tanpa schema canonical, validasi unik, relasi `employee-user`, dan migrasi repeatable akan rapuh.
+- **Login real harus sesudah provisioning flow jelas:** kalau tidak, akun yatim (tanpa employee valid) akan muncul.
+- **Role guard baru efektif setelah session auth stabil:** guard berbasis role di `$_SESSION` butuh login DB yang benar.
+- **Output tahun 6/7/8 bergantung data DB, bukan session demo:** agar hasil HR/employee/export tetap sinkron.
+- **Hard delete konflik dengan laporan historis:** nonaktif lebih aman untuk milestone ini.
 
 ## MVP Definition
 
 ### Launch With (v2.0)
 
-- [ ] HR creates employee records in DB (including active/inactive status) — core system-of-record gate
-- [ ] HR can create/enable linked employee login credentials — required for controlled access lifecycle
-- [ ] Native PHP session-based login/logout with role-aware guards — replaces visual-only auth and protects pages
-- [ ] Employee successful login lands in existing self-view entitlement feature — immediate user-visible value
-- [ ] Basic failed-login handling (generic errors) + session hardening — minimum safe auth baseline
+Minimum viable milestone berdasarkan requirement aktif (DATA/EMPCRUD/FLOW/AUTH/SEC).
+
+- [ ] DB canonical + setup repeatable (`koneksi.php`, schema inti, migration marker) — fondasi semua fitur baru.
+- [ ] HR CRUD karyawan + status aktif/nonaktif — inti operasi data HR.
+- [ ] HR-first provisioning akun + login DB/session + role guard/logout — alur bisnis utama end-to-end.
+- [ ] Migrasi output cuti fokus tahun 6/7/8 ke data DB canonical — memastikan parity hasil dan konsistensi laporan/export.
+- [ ] Baseline security: password hash/verify, prepared statements, CSRF form token, session hardening dasar — menutup celah paling umum.
 
 ### Add After Validation (v2.x)
 
-- [ ] Invite-token first-time password setup — add when HR no longer wants manual initial passwords
-- [ ] Onboarding readiness checklist/status tracking — add when HR volume makes manual tracking painful
-- [ ] Auth/onboarding audit timeline UI — add when traceability requests increase
+- [ ] Reset password flow terkelola HR (forced reset first login optional) — tambah setelah flow provisioning stabil dipakai.
+- [ ] Pencarian/filter employee lebih kaya (status, unit, masa kerja) — tambah saat volume data mulai mengganggu UX.
 
 ### Future Consideration (v3+)
 
-- [ ] SSO/OIDC integration — defer until local auth and role/access model are stable
-- [ ] Expanded onboarding modules (documents/e-sign/LMS provisioning) — defer until core CRUD+auth proves reliable
+- [ ] Audit trail detail per field + login anomaly dashboard — defer karena butuh desain data observability yang matang.
+- [ ] SSO/OIDC integration — defer sesuai REQUIREMENTS future (SSO-01), bukan kebutuhan MVP backend native.
 
 ## Feature Prioritization Matrix
 
 | Feature | User Value | Implementation Cost | Priority |
 |---------|------------|---------------------|----------|
-| HR employee master record + status | HIGH | MEDIUM | P1 |
-| Linked credential creation/enabling | HIGH | MEDIUM | P1 |
-| Session-backed login/logout + guards | HIGH | MEDIUM | P1 |
-| Secure password/session handling baseline | HIGH | LOW/MEDIUM | P1 |
-| First-login password activation token | MEDIUM | HIGH | P2 |
-| Onboarding checklist/status board | MEDIUM | MEDIUM | P2 |
-| SSO/OIDC | LOW (for current scope) | HIGH | P3 |
+| DB foundation + repeatable setup | HIGH | MEDIUM | P1 |
+| HR employee CRUD | HIGH | MEDIUM | P1 |
+| HR-first provisioning akun | HIGH | MEDIUM | P1 |
+| Login DB + session + role guard/logout | HIGH | MEDIUM | P1 |
+| Output cuti fokus tahun 6/7/8 via DB | HIGH | MEDIUM | P1 |
+| CSRF + session hardening baseline | HIGH | MEDIUM | P1 |
+| Advanced filter/search employee | MEDIUM | LOW | P2 |
+| Forced password reset first login | MEDIUM | MEDIUM | P2 |
+| SSO/OIDC | LOW (for now) | HIGH | P3 |
 
 **Priority key:**
-- P1: Must have for v2.0 launch
-- P2: Should have after core validation
-- P3: Nice to have / future scope
+- P1: Must have for launch
+- P2: Should have, add when possible
+- P3: Nice to have, future consideration
 
 ## Competitor Feature Analysis
 
-| Feature | OrangeHRM pattern | ADP guidance pattern | Our Approach (v2.0) |
-|---------|-------------------|----------------------|---------------------|
-| Employee record before login | Add employee in PIM, optionally create login during add flow | Employer sets profile/system-of-record and provisions access in onboarding responsibilities | Mirror this HR-first gate as non-negotiable |
-| Onboarding process breadth | Supports broad HR profile administration | Recommends broader 90-day process and checklists | Keep only backend foundation subset (record + auth + enablement) |
-| Authentication expectations | Role-linked user account management (ESS/Admin) | Emphasizes preparation, credentials readiness, and structured flow | Role-aware session auth replacing demo-only login |
+| Feature | Competitor A (crud-php-simple) | Competitor B (tutorial-crud-php-native) | Our Approach |
+|---------|-------------------------------|------------------------------------------|--------------|
+| CRUD employee baseline | Ada CRUD sederhana file-per-action | Ada CRUD tutorial + UI scaffolding | Ambil pola sederhana, tambah constraint domain HR (status/nonaktif + relasi user) |
+| Auth + role guard | Umumnya minim/tidak fokus auth production | Ada login/register tutorial-level | Wajib auth DB production-grade untuk internal HR-first (tanpa self-signup) |
+| Security baseline | Sering belum komprehensif (contoh tutorial basic) | Fokus pembelajaran, bukan hardening penuh | Wajib `password_hash/verify`, prepared statements, CSRF token, session hardening |
+| Provisioning flow HR-first | Umumnya tidak ada; user flow generic | Umumnya login/register generic | Jadikan fitur inti: employee master dulu, akun aktif belakangan oleh HR |
+| Fokus output cuti tahun 6/7/8 | Tidak domain-spesifik | Tidak domain-spesifik | Domain-specific differentiator dengan reuse kalkulator v1 + data DB canonical |
 
 ## Sources
 
-- OrangeHRM Help Center — “How to Add an Employee” (employee-first + optional login creation): https://starterhelp.orangehrm.com/hc/en-us/articles/360018588500-How-to-Add-an-Employee (**MEDIUM** confidence; official vendor help doc, older date but workflow still canonical)
-- ADP Resource — “Onboarding” (updated Feb 20, 2026): https://www.adp.com/resources/articles-and-insights/articles/o/onboarding.aspx (**MEDIUM** confidence; official vendor guidance, broad but current)
-- PHP Manual — `password_hash`: https://www.php.net/manual/en/function.password-hash.php (**HIGH** confidence)
-- PHP Manual — `password_verify`: https://www.php.net/manual/en/function.password-verify.php (**HIGH** confidence)
-- PHP Manual — `password_needs_rehash`: https://www.php.net/manual/en/function.password-needs-rehash.php (**HIGH** confidence)
-- PHP Manual — `session_regenerate_id`: https://www.php.net/manual/en/function.session-regenerate-id.php (**HIGH** confidence)
-- PHP Manual — `session_set_cookie_params`: https://www.php.net/manual/en/function.session-set-cookie-params.php (**HIGH** confidence)
-- OWASP Authentication Cheat Sheet (generic errors, TLS, throttling, secure auth controls): https://cheatsheetseries.owasp.org/cheatsheets/Authentication_Cheat_Sheet.html (**HIGH** confidence)
+- PHP Manual — `password_hash()` (HIGH): https://www.php.net/manual/en/function.password-hash.php
+- PHP Manual — `password_verify()` (HIGH): https://www.php.net/manual/en/function.password-verify.php
+- PHP Manual — Session Handling (HIGH): https://www.php.net/manual/en/book.session.php
+- PHP Manual — Session Management Basics (HIGH): https://www.php.net/manual/en/features.session.security.management.php
+- PHP Manual — Securing Session INI Settings (HIGH): https://www.php.net/manual/en/session.security.ini.php
+- PHP Manual — `session_regenerate_id()` (HIGH): https://www.php.net/manual/en/function.session-regenerate-id.php
+- PHP Manual — MySQLi Prepared Statements (HIGH): https://www.php.net/manual/en/mysqli.quickstart.prepared-statements.php
+- OWASP CSRF Prevention Cheat Sheet (MEDIUM-HIGH): https://cheatsheetseries.owasp.org/cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html
+- Reference ecosystem examples (LOW-MEDIUM, tutorial/repo patterns, bukan standard resmi):
+  - https://github.com/chapagain/crud-php-simple
+  - https://github.com/suryamsj/tutorial-crud-php-native
+  - https://github.com/thexdev/php-native-crud
+  - https://www.codepolitan.com/blog/tutorial-membuat-crud-php-dengan-mysql-59897c72d8470/
 
 ---
-*Feature research for: HR-first onboarding + employee login milestone (v2.0 backend foundation)*
-*Researched: 2026-03-04*
+*Feature research for: Sicuti HRD Cuti Tracker v2.0 backend milestone*
+*Researched: 2026-03-05*
