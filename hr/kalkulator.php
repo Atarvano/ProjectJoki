@@ -55,6 +55,15 @@ if (isset($_SESSION['flash'])) {
     unset($_SESSION['flash']);
 }
 
+$profile_label = trim((string) ($_SESSION['nama'] ?? ''));
+if ($profile_label === '') {
+    $profile_label = trim((string) ($_SESSION['username'] ?? 'HR'));
+}
+if ($profile_label === '') {
+    $profile_label = 'HR';
+}
+$profile_initials = strtoupper(substr($profile_label, 0, 2));
+
 $dashboard_context = [
     'role' => 'hr',
     'active_nav' => 'kalkulator',
@@ -63,8 +72,8 @@ $dashboard_context = [
         ['label' => 'Dashboard HR', 'url' => 'dashboard.php'],
         ['label' => 'Kalkulator Hak Cuti', 'url' => '#']
     ],
-    'profile_label' => 'Admin HR',
-    'profile_initials' => 'HR',
+    'profile_label' => $profile_label,
+    'profile_initials' => $profile_initials,
 ];
 
 ob_start();

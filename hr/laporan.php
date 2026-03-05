@@ -46,6 +46,15 @@ foreach ($reports as $index => $report) {
     }
 }
 
+$profile_label = trim((string) ($_SESSION['nama'] ?? ''));
+if ($profile_label === '') {
+    $profile_label = trim((string) ($_SESSION['username'] ?? 'HR'));
+}
+if ($profile_label === '') {
+    $profile_label = 'HR';
+}
+$profile_initials = strtoupper(substr($profile_label, 0, 2));
+
 $dashboard_context = [
     'role' => 'hr',
     'active_nav' => 'laporan',
@@ -54,8 +63,8 @@ $dashboard_context = [
         ['label' => 'Dashboard HR', 'url' => 'dashboard.php'],
         ['label' => 'Laporan Hak Cuti', 'url' => '#']
     ],
-    'profile_label' => 'Admin HR',
-    'profile_initials' => 'HR',
+    'profile_label' => $profile_label,
+    'profile_initials' => $profile_initials,
 ];
 
 ob_start();
@@ -110,7 +119,7 @@ ob_start();
     <div class="card-header bg-white border-bottom p-4">
         <div class="d-flex align-items-center gap-2 text-muted">
             <i class="bi bi-info-circle text-primary"></i>
-            <small>Data demo bersifat sementara dan akan hilang saat sesi berakhir (tutup browser). Gunakan fitur Export untuk menyimpan data secara permanen.</small>
+            <small>Data laporan menampilkan hasil perhitungan hak cuti terbaru. Gunakan fitur Export Excel untuk menyimpan rekap data.</small>
         </div>
     </div>
     
@@ -166,11 +175,7 @@ ob_start();
                                         <div>
                                             <div class="fw-bold text-dark"><?php echo htmlspecialchars($report['nama']); ?></div>
                                             <div class="text-muted small d-flex align-items-center gap-1">
-                                                <?php if ($report['is_sample']): ?>
-                                                    <span class="badge bg-secondary opacity-75 fw-normal rounded-pill" style="font-size: 0.65rem;">Preset Demo</span>
-                                                <?php else: ?>
-                                                    <span>Tersimpan di Sesi</span>
-                                                <?php endif; ?>
+                                                <span class="badge bg-secondary opacity-75 fw-normal rounded-pill" style="font-size: 0.65rem;">Data Laporan</span>
                                             </div>
                                         </div>
                                     </div>
@@ -218,8 +223,8 @@ ob_start();
                         <span class="fw-bold fs-2"><?php echo strtoupper(substr(htmlspecialchars($report['nama']), 0, 1)); ?></span>
                     </div>
                     <h4 class="mb-1"><?php echo htmlspecialchars($report['nama']); ?></h4>
-                    <div class="badge <?php echo $report['is_sample'] ? 'bg-secondary' : 'bg-success'; ?> bg-opacity-10 text-<?php echo $report['is_sample'] ? 'secondary' : 'success'; ?> rounded-pill px-3">
-                        <?php echo $report['is_sample'] ? 'Preset Demo' : 'Tersimpan di Sesi'; ?>
+                    <div class="badge bg-secondary bg-opacity-10 text-secondary rounded-pill px-3">
+                        Data Laporan
                     </div>
                 </div>
 
