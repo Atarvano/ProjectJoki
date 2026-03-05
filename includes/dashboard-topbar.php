@@ -3,7 +3,6 @@ $page_title = $dashboard_context['page_title'] ?? 'Dashboard';
 $breadcrumb = $dashboard_context['breadcrumb'] ?? [];
 $profile_label = $dashboard_context['profile_label'] ?? 'Admin HR';
 $profile_initials = $dashboard_context['profile_initials'] ?? 'HR';
-$demo_badge = $dashboard_context['demo_badge'] ?? 'Demo v1';
 ?>
 <header class="dashboard-topbar bg-white border-bottom px-3 py-2 d-flex align-items-center justify-content-between">
     <div class="d-flex align-items-center">
@@ -29,11 +28,6 @@ $demo_badge = $dashboard_context['demo_badge'] ?? 'Demo v1';
     </div>
 
     <div class="d-flex align-items-center gap-2 gap-md-3">
-        <!-- Demo Badge -->
-        <span class="demo-badge d-none d-sm-inline-flex border-primary text-primary bg-primary-subtle" style="font-family: var(--font-body); font-weight: 600;">
-            <i class="bi bi-eye me-1"></i> <?php echo $demo_badge; ?>
-        </span>
-
         <!-- Dummy Search -->
         <div class="dashboard-search d-none d-md-block position-relative">
             <i class="bi bi-search position-absolute top-50 start-0 translate-middle-y ms-3 text-primary" style="opacity: 0.5;"></i>
@@ -60,7 +54,7 @@ $demo_badge = $dashboard_context['demo_badge'] ?? 'Demo v1';
                 <li><a class="dropdown-item fw-medium text-secondary" href="#"><i class="bi bi-person me-2 text-primary opacity-75"></i>Profil</a></li>
                 <li><a class="dropdown-item fw-medium text-secondary" href="#"><i class="bi bi-gear me-2 text-primary opacity-75"></i>Pengaturan</a></li>
                 <li><hr class="dropdown-divider"></li>
-                <li><a class="dropdown-item fw-bold text-danger" href="/index.php"><i class="bi bi-box-arrow-right me-2"></i>Logout</a></li>
+                <li><a class="dropdown-item fw-bold text-danger" href="/logout.php"><i class="bi bi-box-arrow-right me-2"></i>Keluar</a></li>
             </ul>
         </div>
     </div>

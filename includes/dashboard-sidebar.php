@@ -54,6 +54,11 @@ if ($role === 'hr') {
                 <?php endif; ?>
             <?php endforeach; ?>
         </ul>
+        <div class="p-3 mt-auto border-top">
+            <a href="/logout.php" class="btn btn-outline-danger w-100 fw-bold">
+                <i class="bi bi-box-arrow-right me-2"></i>Keluar
+            </a>
+        </div>
     </div>
 </div>
 
@@ -91,4 +96,9 @@ if ($role === 'hr') {
             <?php endif; ?>
         <?php endforeach; ?>
     </ul>
+    <div class="p-3 mt-auto border-top">
+        <a href="/logout.php" class="btn btn-outline-danger w-100 fw-bold">
+            <i class="bi bi-box-arrow-right me-2"></i>Keluar
+        </a>
+    </div>
 </aside>
