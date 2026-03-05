@@ -25,6 +25,7 @@ $dashboard_context = [
     ],
     'profile_label' => $profile_label,
     'profile_initials' => strtoupper(substr($profile_label, 0, 2)),
+    'profile_role' => 'Karyawan',
 ];
 
 $karyawan_id = isset($_SESSION['karyawan_id']) ? (int) $_SESSION['karyawan_id'] : 0;

@@ -65,6 +65,7 @@ $dashboard_context = [
     ],
     'profile_label' => $profile_label,
     'profile_initials' => $profile_initials,
+    'profile_role' => 'HR',
 ];
 
 ob_start();

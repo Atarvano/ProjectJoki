@@ -3,6 +3,11 @@ $page_title = $dashboard_context['page_title'] ?? 'Dashboard';
 $breadcrumb = $dashboard_context['breadcrumb'] ?? [];
 $profile_label = $dashboard_context['profile_label'] ?? 'Admin HR';
 $profile_initials = $dashboard_context['profile_initials'] ?? 'HR';
+$role_key = strtolower((string) ($dashboard_context['role'] ?? 'hr'));
+$profile_role = trim((string) ($dashboard_context['profile_role'] ?? ''));
+if ($profile_role === '') {
+    $profile_role = $role_key === 'employee' ? 'Karyawan' : 'HR';
+}
 ?>
 <header class="dashboard-topbar bg-white border-bottom px-3 py-2 d-flex align-items-center justify-content-between">
     <div class="d-flex align-items-center">
@@ -48,7 +53,10 @@ $profile_initials = $dashboard_context['profile_initials'] ?? 'HR';
                 <div class="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center fw-bold me-2 shadow-sm" style="width: 36px; height: 36px; font-family: var(--font-display);">
                     <?php echo $profile_initials; ?>
                 </div>
-                <span class="d-none d-sm-inline fw-bold text-primary-dark" style="font-family: var(--font-body);"><?php echo $profile_label; ?></span>
+                <span class="d-none d-sm-inline-flex flex-column lh-sm">
+                    <span class="fw-bold text-primary-dark" style="font-family: var(--font-body);"><?php echo $profile_label; ?></span>
+                    <small class="text-muted" style="font-family: var(--font-body); font-size: 0.72rem;"><?php echo $profile_role; ?></small>
+                </span>
             </a>
             <ul class="dropdown-menu dropdown-menu-end text-small shadow-sm border-0" aria-labelledby="dropdownUser" style="font-family: var(--font-body);">
                 <li><a class="dropdown-item fw-medium text-secondary" href="#"><i class="bi bi-person me-2 text-primary opacity-75"></i>Profil</a></li>
