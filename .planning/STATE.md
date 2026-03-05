@@ -1,72 +1,82 @@
 ---
 gsd_state_version: 1.0
 milestone: v2.0
-milestone_name: backend-native-php-hr-first-onboarding
-status: roadmap-created
-last_updated: "2026-03-05T00:00:00.000Z"
+milestone_name: milestone
+status: In progress
+last_updated: "2026-03-05T05:21:12.026Z"
 progress:
   total_phases: 5
-  completed_phases: 0
-  total_plans: 0
-  completed_plans: 0
+  completed_phases: 1
+  total_plans: 1
+  completed_plans: 1
+  percent: 100
 ---
 
-# Project State
+# State: Sicuti HRD Cuti Tracker
 
 ## Project Reference
 
-See: `.planning/PROJECT.md` (updated 2026-03-05)
-
-**Core value:** HR membuat data karyawan dan provisioning kredensial dulu, lalu employee login dengan akun yang dibuat HR.
-**Current focus:** Phase 14 - Data Foundation & Autonomous Bootstrap.
+**Core Value:** HR creates employee data first, provisions login credentials, then employees log in with native PHP sessions to view their own leave data.
+**Current Milestone:** v2.0 — Backend Native PHP + HR-First Employee Onboarding
+**Roadmap:** 5 phases (14–18), 36 requirements
 
 ## Current Position
 
-Phase: 14 of 18 (Data Foundation & Autonomous Bootstrap)
-Plan: 0 of TBD in current phase
-Status: Ready to plan
-Last activity: 2026-03-05 — Roadmap v2.0 (phase 14-18) ditetapkan dan traceability dipetakan.
-
-Progress: [----------] 0%
+**Phase:** 14 — Database Foundation
+**Plan:** 01 completed
+**Status:** Phase 14 complete
+**Progress:** [██████████] 100%
 
 ## Performance Metrics
 
-**Velocity:**
-- Total plans completed: 0
-- Average duration: -
-- Total execution time: 0.0 hours
-
-**By Phase:**
-
-| Phase | Plans | Total | Avg/Plan |
-|-------|-------|-------|----------|
-| 14-18 | 0 | 0 min | - |
-
-**Recent Trend:**
-- Last 5 plans: -
-- Trend: Stable
+| Metric | Value |
+|--------|-------|
+| Phases completed | 1/5 |
+| Requirements completed | 6/36 |
+| Plans completed | 1/1 |
+| Current streak | - |
+| Phase 14 P01 | 2 min | 2 tasks | 3 files |
 
 ## Accumulated Context
 
-### Decisions
+### Key Decisions
+| Decision | Rationale | Phase |
+|----------|-----------|-------|
+| 5 phases derived from dependency chain | DB → Auth → CRUD → Provisioning → Wiring follows natural build order | Roadmap |
+| DASH requirements distributed across phases | Dashboard items assigned to the phase that creates the feature they depend on (auth UI → P15, nav → P16, stats → P18) | Roadmap |
+| Phase 18 combines calculator + reports + dashboards | All are data-wiring tasks with same pattern (swap demo → DB); independent internally but share the same dependency set | Roadmap |
+| Idempotent SQL import strategy for foundation schema | `CREATE IF NOT EXISTS` and upsert-style seed inserts enable safe repeated local imports | 14 |
+| Silent koneksi sanity-check query | Avoids extra output side effects when `koneksi.php` is included by rendered PHP pages | 14 |
 
-Decisions are logged in PROJECT.md Key Decisions table.
-Recent decisions affecting current work:
+### Implementation Guardrails
+- Native procedural PHP only (no OOP/framework)
+- MySQLi via `koneksi.php` (variable: `$koneksi`)
+- Native PHP sessions for auth/role guard
+- SQL file for manual DB import (no auto-bootstrap)
+- Prepared statements for ALL user input queries
+- `password_hash()` / `password_verify()` for credentials
+- HR admin is standalone user (not in karyawan table)
 
-- v2.0 roadmap dimulai dari Phase 14 (continuation milestone numbering).
-- Guardrail wajib di semua fase: native procedural PHP, MySQLi via `koneksi.php`, native session auth/role.
-- DATA-04 (autonomous DB bootstrap one local command) diperlakukan sebagai deliverable fondasi inti di Phase 14.
+### TODOs
+- [ ] Plan Phase 15
 
-### Pending Todos
-
-- Lanjut ke `/gsd-plan-phase 14` untuk merinci rencana eksekusi fondasi DB + bootstrap command.
-
-### Blockers/Concerns
-
-- Tidak ada blocker aktif.
+### Blockers
+- Local MySQL service not reachable in this execution environment (runtime DB verification pending on active service).
 
 ## Session Continuity
 
-Last session: 2026-03-05
-Stopped at: ROADMAP.md, STATE.md, dan REQUIREMENTS traceability untuk milestone v2.0 selesai ditulis.
-Resume file: `.planning/ROADMAP.md`
+### Last Session
+- **Date:** 2026-03-05
+- **Activity:** Executed Phase 14 Plan 01 (database foundation)
+- **Outcome:** SQL schema, koneksi.php, migrate.php fix, SUMMARY.md, ROADMAP/REQUIREMENTS progress updated
+- **Next:** Plan and execute Phase 15 (Authentication & Access Control)
+
+### Context for Next Session
+- Start with `/gsd-plan-phase 15`
+- Ensure local MySQL service is running before runtime verification
+- Reuse `koneksi.php` and seeded `users` data for auth implementation
+- Phase 15 should consume HR user `HR0001` from DB
+
+---
+*State initialized: 2026-03-05*
+*Last updated: 2026-03-05*
