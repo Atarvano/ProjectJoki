@@ -17,7 +17,7 @@ if (PHP_SAPI !== 'cli') {
 // Load koneksi dan konek ke database sicuti_hrd
 // ============================================================
 require_once __DIR__ . '/../koneksi.php';
-$db = db_connect();
+$db = $koneksi;
 
 // ============================================================
 // Pastikan tabel schema_migrations ada untuk tracking
