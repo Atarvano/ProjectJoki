@@ -2,14 +2,14 @@
 gsd_state_version: 1.0
 milestone: v2.0
 milestone_name: milestone
-status: completed
-last_updated: "2026-03-05T05:53:31.857Z"
+status: in_progress
+last_updated: "2026-03-05T07:00:19.000Z"
 progress:
   total_phases: 5
   completed_phases: 1
-  total_plans: 2
-  completed_plans: 2
-  percent: 100
+  total_plans: 4
+  completed_plans: 3
+  percent: 75
 ---
 
 # State: Sicuti HRD Cuti Tracker
@@ -22,21 +22,22 @@ progress:
 
 ## Current Position
 
-**Phase:** 14 — Database Foundation
-**Plan:** 02 completed (all phase plans complete)
-**Status:** Phase 14 complete
-**Progress:** [██████████] 100%
+**Phase:** 15 — Authentication & Access Control
+**Plan:** 01 completed (1/2)
+**Status:** Phase 15 in progress
+**Progress:** [███████░░░] 75%
 
 ## Performance Metrics
 
 | Metric | Value |
 |--------|-------|
 | Phases completed | 1/5 |
-| Requirements completed | 6/36 |
-| Plans completed | 2/2 |
+| Requirements completed | 11/36 |
+| Plans completed | 3/4 |
 | Current streak | - |
 | Phase 14 P01 | 2 min | 2 tasks | 3 files |
 | Phase 14 P02 | 3 min | 2 tasks | 2 files |
+| Phase 15 P01 | 0 min | 2 tasks | 3 files |
 
 ## Accumulated Context
 
@@ -48,8 +49,9 @@ progress:
 | Phase 18 combines calculator + reports + dashboards | All are data-wiring tasks with same pattern (swap demo → DB); independent internally but share the same dependency set | Roadmap |
 | Idempotent SQL import strategy for foundation schema | `CREATE IF NOT EXISTS` and upsert-style seed inserts enable safe repeated local imports | 14 |
 | Silent koneksi sanity-check query | Avoids extra output side effects when `koneksi.php` is included by rendered PHP pages | 14 |
-| Runtime verification uses terminal `diagnosed` status when environment blocks full validation | Prevents lingering `human_needed` state and records exact remediation commands | 14 |
-| Phase 14 runtime checks are centralized in one CLI verifier script | Ensures repeatable PASS/FAIL output for connection, schema, FK, seed, and prepared statement checks | 14 |
+| Phase 14 verification finalized after clean phpMyAdmin import + full runtime PASS checks | Closes environment-related uncertainty and confirms DB foundation is operational in local setup | 14 |
+| Keep authentication processing in one procedural POST block at the top of login.php | Ensures redirects happen before output and matches beginner PHP style constraints | 15 |
+| Use absolute redirect paths for auth routing | Avoids nested URL path issues across root, HR, and employee pages | 15 |
 
 ### Implementation Guardrails
 - Native procedural PHP only (no OOP/framework)
@@ -61,26 +63,24 @@ progress:
 - HR admin is standalone user (not in karyawan table)
 
 ### TODOs
-- [ ] Plan Phase 15
+- [ ] Execute Phase 15 Plan 02
 
 ### Blockers
-- MySQL CLI is unavailable in this execution environment (`mysql: command not found`), so SQL import could not be executed here.
-- Live DB currently fails users schema/FK and HR seed runtime checks; rerun import after MySQL CLI/service are available.
+- None.
 
 ## Session Continuity
 
 ### Last Session
 - **Date:** 2026-03-05
-- **Activity:** Executed Phase 14 Plan 02 (runtime verification closure)
-- **Outcome:** Added `database/verify_phase14_runtime.php`, updated `14-VERIFICATION.md` to terminal diagnosed state, and completed Phase 14 plan set (2/2)
-- **Next:** Proceed to Phase 15 planning/execution after restoring local MySQL import flow
+- **Activity:** Executed Phase 15 Plan 01 (auth guard, logout, real login POST flow)
+- **Outcome:** Added `includes/auth-guard.php`, `logout.php`, and rewrote `login.php` with DB-backed auth + session identity contract
+- **Next:** Execute Phase 15 Plan 02 to guard all pages and wire session identity into dashboard UI
 
 ### Context for Next Session
-- Start with `/gsd-plan-phase 15`
-- Ensure MySQL service is running and `mysql` CLI is installed/available in PATH
-- Run `mysql -u root < database/sicuti_hrd.sql` then `php database/verify_phase14_runtime.php` until all checks pass
-- Reuse `koneksi.php` and seeded `users` data for auth implementation once runtime verifier is green
-- Phase 15 should consume HR user `HR0001` from DB
+- Start with `/gsd-execute-phase 15`
+- Execute `15-02-PLAN.md` to apply `cekLogin()`/`cekRole()` on HR and employee pages
+- Update dashboard topbar/sidebar for real identity and logout button
+- Keep MySQL running and reuse seeded HR user `HR0001` for verification
 
 ---
 *State initialized: 2026-03-05*

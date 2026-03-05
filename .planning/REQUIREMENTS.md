@@ -25,16 +25,16 @@
 
 ### Authentication & Sessions
 
-- [ ] **AUTH-01**: User can log in with NIK + password via POST form, validated against database with `password_verify()`
-- [ ] **AUTH-02**: User can log out, which destroys the session and redirects to login page
-- [ ] **AUTH-03**: After login, user is redirected to the correct dashboard based on role (HR or Employee)
+- [x] **AUTH-01**: User can log in with NIK + password via POST form, validated against database with `password_verify()`
+- [x] **AUTH-02**: User can log out, which destroys the session and redirects to login page
+- [x] **AUTH-03**: After login, user is redirected to the correct dashboard based on role (HR or Employee)
 
 ### Role-Based Access Control
 
-- [ ] **RBAC-01**: App has a single `auth-guard.php` include file with `cekLogin()` and `cekRole()` functions
+- [x] **RBAC-01**: App has a single `auth-guard.php` include file with `cekLogin()` and `cekRole()` functions
 - [ ] **RBAC-02**: All HR pages are protected — only role='hr' can access them
 - [ ] **RBAC-03**: All employee pages are protected — only role='employee' can access them, showing only own data
-- [ ] **RBAC-04**: Unauthorized access redirects to login page (not logged in) or own dashboard (wrong role)
+- [x] **RBAC-04**: Unauthorized access redirects to login page (not logged in) or own dashboard (wrong role)
 - [ ] **RBAC-05**: All demo badges, "Demo v1" notices, and "Akses demo" labels are removed from the UI
 
 ### HR-First Provisioning
@@ -116,13 +116,13 @@
 | DATA-04 | Phase 14 | Complete |
 | DATA-05 | Phase 14 | Complete |
 | DATA-06 | Phase 14 | Complete |
-| AUTH-01 | Phase 15 | Pending |
-| AUTH-02 | Phase 15 | Pending |
-| AUTH-03 | Phase 15 | Pending |
-| RBAC-01 | Phase 15 | Pending |
+| AUTH-01 | Phase 15 | Complete |
+| AUTH-02 | Phase 15 | Complete |
+| AUTH-03 | Phase 15 | Complete |
+| RBAC-01 | Phase 15 | Complete |
 | RBAC-02 | Phase 15 | Pending |
 | RBAC-03 | Phase 15 | Pending |
-| RBAC-04 | Phase 15 | Pending |
+| RBAC-04 | Phase 15 | Complete |
 | RBAC-05 | Phase 15 | Pending |
 | CRUD-01 | Phase 16 | Pending |
 | CRUD-02 | Phase 16 | Pending |
