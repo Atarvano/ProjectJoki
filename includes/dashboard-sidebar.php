@@ -7,6 +7,7 @@ $nav_items = [];
 if ($role === 'hr') {
     $nav_items = [
         ['id' => 'dashboard', 'label' => 'Dashboard', 'icon' => 'bi-grid', 'href' => '/hr/dashboard.php'],
+        ['id' => 'kelola-karyawan', 'label' => 'Kelola Karyawan', 'icon' => 'bi-people', 'href' => '/hr/karyawan.php'],
         ['id' => 'kalkulator', 'label' => 'Kalkulator Cuti', 'icon' => 'bi-calculator', 'href' => '/hr/kalkulator.php'],
         ['id' => 'laporan', 'label' => 'Laporan', 'icon' => 'bi-file-earmark-text', 'href' => '/hr/laporan.php'],
     ];

@@ -150,7 +150,7 @@ All phases are sequential. Each phase depends on its predecessor. No paralleliza
 | Phase | Plans Complete | Status | Completed |
 |-------|---------------|--------|-----------|
 | 14. Database Foundation | 2/2 | Complete   | 2026-03-05 |
-| 15. Authentication & Access Control | 3/3 | Complete   | 2026-03-05 |
+| 15. Authentication & Access Control | 3/3 | Complete    | 2026-03-05 |
 | 16. Employee CRUD & HR Navigation | 0/? | Not started | - |
 | 17. Account Provisioning | 0/? | Not started | - |
 | 18. Data Wiring — Calculator, Reports & Dashboards | 0/? | Not started | - |
