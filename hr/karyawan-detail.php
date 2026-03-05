@@ -92,8 +92,25 @@ ob_start();
 
 <div class="card border-0 shadow-sm mb-4">
     <div class="card-body">
-        <p class="mb-1"><strong>Akun login:</strong> <?php echo $akun_login_status; ?></p>
-        <p class="text-muted mb-0">Jika data karyawan ini dihapus permanen, akun login yang terhubung juga akan ikut terhapus otomatis.</p>
+        <div class="d-flex justify-content-between align-items-start flex-wrap gap-3">
+            <div>
+                <p class="mb-1"><strong>Akun login:</strong> <?php echo htmlspecialchars($akun_login_status); ?></p>
+                <p class="text-muted mb-0">Jika data karyawan ini dihapus permanen, akun login yang terhubung juga akan ikut terhapus otomatis.</p>
+            </div>
+
+            <div>
+                <?php if ($akun_login_status === 'Belum dibuat'): ?>
+                    <form method="post" action="/hr/karyawan-provision.php" class="m-0">
+                        <input type="hidden" name="id" value="<?php echo (int) $karyawan['id']; ?>">
+                        <button type="submit" class="btn btn-success">
+                            <i class="bi bi-person-plus me-2"></i>Buat Akun Login
+                        </button>
+                    </form>
+                <?php else: ?>
+                    <span class="badge bg-success-subtle text-success-emphasis fs-6">Akun login sudah dibuat</span>
+                <?php endif; ?>
+            </div>
+        </div>
     </div>
 </div>
 
