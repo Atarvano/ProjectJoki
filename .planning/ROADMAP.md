@@ -36,7 +36,7 @@ These constraints apply to ALL phases:
   2. SQL file imports cleanly via phpMyAdmin/CLI, creating the database, `karyawan` table (12 fields, NIK unique), and `users` table (FK cascade to karyawan)
   3. Seeded HR admin account exists in `users` table with hashed password and role='hr' after import
   4. A sample prepared statement query (`mysqli_prepare` + `mysqli_stmt_bind_param`) works end-to-end, establishing the security pattern for all subsequent phases
-**Plans:** 1/1 plans complete
+**Plans:** 2/2 plans complete
 Plans:
 - [ ] 14-01-PLAN.md — SQL schema, connection file, seed data & prepared statement pattern
 
@@ -146,7 +146,7 @@ All phases are sequential. Each phase depends on its predecessor. No paralleliza
 
 | Phase | Plans Complete | Status | Completed |
 |-------|---------------|--------|-----------|
-| 14. Database Foundation | 1/1 | Complete   | 2026-03-05 |
+| 14. Database Foundation | 2/2 | Complete   | 2026-03-05 |
 | 15. Authentication & Access Control | 0/? | Not started | - |
 | 16. Employee CRUD & HR Navigation | 0/? | Not started | - |
 | 17. Account Provisioning | 0/? | Not started | - |
