@@ -80,7 +80,10 @@ Plans:
   2. System auto-generates password from employee data (NIK + tanggal_lahir), hashes it with `password_hash()`, and creates a `users` record linked via karyawan_id FK with role='employee'
   3. After provisioning, the generated credentials (NIK as username + plaintext password) are displayed exactly once via flash message
   4. A provisioned employee can successfully log in with their NIK and auto-generated password (end-to-end flow validated)
-**Plans:** TBD
+**Plans:** 1/2 plans executed
+Plans:
+- [ ] 17-01-PLAN.md — Provisioning actions on list/detail + POST provisioning endpoint with password generation and users insert
+- [ ] 17-02-PLAN.md — One-time credential flash UX + Wave 0 manual validation checklist
 
 ### Phase 18: Data Wiring — Calculator, Reports & Dashboards
 **Goal:** All application pages display real DB data instead of demo/session data, completing the v1→v2 transformation
@@ -155,8 +158,8 @@ All phases are sequential. Each phase depends on its predecessor. No paralleliza
 |-------|---------------|--------|-----------|
 | 14. Database Foundation | 2/2 | Complete   | 2026-03-05 |
 | 15. Authentication & Access Control | 3/3 | Complete    | 2026-03-05 |
-| 16. Employee CRUD & HR Navigation | 3/3 | Complete   | 2026-03-05 |
-| 17. Account Provisioning | 0/? | Not started | - |
+| 16. Employee CRUD & HR Navigation | 3/3 | Complete    | 2026-03-05 |
+| 17. Account Provisioning | 1/2 | In Progress|  |
 | 18. Data Wiring — Calculator, Reports & Dashboards | 0/? | Not started | - |
 
 ---

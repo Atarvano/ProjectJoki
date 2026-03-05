@@ -2,13 +2,13 @@
 gsd_state_version: 1.0
 milestone: v2.0
 milestone_name: milestone
-status: planning
-last_updated: "2026-03-05T10:47:02Z"
+status: executing
+last_updated: "2026-03-05T18:00:46.712Z"
 progress:
   total_phases: 5
   completed_phases: 3
-  total_plans: 8
-  completed_plans: 8
+  total_plans: 10
+  completed_plans: 9
   percent: 100
 ---
 
@@ -22,9 +22,9 @@ progress:
 
 ## Current Position
 
-**Phase:** 16 — Employee CRUD & HR Navigation
-**Plan:** 02 completed (3/3, phase complete)
-**Status:** Ready for next phase
+**Phase:** 17 — Account Provisioning
+**Plan:** 01 completed (1/2)
+**Status:** In progress
 **Progress:** [██████████] 100%
 
 ## Performance Metrics
@@ -32,8 +32,8 @@ progress:
 | Metric | Value |
 |--------|-------|
 | Phases completed | 3/5 |
-| Requirements completed | 21/36 |
-| Plans completed | 8/8 |
+| Requirements completed | 24/36 |
+| Plans completed | 9/10 |
 | Current streak | - |
 | Phase 14 P01 | 2 min | 2 tasks | 3 files |
 | Phase 14 P02 | 3 min | 2 tasks | 2 files |
@@ -43,6 +43,7 @@ progress:
 | Phase 16 P01 | 5 min | 2 tasks | 2 files |
 | Phase 16 P03 | 2 min | 2 tasks | 2 files |
 | Phase 16 P02 | 6 min | 2 tasks | 2 files |
+| Phase 17 P01 | 7 min | 3 tasks | 4 files |
 
 ## Accumulated Context
 
@@ -67,6 +68,8 @@ progress:
 | Endpoint hapus karyawan wajib POST-only dengan flash ramah untuk sukses/gagal | Menjaga alur hapus tetap aman, sederhana, dan mudah dipahami user HR | 16 |
 | Add dan edit dipisah jadi dua halaman procedural terpisah | Alur lebih mudah dipahami pemula dan meminimalkan branching rumit dalam satu file | 16 |
 | Pola validasi tambah/edit disamakan (summary + inline) | Feedback error jadi konsisten dan lebih mudah dipahami HR non-teknis | 16 |
+| Provisioning endpoint wajib re-check linked account di server sebelum INSERT users | Mencegah provisioning ulang via submit manual meski tombol sudah disembunyikan di UI | 17 |
+| Password provisioning dipatok ketat ke rumus NIK + DDMMYYYY(tanggal_lahir) dan abort jika tanggal invalid | Menjaga kredensial awal konsisten dengan requirement dan mencegah akun dibuat dengan password salah format | 17 |
 
 ### Implementation Guardrails
 - Native procedural PHP only (no OOP/framework)
@@ -78,7 +81,7 @@ progress:
 - HR admin is standalone user (not in karyawan table)
 
 ### TODOs
-- [ ] Start Phase 17 Plan 01
+- [ ] Execute Phase 17 Plan 02
 
 ### Blockers
 - None.
@@ -86,16 +89,16 @@ progress:
 ## Session Continuity
 
 ### Last Session
-- **Date:** 2026-03-05
-- **Activity:** Executed Phase 16 Plan 02 (employee add/edit pages with validation + PRG flash)
-- **Outcome:** `/hr/karyawan-tambah.php` and `/hr/karyawan-edit.php` now support complete add/edit flow with required field validation, unique NIK checks, valid email checks, and redirect success flash
-- **Next:** Move to Phase 17 planning/execution
+- **Date:** 2026-03-06
+- **Activity:** Executed Phase 17 Plan 01 (list/detail provisioning actions + POST provisioning endpoint)
+- **Outcome:** `hr/karyawan.php` and `hr/karyawan-detail.php` now expose conditional `Buat Akun Login` entrypoints; `hr/karyawan-provision.php` creates linked employee login with hashed default password and duplicate-provision guard
+- **Next:** Execute Phase 17 Plan 02 for one-time credential flash UX + manual validation checklist
 
 ### Context for Next Session
-- Start with `/gsd-plan-phase 17` or `/gsd-execute-phase 17`
-- Continue from completed Phase 16 CRUD baseline (list, add, edit, detail, delete)
-- Reuse existing PRG flash pattern and prepared statement style for provisioning flow
+- Continue from Phase 17 provisioning baseline (entrypoints + endpoint done)
+- Complete PROV-04 verification path and manual E2E checklist artifacts
+- Keep using procedural PHP + prepared statement + PRG flash patterns
 
 ---
 *State initialized: 2026-03-05*
-*Last updated: 2026-03-05*
+*Last updated: 2026-03-06*
