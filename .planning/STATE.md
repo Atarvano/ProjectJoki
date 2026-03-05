@@ -3,12 +3,12 @@ gsd_state_version: 1.0
 milestone: v2.0
 milestone_name: milestone
 status: executing
-last_updated: "2026-03-05T18:00:46.712Z"
+last_updated: "2026-03-05T18:14:00.000Z"
 progress:
   total_phases: 5
-  completed_phases: 3
+  completed_phases: 4
   total_plans: 10
-  completed_plans: 9
+  completed_plans: 10
   percent: 100
 ---
 
@@ -22,18 +22,18 @@ progress:
 
 ## Current Position
 
-**Phase:** 17 — Account Provisioning
-**Plan:** 01 completed (1/2)
-**Status:** In progress
+**Phase:** 18 — Data Wiring — Calculator, Reports & Dashboards
+**Plan:** Pending planning/execution
+**Status:** Ready for transition
 **Progress:** [██████████] 100%
 
 ## Performance Metrics
 
 | Metric | Value |
 |--------|-------|
-| Phases completed | 3/5 |
-| Requirements completed | 24/36 |
-| Plans completed | 9/10 |
+| Phases completed | 4/5 |
+| Requirements completed | 25/36 |
+| Plans completed | 10/10 |
 | Current streak | - |
 | Phase 14 P01 | 2 min | 2 tasks | 3 files |
 | Phase 14 P02 | 3 min | 2 tasks | 2 files |
@@ -44,6 +44,7 @@ progress:
 | Phase 16 P03 | 2 min | 2 tasks | 2 files |
 | Phase 16 P02 | 6 min | 2 tasks | 2 files |
 | Phase 17 P01 | 7 min | 3 tasks | 4 files |
+| Phase 17 P02 | 1 min | 2 tasks | 2 files |
 
 ## Accumulated Context
 
@@ -70,6 +71,8 @@ progress:
 | Pola validasi tambah/edit disamakan (summary + inline) | Feedback error jadi konsisten dan lebih mudah dipahami HR non-teknis | 16 |
 | Provisioning endpoint wajib re-check linked account di server sebelum INSERT users | Mencegah provisioning ulang via submit manual meski tombol sudah disembunyikan di UI | 17 |
 | Password provisioning dipatok ketat ke rumus NIK + DDMMYYYY(tanggal_lahir) dan abort jika tanggal invalid | Menjaga kredensial awal konsisten dengan requirement dan mencegah akun dibuat dengan password salah format | 17 |
+| Flash sukses provisioning di list karyawan memprioritaskan payload `flash.credentials` dengan fallback pesan lama | Menjamin copy kredensial terkunci (2 baris wajib) tetap konsisten tanpa memutus kompatibilitas flash generik | 17 |
+| Verifikasi provisioning Wave 0 didokumentasikan sebagai checklist manual + SQL snippet | Memastikan validasi PROV-01..PROV-04 bisa diulang oleh verifier secara operasional dan terukur | 17 |
 
 ### Implementation Guardrails
 - Native procedural PHP only (no OOP/framework)
@@ -81,7 +84,7 @@ progress:
 - HR admin is standalone user (not in karyawan table)
 
 ### TODOs
-- [ ] Execute Phase 17 Plan 02
+- [ ] Start Phase 18 planning/execution (Data Wiring)
 
 ### Blockers
 - None.
@@ -90,14 +93,14 @@ progress:
 
 ### Last Session
 - **Date:** 2026-03-06
-- **Activity:** Executed Phase 17 Plan 01 (list/detail provisioning actions + POST provisioning endpoint)
-- **Outcome:** `hr/karyawan.php` and `hr/karyawan-detail.php` now expose conditional `Buat Akun Login` entrypoints; `hr/karyawan-provision.php` creates linked employee login with hashed default password and duplicate-provision guard
-- **Next:** Execute Phase 17 Plan 02 for one-time credential flash UX + manual validation checklist
+- **Activity:** Completed Phase 17 Plan 02 (one-time credential flash UX + Wave 0 manual validation checklist)
+- **Outcome:** `hr/karyawan.php` now renders provisioning success credentials via structured flash payload with fixed labels and one-time warning; `.planning/phases/17-account-provisioning/17-MANUAL-TEST.md` added for repeatable PROV-01..PROV-04 verification + SQL checks
+- **Next:** Start Phase 18 planning/execution (data wiring: calculator, reports, dashboards)
 
 ### Context for Next Session
-- Continue from Phase 17 provisioning baseline (entrypoints + endpoint done)
-- Complete PROV-04 verification path and manual E2E checklist artifacts
-- Keep using procedural PHP + prepared statement + PRG flash patterns
+- Phase 17 provisioning flow is fully closed (PROV-01..PROV-04 complete)
+- Use `17-MANUAL-TEST.md` when re-validating account provisioning/login behavior
+- Maintain procedural PHP + prepared statement + PRG flash patterns while replacing demo data with DB-backed data in Phase 18
 
 ---
 *State initialized: 2026-03-05*

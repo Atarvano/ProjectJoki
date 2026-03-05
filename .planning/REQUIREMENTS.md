@@ -42,7 +42,7 @@
 - [x] **PROV-01**: HR can click "Buat Akun Login" button to create a login account for an existing employee
 - [x] **PROV-02**: Password is auto-generated from employee data (NIK + birthdate), hashed with `password_hash()`
 - [x] **PROV-03**: System creates a user record linked to employee via karyawan_id FK, with role='employee'
-- [ ] **PROV-04**: After provisioning, generated credentials (NIK + plaintext password) are shown once via flash message
+- [x] **PROV-04**: After provisioning, generated credentials (NIK + plaintext password) are shown once via flash message
 
 ### Calculator Integration
 
@@ -132,7 +132,7 @@
 | PROV-01 | Phase 17 | Complete |
 | PROV-02 | Phase 17 | Complete |
 | PROV-03 | Phase 17 | Complete |
-| PROV-04 | Phase 17 | Pending |
+| PROV-04 | Phase 17 | Complete |
 | CALC-01 | Phase 18 | Pending |
 | CALC-02 | Phase 18 | Pending |
 | CALC-03 | Phase 18 | Pending |

@@ -22,7 +22,7 @@ These constraints apply to ALL phases:
 - [x] **Phase 14: Database Foundation** — SQL schema, connection file, tables, and HR admin seed (completed 2026-03-05)
 - [x] **Phase 15: Authentication & Access Control** — Real login/logout, role guards on all pages, auth-aware UI (completed 2026-03-05)
 - [x] **Phase 16: Employee CRUD & HR Navigation** — Full employee management with list/add/edit/delete and sidebar nav (completed 2026-03-05)
-- [ ] **Phase 17: Account Provisioning** — HR creates login accounts for employees with auto-generated passwords
+- [x] **Phase 17: Account Provisioning** — HR creates login accounts for employees with auto-generated passwords (completed 2026-03-05)
 - [ ] **Phase 18: Data Wiring — Calculator, Reports & Dashboards** — All pages swap from demo/session data to live DB data
 
 ## Phase Details
@@ -80,7 +80,7 @@ Plans:
   2. System auto-generates password from employee data (NIK + tanggal_lahir), hashes it with `password_hash()`, and creates a `users` record linked via karyawan_id FK with role='employee'
   3. After provisioning, the generated credentials (NIK as username + plaintext password) are displayed exactly once via flash message
   4. A provisioned employee can successfully log in with their NIK and auto-generated password (end-to-end flow validated)
-**Plans:** 1/2 plans executed
+**Plans:** 2/2 plans complete
 Plans:
 - [ ] 17-01-PLAN.md — Provisioning actions on list/detail + POST provisioning endpoint with password generation and users insert
 - [ ] 17-02-PLAN.md — One-time credential flash UX + Wave 0 manual validation checklist
@@ -159,7 +159,7 @@ All phases are sequential. Each phase depends on its predecessor. No paralleliza
 | 14. Database Foundation | 2/2 | Complete   | 2026-03-05 |
 | 15. Authentication & Access Control | 3/3 | Complete    | 2026-03-05 |
 | 16. Employee CRUD & HR Navigation | 3/3 | Complete    | 2026-03-05 |
-| 17. Account Provisioning | 1/2 | In Progress|  |
+| 17. Account Provisioning | 2/2 | Complete   | 2026-03-05 |
 | 18. Data Wiring — Calculator, Reports & Dashboards | 0/? | Not started | - |
 
 ---
