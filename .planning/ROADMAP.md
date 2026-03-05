@@ -50,7 +50,10 @@ Plans:
   3. All HR pages reject non-HR users; all employee pages reject non-employees; unauthenticated users redirect to login (single `auth-guard.php` with `cekLogin()` + `cekRole()`)
   4. Topbar displays the logged-in user's real name and role from session/DB data
   5. All "Demo v1" badges, "Akses demo" labels, and demo notice text are removed from the UI
-**Plans:** TBD
+**Plans:** 2 plans
+Plans:
+- [ ] 15-01-PLAN.md — Core auth infrastructure: auth-guard.php, logout.php, and login.php rewrite with real POST authentication
+- [ ] 15-02-PLAN.md — Guard all pages, session-aware dashboards, demo cleanup, logout button in sidebar
 
 ### Phase 16: Employee CRUD & HR Navigation
 **Goal:** HR can fully manage employee records through a complete CRUD interface
@@ -147,7 +150,7 @@ All phases are sequential. Each phase depends on its predecessor. No paralleliza
 | Phase | Plans Complete | Status | Completed |
 |-------|---------------|--------|-----------|
 | 14. Database Foundation | 2/2 | Complete   | 2026-03-05 |
-| 15. Authentication & Access Control | 0/? | Not started | - |
+| 15. Authentication & Access Control | 0/2 | Planning complete | - |
 | 16. Employee CRUD & HR Navigation | 0/? | Not started | - |
 | 17. Account Provisioning | 0/? | Not started | - |
 | 18. Data Wiring — Calculator, Reports & Dashboards | 0/? | Not started | - |
