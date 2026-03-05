@@ -1,66 +1,50 @@
 ---
 gsd_state_version: 1.0
-milestone: v1.0
-milestone_name: milestone
-status: milestone_complete
-last_updated: "2026-03-04T14:05:00.000Z"
+milestone: v2.0
+milestone_name: backend-native-php-hr-first-onboarding
+status: roadmap-created
+last_updated: "2026-03-05T00:00:00.000Z"
 progress:
-  total_phases: 4
-  completed_phases: 2
-  total_plans: 3
-  completed_plans: 3
+  total_phases: 5
+  completed_phases: 0
+  total_plans: 0
+  completed_plans: 0
 ---
 
 # Project State
 
 ## Project Reference
 
-See: .planning/PROJECT.md (updated 2026-03-04)
+See: `.planning/PROJECT.md` (updated 2026-03-05)
 
-**Core value:** HR can quickly calculate and present employee leave entitlement from join year with a clear 8-year table and export-ready reporting.
-**Current focus:** Planning next milestone
+**Core value:** HR membuat data karyawan dan provisioning kredensial dulu, lalu employee login dengan akun yang dibuat HR.
+**Current focus:** Phase 14 - Data Foundation & Autonomous Bootstrap.
 
 ## Current Position
 
-Phase: 13 of 13 (Gap Closure - Traceability & Navigation Consistency)
-Plan: Completed (01/01)
-Status: Phase complete
-Last activity: 2026-03-04 — Completed 13-01 traceability/navigation closure plan
+Phase: 14 of 18 (Data Foundation & Autonomous Bootstrap)
+Plan: 0 of TBD in current phase
+Status: Ready to plan
+Last activity: 2026-03-05 — Roadmap v2.0 (phase 14-18) ditetapkan dan traceability dipetakan.
 
-Progress: [██████████] 100%
+Progress: [----------] 0%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 2
-- Average duration: 2.5 min
-- Total execution time: 0.08 hours
+- Total plans completed: 0
+- Average duration: -
+- Total execution time: 0.0 hours
 
 **By Phase:**
 
 | Phase | Plans | Total | Avg/Plan |
 |-------|-------|-------|----------|
-| 1 | 2 | 5m | 2.5m |
+| 14-18 | 0 | 0 min | - |
 
 **Recent Trend:**
-- Last 5 plans: [2m, 3m]
-- Trend: Consistent
-| Phase 02-hr-entitlement-calculator P01 | 15min | 3 tasks | 3 files |
-| Phase 04-reports-excel-compatible-export P01 | 3m | 2 tasks | 5 files |
-| Phase 04-reports-excel-compatible-export P02 | 15m | 2 tasks | 1 files |
-| Phase 04.1-ini-kenapa-malah-ada-composer-sih P01 | 2m | 2 tasks | 4 files |
-| Phase 05-redesign-landing-page P01 | 4 min | 2 tasks | 2 files |
-| Phase 05-redesign-landing-page P02 | 5m | 2 tasks | 2 files |
-| Phase quick P1 | 1 | 1 tasks | 1 files |
-| Phase quick P2 | 1m | 1 tasks | 1 files |
-| Phase 07-redesign-login-page P01 | 2 min | 2 tasks | 2 files |
-| Phase 08-redesign-dashboard-hr-dan-karyawan P01 | 1 min | 2 tasks | 5 files |
-| Phase 08-redesign-dashboard-hr-dan-karyawan P02 | 3 min | 3 tasks | 3 files |
-| Phase 08-redesign-dashboard-hr-dan-karyawan P03 | 5 min | 2 tasks | 1 files |
-| Phase quick P3 | 120s | 2 tasks | 4 files |
-| Phase quick P6 | 3 min | 2 tasks | 1 files |
-| Phase 12 P01 | 2 min | 2 tasks | 3 files |
-| Phase 13 P01 | 10 min | 2 tasks | 5 files |
+- Last 5 plans: -
+- Trend: Stable
 
 ## Accumulated Context
 
@@ -69,68 +53,20 @@ Progress: [██████████] 100%
 Decisions are logged in PROJECT.md Key Decisions table.
 Recent decisions affecting current work:
 
-- [Phase 1]: Landing page and setup foundation prioritized as first delivery boundary.
-- [Phase 1]: Used root-relative paths in CSS for subdirectory compatibility.
-- [Phase 1]: Implemented asymmetric hero layout (7/5) for visual interest.
-- [Phase 1]: Defined strict Deep Teal/Warm Amber color tokens to override Bootstrap defaults.
-- [Phase 1]: Used `?role=` query parameter for simple role toggling.
-- [Phase 1]: Implemented visual-only login form fields to clearly communicate "Demo Mode".
-- [Phase 1]: Used `__DIR__` for robust include paths in subdirectory files.
-- [Phase 2]: HR calculator is canonical source for deterministic 8-year entitlement logic.
-- [Phase 2]: Implemented deterministic engine in pure PHP function for testability.
-- [Phase 2]: Locked Year 7 and Year 8 to exactly 6 days per requirements.
-- [Phase 2]: Used 3-state UI (Empty, Error, Result) to guide user interaction.
-- [Phase 4]: Export ships after report schema to preserve UI/export parity.
-- [Phase 04-reports-excel-compatible-export]: Used pure PHP session storage for report data to keep demo mode lightweight and stateful without a database.
-- [Phase 04-reports-excel-compatible-export]: Implemented a POST-Redirect-GET pattern for the report save flow to prevent duplicate submissions on page refresh.
-- [Phase 04-reports-excel-compatible-export]: Leveraged existing cuti-calculator.php functions for dynamic computation of total leave and entitlement tables within detail modals.
-- [Phase 04-reports-excel-compatible-export]: Used PhpSpreadsheet to generate a multi-sheet XLSX file with branded styling
-- [Phase 04-reports-excel-compatible-export]: Streamed output directly to php://output instead of writing temp files
-- [Phase 04.1-ini-kenapa-malah-ada-composer-sih]: Composer/PhpSpreadsheet kept for XLSX export: Pure PHP cannot produce branded multi-sheet XLSX; PhpSpreadsheet is isolated to hr/export.php only
-- [Phase 07-redesign-login-page]: Used inline SVGs for illustration and co-branding to allow color theming via CSS custom properties.
-- [Phase 07-redesign-login-page]: Kept demo-only behavior while visually communicating it through a demo notice and readonly fields.
-- [Phase 07-redesign-login-page]: Used CSS Grid for the split layout to gracefully collapse to a single column on mobile.
-- [Phase 08]: Preserved single-page preset/custom form flow on employee dashboard while restyling to new design language.
-- [Phase 08]: Applied Deep Teal and Warm Amber token mapping to the employee page to ensure consistency with landing page.
-- [Phase quick]: Apply landing page theme to dashboards
-- [Phase 12]: Use getReports() (not initReports()) in export to guarantee post-reset parity with laporan state.
-- [Phase 12]: Route empty export attempts back to laporan.php with an info flash so users stay in reporting context.
-- [Phase 12]: Honor workflow.auto_advance=true by auto-approving human-verify checkpoint and recording it in verification evidence.
-- [Phase 13]: Keep EMP closure metadata authoritative in Phase 3 summary; Phase 13 references closure evidence without duplicating source-of-truth intent.
-- [Phase 13]: Auto-advance Task 2 checkpoint using workflow.auto_advance=true while preserving locked screenshot slot names in verification artifact.
-
-### Roadmap Evolution
-
-- Phase 04.1 inserted after Phase 4: ini kenapa malah ada composer sih ??? (URGENT)
-- Phase 5 added: redesign landing page
-- Phase 6 added: redesign login page
-- Phase 7 added: redesign login page
-- Phase 8 added: redesign dashboard hr dan karyawan
-- Phase 9 added: 9 redesign/improve svg login page
-- Phase 10 added: redesign/improve svg login page
+- v2.0 roadmap dimulai dari Phase 14 (continuation milestone numbering).
+- Guardrail wajib di semua fase: native procedural PHP, MySQLi via `koneksi.php`, native session auth/role.
+- DATA-04 (autonomous DB bootstrap one local command) diperlakukan sebagai deliverable fondasi inti di Phase 14.
 
 ### Pending Todos
 
-None yet.
+- Lanjut ke `/gsd-plan-phase 14` untuk merinci rencana eksekusi fondasi DB + bootstrap command.
 
 ### Blockers/Concerns
 
-None yet.
-
-### Quick Tasks Completed
-
-| # | Description | Date | Commit | Directory |
-|---|-------------|------|--------|-----------|
-| 1 | footer toolong bagusin dong | 2026-03-03 | 0691bc3 | [1-footer-toolong-bagusin-dong](./quick/1-footer-toolong-bagusin-dong/) |
-| 2 | footer section improve bro. like enterprise level | 2026-03-03 | 70cbe3d | [2-footer-section-improve-bro-like-enterpri](./quick/2-footer-section-improve-bro-like-enterpri/) |
-| 3 | redesign dashboard to match landing page style, colors, fonts, and icons | 2026-03-04 | 1b2b390 | [3-redesign-dashboard-to-match-landing-page](./quick/3-redesign-dashboard-to-match-landing-page/) |
-| 4 | ini ganti warna sidebar kurang banget warna abu itu | 2026-03-04 | 25b85a5 | [4-ini-ganti-warna-sidebar-kurang-banget-wa](./quick/4-ini-ganti-warna-sidebar-kurang-banget-wa/) |
-| 5 | gunakan logo sicuti dari svg agar konsis | 2026-03-04 | 0800deb | [5-gunakan-logo-sicuti-dari-svg-agar-konsis](./quick/5-gunakan-logo-sicuti-dari-svg-agar-konsis/) |
-| 6 | ubah warna icon hamburger dan notification | 2026-03-04 | 312e1f4 | [6-ubah-warna-icon-hamburger-dan-notificati](./quick/6-ubah-warna-icon-hamburger-dan-notificati/) |
+- Tidak ada blocker aktif.
 
 ## Session Continuity
 
-Last session: 2026-03-04
-Stopped at: Completed 13-01-PLAN.md
-Last activity: 2026-03-04 - Completed phase 13 plan 01 (traceability + navigation consistency)
-Resume file: None
+Last session: 2026-03-05
+Stopped at: ROADMAP.md, STATE.md, dan REQUIREMENTS traceability untuk milestone v2.0 selesai ditulis.
+Resume file: `.planning/ROADMAP.md`

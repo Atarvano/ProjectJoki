@@ -2,74 +2,97 @@
 
 ## What This Is
 
-Sicuti HRD Cuti Tracker is a web application prototype for HR and employees to view leave entitlement flows with a realistic UI. In v1, the focus is frontend behavior using native procedural PHP pages, local dummy data, and no database. The product includes a landing page, visual login flow, HR dashboard for leave calculation, employee view, and leave report export to Excel.
+Sicuti HRD Cuti Tracker adalah aplikasi web internal HR/employee untuk menghitung, menyimpan, dan meninjau hak cuti. Setelah milestone v1 (frontend demo) selesai, milestone v2 berfokus pada backend nyata berbasis native procedural PHP + MySQLi.
 
 ## Core Value
 
-HR can quickly calculate and present employee leave entitlement from join year with a clear 8-year table and export-ready reporting.
+HR dapat membuat data karyawan terlebih dahulu, memprovisioning akun login, lalu karyawan login dengan session native PHP untuk melihat data cuti dengan alur yang valid.
 
 ## Current State
 
-Shipped **v1.0 milestone** on 2026-03-04. The product now includes:
-- Public landing and demo-only access flow for HR/Employee.
-- Deterministic HR leave calculator with 8-year output and enforced Year-7/8 rules.
-- Employee entitlement self-view that reuses the same calculation engine for parity.
-- Session-backed reporting and Excel-compatible export.
-- Gap-closure improvements for report parity, traceability, and shared navigation consistency.
+Milestone aktif: **v2.0 - Backend Native PHP + HR-First Onboarding** (started 2026-03-05).
 
-## Next Milestone Goals
+Target utama v2.0:
+- Koneksi DB terpusat lewat `koneksi.php` (MySQLi) di Laragon localhost.
+- CRUD master karyawan oleh HR.
+- Login nyata dari database + session native PHP (role `hr` / `employee`).
+- Flow baru: HR buat data karyawan -> HR provisioning akun -> karyawan baru bisa login.
+- Migrasi bertahap dari data session-array demo ke DB agar laporan/export konsisten.
 
-- Define post-v1 requirement set (new `REQUIREMENTS.md`) with explicit milestone boundary.
-- Decide whether remaining UI redesign phases (9-11) are still in-scope, re-scoped, or replaced.
-- Close accepted tech debt: seeded-report dead path, demo-route guard strategy, and routing clarity hardening.
+## Current Milestone: v2.0 Backend Native PHP + HR-First Employee Onboarding
+
+**Goal:** Mentransformasi demo v1 menjadi backend procedural PHP nyata dengan MySQLi di Laragon/XAMPP, session auth native PHP, dan alur HR-first onboarding karyawan.
+
+**Target features:**
+- HR dapat CRUD data karyawan ke database lewat `koneksi.php` + MySQLi prepared statements.
+- HR membuat/mengaktifkan akun login dari data karyawan yang sudah dibuat.
+- Login/logout serta guard role HR/Employee berjalan dengan session native PHP.
+- Flow web baru: HR input data karyawan dulu, baru karyawan bisa login.
+- Output cuti employee fokus tampilan tahun ke-6, ke-7, dan ke-8.
+
+## Milestone History
+
+### v1.0 (Shipped: 2026-03-04)
+
+Delivered:
+- Frontend-first leave entitlement demo (landing, role login demo, HR/employee dashboard).
+- Deterministic 8-year calculator engine reused across HR and employee views.
+- Session-backed report save/list/detail flow.
+- Excel-compatible export via isolated PhpSpreadsheet usage.
+
+Known debt accepted at v1 completion:
+- Data layer masih campuran demo/session, belum DB canonical.
+- Login masih visual-only (belum real auth).
+- Route demo masih bisa diakses langsung.
 
 ## Requirements
 
 ### Validated
 
-- ✓ Build a primary landing page with enterprise-clean branding using Bootstrap plus native CSS. — Phase 1
-- ✓ Provide visual-only login flow for HR and employee entry points without backend authentication. — Phase 1
-- ✓ Enable HR to input employee join year and generate an 8-year leave entitlement table with per-row status. — Phase 2
-- ✓ Show year-7 and year-8 entitlement as 6 leave days each in the calculation result. — Phase 2
-- ✓ Provide employee-facing view to see their own leave entitlement output. — Phase 3
-- ✓ Store and display leave reports using local PHP arrays (dummy data) and support export of all employee reports to Excel. — Phase 4/12
+- ✓ Seluruh requirement v1.0 terpenuhi (archive ada di `.planning/milestones/v1.0-REQUIREMENTS.md`).
 
-### Active
+### Active (v2.0)
 
-- [ ] Define next milestone requirement set (v1.1+), including decision on redesign continuation and debt payoff priorities.
+Lihat detail lengkap di `.planning/REQUIREMENTS.md`.
+
+Fokus aktif:
+- DATA-01..03 (fondasi DB + koneksi + migration repeatable)
+- EMPCRUD-01..04 (CRUD karyawan oleh HR)
+- FLOW-01..03 (HR-first provisioning)
+- AUTH-01..04 (login/session/logout/role guard)
+- SEC-01..02 (password hash + prepared statements)
 
 ### Out of Scope
 
-- Database integration - deferred to v2 to keep v1 fast and frontend-focused.
-- Real authentication/session security - login is visual-only for v1 prototype scope.
-- OOP/framework architecture for project code - implementation stays native procedural PHP. Packaged libraries (e.g., PhpSpreadsheet via Composer) are permitted where PHP lacks native capability.
-- Leave policy rules beyond the 8-year output window - postponed until v2 policy expansion.
-
-## Context
-
-v1.0 is now shipped as a realistic demo website for internal HR usage. The codebase remains native procedural PHP with dummy/session data for runtime behavior and isolated Composer usage for XLSX generation. Milestone audit reports all v1 requirements satisfied with non-blocking tech debt tracked for next milestone planning.
+- Refactor ke framework/OOP (Laravel/class architecture).
+- Open self-signup karyawan.
+- Migrasi token/JWT auth.
+- Redesign UI besar; visual bukan prioritas milestone ini.
 
 ## Constraints
 
-- **Tech stack**: Native procedural PHP for project code. Third-party libraries via Composer are acceptable for capabilities PHP cannot handle natively (e.g., XLSX generation with PhpSpreadsheet). Composer autoloading is isolated to specific endpoints — not spread across the application.
-- **Data layer**: No database in v1 - only local arrays and in-memory style demo data.
-- **UI direction**: Enterprise clean - landing page is the primary visual entry and should not look generic.
-- **Styling**: Bootstrap + native CSS - Bootstrap for baseline layout/components, custom CSS for identity.
+- **Arsitektur:** Native procedural PHP (tanpa OOP app architecture).
+- **Database API:** MySQLi procedural via `koneksi.php`.
+- **Environment:** Laragon localhost (harus tetap kompatibel XAMPP lokal).
+- **Security baseline:** `password_hash()` / `password_verify()`, prepared statements untuk input user.
+- **Flow bisnis utama:** HR-first onboarding, bukan employee self-registration.
+
+## Implementation References (User-Provided)
+
+- https://github.com/suryamsj/tutorial-crud-php-native
+- https://github.com/thexdev/php-native-crud
+- https://github.com/chapagain/crud-php-simple
+- https://www.codepolitan.com/blog/tutorial-membuat-crud-php-dengan-mysql-59897c72d8470/
 
 ## Key Decisions
 
 | Decision | Rationale | Outcome |
 |----------|-----------|---------|
-| Build v1 as frontend-first prototype with dummy data | Validate UX flow quickly before backend investment | - Pending |
-| Keep PHP implementation procedural only | Matches user constraint for both v1 and future v2 | - Pending |
-| Scope calculator output to 8-year table | User requested clear, bounded entitlement view for initial release | - Pending |
-| Phase 1 emphasizes setup, landing page, Bootstrap/native CSS foundation | User explicitly prioritized landing page and setup first | - Pending |
-| Implemented deterministic engine in pure PHP function for testability | Ensures reuse in bulk processing later and independent testing | - Validated |
-| Locked Year 7 and Year 8 to exactly 6 days per requirements | Hard constraint from HRC-04/HRC-05 | - Validated |
-| Used 3-state UI (Empty, Error, Result) to guide user interaction | Improves UX by handling first load and invalid input explicitly | - Validated |
-| Reused HR calculation engine for employee view | Guarantees data parity and avoids duplicate logic per EMP-02 | - Validated |
-| Composer/PhpSpreadsheet kept for XLSX export | Pure PHP cannot produce branded multi-sheet XLSX; PhpSpreadsheet is isolated to hr/export.php only | - Validated |
-| Use getReports() for list/export parity and guard empty export with flash redirect | Prevents reseed mismatch and broken export UX after reset | - Validated |
-| Keep EMP closure metadata in Phase 3 summary and link it from Phase 13 verification | Restores auditable three-source requirement closure chain | - Validated |
+| Mulai milestone v2.0 dengan backend foundation dulu | Menghindari split-brain data dan rewrite yang berisiko | Active |
+| Gunakan satu koneksi `koneksi.php` berbasis MySQLi | Menjaga konsistensi procedural native PHP | Active |
+| Terapkan flow HR-first provisioning | Sesuai kebutuhan: HR buat data karyawan dulu baru login aktif | Active |
+| Pertahankan engine kalkulasi cuti existing | Menjaga parity output saat backend dimigrasikan | Active |
+| Session login wajib native PHP | Sesuai constraint proyek dan cocok untuk server-rendered app | Active |
+
 ---
-*Last updated: 2026-03-04 after v1.0 milestone completion*
+*Last updated: 2026-03-05 (milestone v2.0 initialized)*
