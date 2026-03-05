@@ -2,13 +2,13 @@
 gsd_state_version: 1.0
 milestone: v2.0
 milestone_name: milestone
-status: executing
-last_updated: "2026-03-05T07:09:54.669Z"
+status: completed
+last_updated: "2026-03-05T07:45:42.450Z"
 progress:
   total_phases: 5
   completed_phases: 2
-  total_plans: 4
-  completed_plans: 4
+  total_plans: 5
+  completed_plans: 5
   percent: 100
 ---
 
@@ -23,7 +23,7 @@ progress:
 ## Current Position
 
 **Phase:** 15 — Authentication & Access Control
-**Plan:** 02 completed (2/2)
+**Plan:** 03 completed (3/3)
 **Status:** Phase 15 complete
 **Progress:** [██████████] 100%
 
@@ -33,12 +33,13 @@ progress:
 |--------|-------|
 | Phases completed | 2/5 |
 | Requirements completed | 16/36 |
-| Plans completed | 4/4 |
+| Plans completed | 5/5 |
 | Current streak | - |
 | Phase 14 P01 | 2 min | 2 tasks | 3 files |
 | Phase 14 P02 | 3 min | 2 tasks | 2 files |
 | Phase 15 P01 | 0 min | 2 tasks | 3 files |
 | Phase 15 P02 | 0 min | 3 tasks | 8 files |
+| Phase 15 P03 | 4 min | 3 tasks | 4 files |
 
 ## Accumulated Context
 
@@ -55,6 +56,8 @@ progress:
 | Use absolute redirect paths for auth routing | Avoids nested URL path issues across root, HR, and employee pages | 15 |
 | Normalize all dashboard logout links to `/logout.php` | Ensures every logout action destroys session through one endpoint | 15 |
 | Remove residual demo labels in shared authenticated UI | Keeps authenticated dashboard UX consistent with production behavior | 15 |
+| Employee dashboard must only query current session karyawan_id | Enforces own-data-only behavior and removes profile switching risk | 15 |
+| Render explicit profile_role in shared topbar include | Guarantees DASH-02 shows both identity name and role on every protected page | 15 |
 
 ### Implementation Guardrails
 - Native procedural PHP only (no OOP/framework)
@@ -75,8 +78,8 @@ progress:
 
 ### Last Session
 - **Date:** 2026-03-05
-- **Activity:** Executed Phase 15 Plan 02 (guard rollout, dashboard identity wiring, demo cleanup)
-- **Outcome:** Protected all HR/employee dashboards with role checks, removed demo-only UI labels, and unified logout actions to `/logout.php`
+- **Activity:** Executed Phase 15 Plan 03 (verification gap closure for identity, demo cleanup, and employee own-data flow)
+- **Outcome:** HR kalkulator/laporan now use session identity, topbar renders explicit role text, and employee dashboard is session-scoped with prepared DB lookup by `karyawan_id`
 - **Next:** Start Phase 16 Plan 01
 
 ### Context for Next Session
