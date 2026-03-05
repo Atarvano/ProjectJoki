@@ -32,10 +32,10 @@
 ### Role-Based Access Control
 
 - [x] **RBAC-01**: App has a single `auth-guard.php` include file with `cekLogin()` and `cekRole()` functions
-- [ ] **RBAC-02**: All HR pages are protected — only role='hr' can access them
-- [ ] **RBAC-03**: All employee pages are protected — only role='employee' can access them, showing only own data
+- [x] **RBAC-02**: All HR pages are protected — only role='hr' can access them
+- [x] **RBAC-03**: All employee pages are protected — only role='employee' can access them, showing only own data
 - [x] **RBAC-04**: Unauthorized access redirects to login page (not logged in) or own dashboard (wrong role)
-- [ ] **RBAC-05**: All demo badges, "Demo v1" notices, and "Akses demo" labels are removed from the UI
+- [x] **RBAC-05**: All demo badges, "Demo v1" notices, and "Akses demo" labels are removed from the UI
 
 ### HR-First Provisioning
 
@@ -61,9 +61,9 @@
 ### Dashboard & Navigation
 
 - [ ] **DASH-01**: HR dashboard shows real employee count and stats from DB queries
-- [ ] **DASH-02**: Topbar shows logged-in user's real name and role from session/DB
+- [x] **DASH-02**: Topbar shows logged-in user's real name and role from session/DB
 - [ ] **DASH-03**: HR sidebar includes "Kelola Karyawan" navigation link to CRUD pages
-- [ ] **DASH-04**: Sidebar/topbar includes logout ("Keluar") button
+- [x] **DASH-04**: Sidebar/topbar includes logout ("Keluar") button
 - [ ] **DASH-05**: All "Demo v1" badges and demo notices are removed from dashboards
 
 ## Future Requirements (Deferred)
@@ -120,10 +120,10 @@
 | AUTH-02 | Phase 15 | Complete |
 | AUTH-03 | Phase 15 | Complete |
 | RBAC-01 | Phase 15 | Complete |
-| RBAC-02 | Phase 15 | Pending |
-| RBAC-03 | Phase 15 | Pending |
+| RBAC-02 | Phase 15 | Complete |
+| RBAC-03 | Phase 15 | Complete |
 | RBAC-04 | Phase 15 | Complete |
-| RBAC-05 | Phase 15 | Pending |
+| RBAC-05 | Phase 15 | Complete |
 | CRUD-01 | Phase 16 | Pending |
 | CRUD-02 | Phase 16 | Pending |
 | CRUD-03 | Phase 16 | Pending |
@@ -142,9 +142,9 @@
 | RPT-03 | Phase 18 | Pending |
 | RPT-04 | Phase 18 | Pending |
 | DASH-01 | Phase 18 | Pending |
-| DASH-02 | Phase 15 | Pending |
+| DASH-02 | Phase 15 | Complete |
 | DASH-03 | Phase 16 | Pending |
-| DASH-04 | Phase 15 | Pending |
+| DASH-04 | Phase 15 | Complete |
 | DASH-05 | Phase 18 | Pending |
 
 **Coverage:**

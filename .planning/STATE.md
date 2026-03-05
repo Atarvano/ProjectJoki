@@ -2,14 +2,14 @@
 gsd_state_version: 1.0
 milestone: v2.0
 milestone_name: milestone
-status: in_progress
-last_updated: "2026-03-05T07:00:19.000Z"
+status: executing
+last_updated: "2026-03-05T07:09:54.669Z"
 progress:
   total_phases: 5
-  completed_phases: 1
+  completed_phases: 2
   total_plans: 4
-  completed_plans: 3
-  percent: 75
+  completed_plans: 4
+  percent: 100
 ---
 
 # State: Sicuti HRD Cuti Tracker
@@ -23,21 +23,22 @@ progress:
 ## Current Position
 
 **Phase:** 15 — Authentication & Access Control
-**Plan:** 01 completed (1/2)
-**Status:** Phase 15 in progress
-**Progress:** [███████░░░] 75%
+**Plan:** 02 completed (2/2)
+**Status:** Phase 15 complete
+**Progress:** [██████████] 100%
 
 ## Performance Metrics
 
 | Metric | Value |
 |--------|-------|
-| Phases completed | 1/5 |
-| Requirements completed | 11/36 |
-| Plans completed | 3/4 |
+| Phases completed | 2/5 |
+| Requirements completed | 16/36 |
+| Plans completed | 4/4 |
 | Current streak | - |
 | Phase 14 P01 | 2 min | 2 tasks | 3 files |
 | Phase 14 P02 | 3 min | 2 tasks | 2 files |
 | Phase 15 P01 | 0 min | 2 tasks | 3 files |
+| Phase 15 P02 | 0 min | 3 tasks | 8 files |
 
 ## Accumulated Context
 
@@ -52,6 +53,8 @@ progress:
 | Phase 14 verification finalized after clean phpMyAdmin import + full runtime PASS checks | Closes environment-related uncertainty and confirms DB foundation is operational in local setup | 14 |
 | Keep authentication processing in one procedural POST block at the top of login.php | Ensures redirects happen before output and matches beginner PHP style constraints | 15 |
 | Use absolute redirect paths for auth routing | Avoids nested URL path issues across root, HR, and employee pages | 15 |
+| Normalize all dashboard logout links to `/logout.php` | Ensures every logout action destroys session through one endpoint | 15 |
+| Remove residual demo labels in shared authenticated UI | Keeps authenticated dashboard UX consistent with production behavior | 15 |
 
 ### Implementation Guardrails
 - Native procedural PHP only (no OOP/framework)
@@ -63,7 +66,7 @@ progress:
 - HR admin is standalone user (not in karyawan table)
 
 ### TODOs
-- [ ] Execute Phase 15 Plan 02
+- [ ] Execute Phase 16 Plan 01
 
 ### Blockers
 - None.
@@ -72,15 +75,14 @@ progress:
 
 ### Last Session
 - **Date:** 2026-03-05
-- **Activity:** Executed Phase 15 Plan 01 (auth guard, logout, real login POST flow)
-- **Outcome:** Added `includes/auth-guard.php`, `logout.php`, and rewrote `login.php` with DB-backed auth + session identity contract
-- **Next:** Execute Phase 15 Plan 02 to guard all pages and wire session identity into dashboard UI
+- **Activity:** Executed Phase 15 Plan 02 (guard rollout, dashboard identity wiring, demo cleanup)
+- **Outcome:** Protected all HR/employee dashboards with role checks, removed demo-only UI labels, and unified logout actions to `/logout.php`
+- **Next:** Start Phase 16 Plan 01
 
 ### Context for Next Session
-- Start with `/gsd-execute-phase 15`
-- Execute `15-02-PLAN.md` to apply `cekLogin()`/`cekRole()` on HR and employee pages
-- Update dashboard topbar/sidebar for real identity and logout button
-- Keep MySQL running and reuse seeded HR user `HR0001` for verification
+- Start with `/gsd-execute-phase 16`
+- Execute `16-01-PLAN.md` as the next pending plan
+- Keep MySQL running and reuse established auth/session contracts from Phase 15
 
 ---
 *State initialized: 2026-03-05*

@@ -20,7 +20,7 @@ These constraints apply to ALL phases:
 ## Phases
 
 - [x] **Phase 14: Database Foundation** — SQL schema, connection file, tables, and HR admin seed (completed 2026-03-05)
-- [ ] **Phase 15: Authentication & Access Control** — Real login/logout, role guards on all pages, auth-aware UI
+- [x] **Phase 15: Authentication & Access Control** — Real login/logout, role guards on all pages, auth-aware UI (completed 2026-03-05)
 - [ ] **Phase 16: Employee CRUD & HR Navigation** — Full employee management with list/add/edit/delete and sidebar nav
 - [ ] **Phase 17: Account Provisioning** — HR creates login accounts for employees with auto-generated passwords
 - [ ] **Phase 18: Data Wiring — Calculator, Reports & Dashboards** — All pages swap from demo/session data to live DB data
@@ -50,7 +50,7 @@ Plans:
   3. All HR pages reject non-HR users; all employee pages reject non-employees; unauthenticated users redirect to login (single `auth-guard.php` with `cekLogin()` + `cekRole()`)
   4. Topbar displays the logged-in user's real name and role from session/DB data
   5. All "Demo v1" badges, "Akses demo" labels, and demo notice text are removed from the UI
-**Plans:** 1/2 plans executed
+**Plans:** 2/2 plans complete
 Plans:
 - [ ] 15-01-PLAN.md — Core auth infrastructure: auth-guard.php, logout.php, and login.php rewrite with real POST authentication
 - [ ] 15-02-PLAN.md — Guard all pages, session-aware dashboards, demo cleanup, logout button in sidebar
@@ -150,7 +150,7 @@ All phases are sequential. Each phase depends on its predecessor. No paralleliza
 | Phase | Plans Complete | Status | Completed |
 |-------|---------------|--------|-----------|
 | 14. Database Foundation | 2/2 | Complete   | 2026-03-05 |
-| 15. Authentication & Access Control | 1/2 | In Progress|  |
+| 15. Authentication & Access Control | 2/2 | Complete   | 2026-03-05 |
 | 16. Employee CRUD & HR Navigation | 0/? | Not started | - |
 | 17. Account Provisioning | 0/? | Not started | - |
 | 18. Data Wiring — Calculator, Reports & Dashboards | 0/? | Not started | - |
