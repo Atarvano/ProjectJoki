@@ -8,14 +8,14 @@ $is_dashboard = isset($page_class) && strpos($page_class, 'page-dashboard') !== 
     <div class="container-fluid px-4">
         <div class="d-flex flex-column flex-md-row align-items-center justify-content-between text-muted small">
             <div>
-                &copy; <?php echo date('Y'); ?> Sicuti HRD. Prototipe Demo v1.
+                &copy; <?php echo date('Y'); ?> Sicuti HRD.
             </div>
             <div class="mt-2 mt-md-0 d-flex gap-3 flex-wrap justify-content-center">
                 <a href="/hr/dashboard.php" class="text-decoration-none text-muted">HR Dashboard</a>
                 <a href="/hr/kalkulator.php" class="text-decoration-none text-muted">HR Kalkulator</a>
                 <a href="/hr/laporan.php" class="text-decoration-none text-muted">HR Laporan</a>
                 <a href="/employee/dashboard.php" class="text-decoration-none text-muted">Portal Karyawan</a>
-                <a href="/index.php" class="text-decoration-none text-danger">Logout</a>
+                <a href="/logout.php" class="text-decoration-none text-danger">Keluar</a>
             </div>
         </div>
     </div>
@@ -65,7 +65,7 @@ $is_dashboard = isset($page_class) && strpos($page_class, 'page-dashboard') !== 
                 <span class="small text-light opacity-75">&copy; <?php echo date('Y'); ?> Sicuti HRD. All rights reserved.</span>
             </div>
             <div class="col-md-6 text-center text-md-end mt-3 mt-md-0">
-                <span class="small text-light opacity-75">Prototipe Demo v1</span>
+                <span class="small text-light opacity-75">Sistem manajemen cuti karyawan</span>
             </div>
         </div>
     </div>

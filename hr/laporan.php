@@ -56,7 +56,6 @@ $dashboard_context = [
     ],
     'profile_label' => 'Admin HR',
     'profile_initials' => 'HR',
-    'demo_badge' => 'Demo v1',
 ];
 
 ob_start();
