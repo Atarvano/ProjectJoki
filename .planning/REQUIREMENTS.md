@@ -18,7 +18,7 @@
 ### Employee CRUD
 
 - [ ] **CRUD-01**: HR can add a new employee via form with 9 fields (nama, NIK, jabatan, tanggal_bergabung, tanggal_lahir, email, telepon, alamat, departemen)
-- [ ] **CRUD-02**: HR can view a list of all employees from the database in an HTML table
+- [x] **CRUD-02**: HR can view a list of all employees from the database in an HTML table
 - [ ] **CRUD-03**: HR can edit an existing employee's data via pre-filled form
 - [ ] **CRUD-04**: HR can permanently delete an employee (hard delete), which also removes their user account via CASCADE
 - [ ] **CRUD-05**: Forms validate required fields, NIK uniqueness, and email format on the server side
@@ -62,7 +62,7 @@
 
 - [ ] **DASH-01**: HR dashboard shows real employee count and stats from DB queries
 - [x] **DASH-02**: Topbar shows logged-in user's real name and role from session/DB
-- [ ] **DASH-03**: HR sidebar includes "Kelola Karyawan" navigation link to CRUD pages
+- [x] **DASH-03**: HR sidebar includes "Kelola Karyawan" navigation link to CRUD pages
 - [x] **DASH-04**: Sidebar/topbar includes logout ("Keluar") button
 - [ ] **DASH-05**: All "Demo v1" badges and demo notices are removed from dashboards
 
@@ -125,7 +125,7 @@
 | RBAC-04 | Phase 15 | Complete |
 | RBAC-05 | Phase 15 | Complete |
 | CRUD-01 | Phase 16 | Pending |
-| CRUD-02 | Phase 16 | Pending |
+| CRUD-02 | Phase 16 | Complete |
 | CRUD-03 | Phase 16 | Pending |
 | CRUD-04 | Phase 16 | Pending |
 | CRUD-05 | Phase 16 | Pending |
@@ -143,7 +143,7 @@
 | RPT-04 | Phase 18 | Pending |
 | DASH-01 | Phase 18 | Pending |
 | DASH-02 | Phase 15 | Complete |
-| DASH-03 | Phase 16 | Pending |
+| DASH-03 | Phase 16 | Complete |
 | DASH-04 | Phase 15 | Complete |
 | DASH-05 | Phase 18 | Pending |
 
