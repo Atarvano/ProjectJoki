@@ -24,7 +24,7 @@ if ($koneksiOutput !== '') {
     echo "PASS: koneksi.php included\n";
 }
 
-if (mysqli_ping($koneksi)) {
+if (@mysqli_ping($koneksi)) {
     echo "PASS: mysqli_ping connection to sicuti_hrd\n";
 } else {
     echo "FAIL: mysqli_ping connection to sicuti_hrd\n";
