@@ -2,14 +2,14 @@
 gsd_state_version: 1.0
 milestone: v2.0
 milestone_name: milestone
-status: planning
-last_updated: "2026-03-05T10:35:00.000Z"
+status: executing
+last_updated: "2026-03-05T10:44:38.450Z"
 progress:
   total_phases: 5
-  completed_phases: 2
+  completed_phases: 3
   total_plans: 8
-  completed_plans: 6
-  percent: 75
+  completed_plans: 8
+  percent: 100
 ---
 
 # State: Sicuti HRD Cuti Tracker
@@ -23,9 +23,9 @@ progress:
 ## Current Position
 
 **Phase:** 16 — Employee CRUD & HR Navigation
-**Plan:** 01 completed (1/3)
-**Status:** Ready for next plan
-**Progress:** [███████░░░] 75%
+**Plan:** 03 completed (2/3, out of sequence)
+**Status:** In progress
+**Progress:** [██████████] 100%
 
 ## Performance Metrics
 
@@ -33,7 +33,7 @@ progress:
 |--------|-------|
 | Phases completed | 2/5 |
 | Requirements completed | 18/36 |
-| Plans completed | 6/8 |
+| Plans completed | 7/8 |
 | Current streak | - |
 | Phase 14 P01 | 2 min | 2 tasks | 3 files |
 | Phase 14 P02 | 3 min | 2 tasks | 2 files |
@@ -41,6 +41,8 @@ progress:
 | Phase 15 P02 | 0 min | 3 tasks | 8 files |
 | Phase 15 P03 | 4 min | 3 tasks | 4 files |
 | Phase 16 P01 | 5 min | 2 tasks | 2 files |
+| Phase 16 P03 | 2 min | 2 tasks | 2 files |
+| Phase 16 P02 | 6 min | 2 tasks | 2 files |
 
 ## Accumulated Context
 
@@ -61,6 +63,8 @@ progress:
 | Render explicit profile_role in shared topbar include | Guarantees DASH-02 shows both identity name and role on every protected page | 15 |
 | Use one active nav id `kelola-karyawan` for HR CRUD pages | Menjaga highlight sidebar konsisten untuk list/add/edit/detail tanpa logic tambahan | 16 |
 | Delete action on employee list must be POST + browser confirm copy | Menekan risiko hapus tidak sengaja dan menegaskan dampak hapus akun login terhubung | 16 |
+| Detail karyawan menampilkan status akun login dari relasi users.karyawan_id | Membantu HR memastikan status provisioning dari halaman detail tanpa membuka tabel users | 16 |
+| Endpoint hapus karyawan wajib POST-only dengan flash ramah untuk sukses/gagal | Menjaga alur hapus tetap aman, sederhana, dan mudah dipahami user HR | 16 |
 
 ### Implementation Guardrails
 - Native procedural PHP only (no OOP/framework)
@@ -81,14 +85,14 @@ progress:
 
 ### Last Session
 - **Date:** 2026-03-05
-- **Activity:** Executed Phase 16 Plan 01 (sidebar nav + employee list foundation)
-- **Outcome:** HR sidebar now has `Kelola Karyawan`; `/hr/karyawan.php` available with DB-backed table, empty state CTA, and POST delete action with confirm copy
-- **Next:** Continue Phase 16 Plan 02
+- **Activity:** Executed Phase 16 Plan 03 (employee detail page + delete endpoint)
+- **Outcome:** `/hr/karyawan-detail.php` now shows 9 read-only fields plus akun login status, and `/hr/karyawan-hapus.php` handles POST-only hard delete with friendly flash messaging
+- **Next:** Continue remaining pending plan `16-02-PLAN.md`
 
 ### Context for Next Session
 - Start with `/gsd-execute-phase 16`
-- Execute `16-02-PLAN.md` as the next pending plan
-- Reuse `active_nav = kelola-karyawan` and existing flash PRG pattern from `/hr/karyawan.php`
+- Execute `16-02-PLAN.md` as the next pending plan (still missing in Phase 16)
+- Reuse `active_nav = kelola-karyawan`, validation + PRG flash pattern, and new detail/delete flows
 
 ---
 *State initialized: 2026-03-05*

@@ -65,7 +65,7 @@ Plans:
   3. HR can edit any employee's data via a pre-filled form and save updates to the database
   4. HR can permanently delete an employee (hard delete) and the associated user account is automatically removed via CASCADE
   5. HR sidebar includes a "Kelola Karyawan" navigation link that leads to the employee management pages
-**Plans:** 1/3 plans executed
+**Plans:** 2/3 plans executed
 Plans:
 - [ ] 16-01-PLAN.md — Sidebar `Kelola Karyawan` nav + employee list page (table, empty state, actions)
 - [ ] 16-02-PLAN.md — Separate add/edit pages with server validation, prefill, and PRG flash flow
@@ -155,7 +155,7 @@ All phases are sequential. Each phase depends on its predecessor. No paralleliza
 |-------|---------------|--------|-----------|
 | 14. Database Foundation | 2/2 | Complete   | 2026-03-05 |
 | 15. Authentication & Access Control | 3/3 | Complete    | 2026-03-05 |
-| 16. Employee CRUD & HR Navigation | 1/3 | In Progress|  |
+| 16. Employee CRUD & HR Navigation | 2/3 | In Progress|  |
 | 17. Account Provisioning | 0/? | Not started | - |
 | 18. Data Wiring — Calculator, Reports & Dashboards | 0/? | Not started | - |
 

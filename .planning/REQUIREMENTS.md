@@ -20,7 +20,7 @@
 - [ ] **CRUD-01**: HR can add a new employee via form with 9 fields (nama, NIK, jabatan, tanggal_bergabung, tanggal_lahir, email, telepon, alamat, departemen)
 - [x] **CRUD-02**: HR can view a list of all employees from the database in an HTML table
 - [ ] **CRUD-03**: HR can edit an existing employee's data via pre-filled form
-- [ ] **CRUD-04**: HR can permanently delete an employee (hard delete), which also removes their user account via CASCADE
+- [x] **CRUD-04**: HR can permanently delete an employee (hard delete), which also removes their user account via CASCADE
 - [ ] **CRUD-05**: Forms validate required fields, NIK uniqueness, and email format on the server side
 
 ### Authentication & Sessions
@@ -127,7 +127,7 @@
 | CRUD-01 | Phase 16 | Pending |
 | CRUD-02 | Phase 16 | Complete |
 | CRUD-03 | Phase 16 | Pending |
-| CRUD-04 | Phase 16 | Pending |
+| CRUD-04 | Phase 16 | Complete |
 | CRUD-05 | Phase 16 | Pending |
 | PROV-01 | Phase 17 | Pending |
 | PROV-02 | Phase 17 | Pending |
