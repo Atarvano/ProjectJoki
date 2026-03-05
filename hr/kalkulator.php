@@ -1,4 +1,7 @@
 <?php
+require_once __DIR__ . '/../includes/auth-guard.php';
+cekLogin();
+cekRole('hr');
 require_once __DIR__ . '/../includes/cuti-calculator.php';
 
 $hasil = null;

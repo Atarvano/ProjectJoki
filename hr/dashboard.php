@@ -1,4 +1,7 @@
 <?php
+require_once __DIR__ . '/../includes/auth-guard.php';
+cekLogin();
+cekRole('hr');
 require_once __DIR__ . '/../includes/cuti-calculator.php';
 require_once __DIR__ . '/../includes/reports-data.php';
 
@@ -25,9 +28,8 @@ $dashboard_context = [
     'breadcrumb' => [
         ['label' => 'Dashboard HR', 'url' => '#']
     ],
-    'profile_label' => 'Admin HR',
-    'profile_initials' => 'HR',
-    'demo_badge' => 'Demo v1',
+    'profile_label' => $_SESSION['nama'],
+    'profile_initials' => strtoupper(substr($_SESSION['nama'], 0, 2)),
 ];
 
 ob_start();
@@ -39,7 +41,7 @@ ob_start();
                 <div class="col-md-8 p-4 p-md-5">
                     <h1 class="hero-title mb-2 text-primary-dark" style="font-size: clamp(2rem, 4vw, 3rem); font-weight: 800;">Selamat datang di <span class="text-accent">Sicuti HRD</span></h1>
                     <p class="hero-subtitle mb-4 text-secondary" style="font-size: 1.125rem;">
-                        Anda berada dalam Mode Demo. Kelola hak cuti karyawan, simpan laporan sesi, dan unduh rekap data dalam format Excel.
+                        Kelola hak cuti karyawan, simpan laporan, dan unduh rekap data dalam format Excel.
                     </p>
                     <div class="d-flex gap-3 flex-wrap">
                         <a href="kalkulator.php" class="btn btn-primary btn-lg px-4" style="background: linear-gradient(135deg, var(--color-primary), var(--color-primary-light)); border: none; box-shadow: 0 4px 15px rgba(15, 76, 92, 0.3); font-weight: 700;">
@@ -70,7 +72,7 @@ ob_start();
         <div class="dashboard-stat-card">
             <div class="card-body p-4">
                 <div class="d-flex justify-content-between align-items-center mb-3">
-                    <div class="text-muted fw-semibold text-uppercase tracking-wider small">Total Karyawan (Demo)</div>
+                    <div class="text-muted fw-semibold text-uppercase tracking-wider small">Total Karyawan</div>
                     <div class="dashboard-stat-icon">
                         <i class="bi bi-people fs-4"></i>
                     </div>

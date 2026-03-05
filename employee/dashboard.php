@@ -1,4 +1,7 @@
 <?php
+require_once __DIR__ . '/../includes/auth-guard.php';
+cekLogin();
+cekRole('employee');
 require_once __DIR__ . '/../includes/cuti-calculator.php';
 
 // Setup dashboard context
@@ -11,9 +14,8 @@ $dashboard_context = [
         ['label' => 'Dashboard'],
         ['label' => 'Hak Cuti Saya'],
     ],
-    'profile_label' => 'Karyawan',
-    'profile_initials' => 'KR',
-    'demo_badge' => 'Demo v1',
+    'profile_label' => $_SESSION['nama'],
+    'profile_initials' => strtoupper(substr($_SESSION['nama'], 0, 2)),
 ];
 
 // Preset demo employees
