@@ -2,8 +2,8 @@
 gsd_state_version: 1.0
 milestone: v2.0
 milestone_name: milestone
-status: executing
-last_updated: "2026-03-05T10:44:38.450Z"
+status: planning
+last_updated: "2026-03-05T10:47:02Z"
 progress:
   total_phases: 5
   completed_phases: 3
@@ -23,17 +23,17 @@ progress:
 ## Current Position
 
 **Phase:** 16 — Employee CRUD & HR Navigation
-**Plan:** 03 completed (2/3, out of sequence)
-**Status:** In progress
+**Plan:** 02 completed (3/3, phase complete)
+**Status:** Ready for next phase
 **Progress:** [██████████] 100%
 
 ## Performance Metrics
 
 | Metric | Value |
 |--------|-------|
-| Phases completed | 2/5 |
-| Requirements completed | 18/36 |
-| Plans completed | 7/8 |
+| Phases completed | 3/5 |
+| Requirements completed | 21/36 |
+| Plans completed | 8/8 |
 | Current streak | - |
 | Phase 14 P01 | 2 min | 2 tasks | 3 files |
 | Phase 14 P02 | 3 min | 2 tasks | 2 files |
@@ -65,6 +65,8 @@ progress:
 | Delete action on employee list must be POST + browser confirm copy | Menekan risiko hapus tidak sengaja dan menegaskan dampak hapus akun login terhubung | 16 |
 | Detail karyawan menampilkan status akun login dari relasi users.karyawan_id | Membantu HR memastikan status provisioning dari halaman detail tanpa membuka tabel users | 16 |
 | Endpoint hapus karyawan wajib POST-only dengan flash ramah untuk sukses/gagal | Menjaga alur hapus tetap aman, sederhana, dan mudah dipahami user HR | 16 |
+| Add dan edit dipisah jadi dua halaman procedural terpisah | Alur lebih mudah dipahami pemula dan meminimalkan branching rumit dalam satu file | 16 |
+| Pola validasi tambah/edit disamakan (summary + inline) | Feedback error jadi konsisten dan lebih mudah dipahami HR non-teknis | 16 |
 
 ### Implementation Guardrails
 - Native procedural PHP only (no OOP/framework)
@@ -76,7 +78,7 @@ progress:
 - HR admin is standalone user (not in karyawan table)
 
 ### TODOs
-- [ ] Execute Phase 16 Plan 02
+- [ ] Start Phase 17 Plan 01
 
 ### Blockers
 - None.
@@ -85,14 +87,14 @@ progress:
 
 ### Last Session
 - **Date:** 2026-03-05
-- **Activity:** Executed Phase 16 Plan 03 (employee detail page + delete endpoint)
-- **Outcome:** `/hr/karyawan-detail.php` now shows 9 read-only fields plus akun login status, and `/hr/karyawan-hapus.php` handles POST-only hard delete with friendly flash messaging
-- **Next:** Continue remaining pending plan `16-02-PLAN.md`
+- **Activity:** Executed Phase 16 Plan 02 (employee add/edit pages with validation + PRG flash)
+- **Outcome:** `/hr/karyawan-tambah.php` and `/hr/karyawan-edit.php` now support complete add/edit flow with required field validation, unique NIK checks, valid email checks, and redirect success flash
+- **Next:** Move to Phase 17 planning/execution
 
 ### Context for Next Session
-- Start with `/gsd-execute-phase 16`
-- Execute `16-02-PLAN.md` as the next pending plan (still missing in Phase 16)
-- Reuse `active_nav = kelola-karyawan`, validation + PRG flash pattern, and new detail/delete flows
+- Start with `/gsd-plan-phase 17` or `/gsd-execute-phase 17`
+- Continue from completed Phase 16 CRUD baseline (list, add, edit, detail, delete)
+- Reuse existing PRG flash pattern and prepared statement style for provisioning flow
 
 ---
 *State initialized: 2026-03-05*
