@@ -69,8 +69,42 @@ ob_start();
 </div>
 
 <?php if ($flash): ?>
-    <div class="alert alert-<?php echo htmlspecialchars($flash['type'] ?? 'info'); ?> alert-dismissible fade show mb-4" role="alert">
-        <?php echo htmlspecialchars($flash['message'] ?? 'Informasi diperbarui.'); ?>
+    <?php
+    $flash_type = (string) ($flash['type'] ?? 'info');
+    $flash_message = trim((string) ($flash['message'] ?? ''));
+    $flash_credentials = $flash['credentials'] ?? null;
+    $has_structured_credentials = is_array($flash_credentials)
+        && trim((string) ($flash_credentials['username'] ?? '')) !== ''
+        && trim((string) ($flash_credentials['password_awal'] ?? '')) !== '';
+
+    $credential_username = trim((string) ($flash_credentials['username'] ?? ''));
+    $credential_password = trim((string) ($flash_credentials['password_awal'] ?? ''));
+    $credential_pattern = trim((string) ($flash_credentials['pattern_example'] ?? ''));
+    if ($credential_pattern === '' && $credential_username !== '') {
+        $credential_pattern = $credential_username . 'DDMMYYYY';
+    }
+    ?>
+    <div class="alert alert-<?php echo htmlspecialchars($flash_type); ?> alert-dismissible fade show mb-4" role="alert">
+        <?php if ($has_structured_credentials): ?>
+            <p class="mb-2 fw-semibold">Akun login karyawan berhasil dibuat.</p>
+            <ul class="list-unstyled mb-2">
+                <li><strong>NIK (Username):</strong> <?php echo htmlspecialchars($credential_username); ?></li>
+                <li><strong>Password awal:</strong> <?php echo htmlspecialchars($credential_password); ?></li>
+            </ul>
+            <p class="mb-2">
+                <small>
+                    Pola password awal: NIK + tanggal lahir (DDMMYYYY)
+                    <?php if ($credential_pattern !== ''): ?>
+                        (contoh: <?php echo htmlspecialchars($credential_pattern); ?>)
+                    <?php endif; ?>
+                </small>
+            </p>
+            <p class="mb-0 fw-semibold">Kredensial ini hanya ditampilkan sekali. Segera catat dan sampaikan ke karyawan.</p>
+        <?php elseif ($flash_message !== ''): ?>
+            <?php echo nl2br(htmlspecialchars($flash_message), false); ?>
+        <?php else: ?>
+            Informasi diperbarui.
+        <?php endif; ?>
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
 <?php endif; ?>
