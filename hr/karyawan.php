@@ -13,7 +13,10 @@ if (isset($_SESSION['flash'])) {
 $karyawan_list = [];
 $query_error = null;
 
-$sql = 'SELECT id, nik, nama, departemen, jabatan, tanggal_bergabung FROM karyawan ORDER BY id DESC';
+$sql = 'SELECT k.id, k.nik, k.nama, k.departemen, k.jabatan, k.tanggal_bergabung, u.id AS user_id
+        FROM karyawan k
+        LEFT JOIN users u ON u.karyawan_id = k.id
+        ORDER BY k.id DESC';
 $stmt = mysqli_prepare($koneksi, $sql);
 
 if ($stmt) {
@@ -99,20 +102,22 @@ ob_start();
             <div class="table-responsive">
                 <table class="table table-hover align-middle mb-0">
                     <thead class="table-light">
-                        <tr>
-                            <th class="py-3 ps-4">NIK</th>
-                            <th class="py-3">Nama</th>
-                            <th class="py-3">Departemen</th>
-                            <th class="py-3">Jabatan</th>
-                            <th class="py-3">Tanggal Bergabung</th>
-                            <th class="py-3 text-center pe-4">Aksi</th>
-                        </tr>
+                            <tr>
+                                <th class="py-3 ps-4">NIK</th>
+                                <th class="py-3">Nama</th>
+                                <th class="py-3">Departemen</th>
+                                <th class="py-3">Jabatan</th>
+                                <th class="py-3">Tanggal Bergabung</th>
+                                <th class="py-3">Akun Login</th>
+                                <th class="py-3 text-center pe-4">Aksi</th>
+                            </tr>
                     </thead>
                     <tbody>
                         <?php foreach ($karyawan_list as $row): ?>
                             <?php
                             $id = (int) $row['id'];
                             $tanggal_bergabung = '-';
+                            $akun_login_status = !empty($row['user_id']) ? 'Sudah ada' : 'Belum dibuat';
                             if (!empty($row['tanggal_bergabung'])) {
                                 $tanggal_bergabung = date('d M Y', strtotime($row['tanggal_bergabung']));
                             }
@@ -123,9 +128,20 @@ ob_start();
                                 <td><?php echo htmlspecialchars($row['departemen'] ?: '-'); ?></td>
                                 <td><?php echo htmlspecialchars($row['jabatan'] ?: '-'); ?></td>
                                 <td><?php echo htmlspecialchars($tanggal_bergabung); ?></td>
+                                <td>
+                                    <span class="badge <?php echo $akun_login_status === 'Sudah ada' ? 'bg-success-subtle text-success-emphasis' : 'bg-warning-subtle text-warning-emphasis'; ?>">
+                                        <?php echo htmlspecialchars($akun_login_status); ?>
+                                    </span>
+                                </td>
                                 <td class="text-center pe-4 action-area">
                                     <div class="d-flex justify-content-center gap-2 flex-wrap">
                                         <a href="/hr/karyawan-detail.php?id=<?php echo $id; ?>" class="btn btn-sm btn-outline-secondary">Detail</a>
+                                        <?php if ($akun_login_status === 'Belum dibuat'): ?>
+                                            <form method="post" action="/hr/karyawan-provision.php" class="d-inline">
+                                                <input type="hidden" name="id" value="<?php echo $id; ?>">
+                                                <button type="submit" class="btn btn-sm btn-outline-success">Buat Akun Login</button>
+                                            </form>
+                                        <?php endif; ?>
                                         <a href="/hr/karyawan-edit.php?id=<?php echo $id; ?>" class="btn btn-sm btn-outline-primary">Edit</a>
                                         <form method="post" action="/hr/karyawan-hapus.php" onsubmit="return confirm('Data karyawan akan dihapus permanen dan akun login yang terhubung ikut terhapus. Lanjutkan?');" class="d-inline">
                                             <input type="hidden" name="id" value="<?php echo $id; ?>">
