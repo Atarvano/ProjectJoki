@@ -1,4 +1,78 @@
 <?php
+session_start();
+
+if (isset($_SESSION['user_id'])) {
+    if ($_SESSION['role'] === 'hr') {
+        header('Location: /hr/dashboard.php');
+    } else {
+        header('Location: /employee/dashboard.php');
+    }
+    exit;
+}
+
+$error = '';
+$username = '';
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    require_once 'koneksi.php';
+
+    $username = trim($_POST['username'] ?? '');
+    $password = $_POST['password'] ?? '';
+
+    if ($username === '' || $password === '') {
+        $error = 'NIK dan password harus diisi.';
+    } else {
+        $stmt = mysqli_prepare($koneksi, "SELECT id, karyawan_id, username, password, role FROM users WHERE username = ? AND is_active = 1 LIMIT 1");
+
+        if ($stmt) {
+            mysqli_stmt_bind_param($stmt, 's', $username);
+            mysqli_stmt_execute($stmt);
+            $result = mysqli_stmt_get_result($stmt);
+            $user = mysqli_fetch_assoc($result);
+            mysqli_stmt_close($stmt);
+
+            if ($user && password_verify($password, $user['password'])) {
+                $_SESSION['user_id'] = (int) $user['id'];
+                $_SESSION['username'] = $user['username'];
+                $_SESSION['role'] = $user['role'];
+                $_SESSION['karyawan_id'] = $user['karyawan_id'] !== null ? (int) $user['karyawan_id'] : null;
+
+                if ($user['role'] === 'hr') {
+                    $_SESSION['nama'] = 'Admin HR';
+                } else {
+                    $_SESSION['nama'] = $user['username'];
+
+                    if ($user['karyawan_id'] !== null) {
+                        $karyawan_id = (int) $user['karyawan_id'];
+                        $stmt2 = mysqli_prepare($koneksi, 'SELECT nama FROM karyawan WHERE id = ? LIMIT 1');
+
+                        if ($stmt2) {
+                            mysqli_stmt_bind_param($stmt2, 'i', $karyawan_id);
+                            mysqli_stmt_execute($stmt2);
+                            $result2 = mysqli_stmt_get_result($stmt2);
+                            $karyawan = mysqli_fetch_assoc($result2);
+                            mysqli_stmt_close($stmt2);
+
+                            if ($karyawan && isset($karyawan['nama'])) {
+                                $_SESSION['nama'] = $karyawan['nama'];
+                            }
+                        }
+                    }
+                }
+
+                if ($user['role'] === 'hr') {
+                    header('Location: /hr/dashboard.php');
+                } else {
+                    header('Location: /employee/dashboard.php');
+                }
+                exit;
+            }
+        }
+
+        $error = 'NIK atau password salah.';
+    }
+}
+
 $role = isset($_GET['role']) ? $_GET['role'] : 'hr';
 $valid_roles = ['hr', 'employee'];
 if (!in_array($role, $valid_roles)) {
@@ -8,7 +82,6 @@ if (!in_array($role, $valid_roles)) {
 $is_hr = ($role === 'hr');
 $role_label = $is_hr ? 'HR' : 'Karyawan';
 $role_action = $is_hr ? 'Masuk sebagai HR' : 'Masuk sebagai Karyawan';
-$role_dashboard = $is_hr ? 'hr/dashboard.php' : 'employee/dashboard.php';
 $switch_role = $is_hr ? 'employee' : 'hr';
 $switch_label = $is_hr ? 'Masuk sebagai Karyawan' : 'Masuk sebagai HR';
 $role_icon = $is_hr ? 'bi-shield-check' : 'bi-person';
@@ -47,31 +120,42 @@ include 'includes/header.php';
                 Selamat Datang, <?php echo htmlspecialchars($role_label); ?>
             </h1>
 
-            <div class="demo-notice">
-                <i class="bi bi-info-circle me-1"></i>
-                Akses demo — tidak memerlukan autentikasi nyata.
-            </div>
+            <?php if ($error !== ''): ?>
+                <div class="alert alert-danger mt-3" role="alert">
+                    <?php echo htmlspecialchars($error); ?>
+                </div>
+            <?php endif; ?>
 
-            <div class="login-fields mb-3">
+            <form method="POST" action="login.php?role=<?php echo htmlspecialchars($role); ?>" class="login-fields mb-3">
                 <div class="mb-3 text-start">
-                    <label class="form-label text-muted small">Email (Demo)</label>
-                    <input type="email" class="form-control bg-light" value="demo@perusahaan.com" readonly>
+                    <label class="form-label text-muted small">NIK</label>
+                    <input type="text" name="username" class="form-control" placeholder="Masukkan NIK Anda" value="<?php echo htmlspecialchars($username); ?>" required>
                 </div>
                 <div class="mb-4 text-start">
                     <label class="form-label text-muted small">Password</label>
-                    <input type="password" class="form-control bg-light" value="********" readonly>
+                    <input type="password" name="password" class="form-control" placeholder="Masukkan password" required>
                 </div>
+
+                <button type="submit" class="btn-login mb-3">
+                    <?php echo htmlspecialchars($role_action); ?>
+                </button>
+
+                <?php if ($is_hr): ?>
+                    <div class="text-muted small mt-2 text-center">
+                        <i class="bi bi-info-circle me-1"></i>
+                        Gunakan <strong>HR0001</strong> / <strong>Admin123!</strong> untuk uji coba lokal
+                    </div>
+                <?php endif; ?>
+            </form>
+
+            <div class="text-muted small mt-3 p-3 bg-light rounded text-center">
+                <i class="bi bi-shield-lock me-1"></i>
+                Akun karyawan dibuat oleh HR. Hubungi tim HR jika akun Anda belum tersedia.
             </div>
 
-            <a href="<?php echo htmlspecialchars($role_dashboard); ?>" class="btn-login mb-3">
-                <?php echo htmlspecialchars($role_action); ?>
-            </a>
-
-            <ul class="login-value-list">
-                <li><i class="bi bi-check-circle-fill"></i> Perhitungan cuti otomatis & akurat</li>
-                <li><i class="bi bi-check-circle-fill"></i> Laporan transparan untuk semua karyawan</li>
-                <li><i class="bi bi-check-circle-fill"></i> Ekspor data ke Excel dalam satu klik</li>
-            </ul>
+            <div class="text-center mt-2">
+                <span class="text-muted small">Lupa password? Hubungi HR untuk reset.</span>
+            </div>
 
             <div class="role-switch text-center pt-3 mt-4 border-top">
                 <span class="text-muted small d-block mb-2">Atau</span>
