@@ -12,7 +12,7 @@ These constraints apply to ALL phases:
 - **Architecture:** Native procedural PHP only — no OOP, no classes, no frameworks
 - **Database API:** MySQLi procedural via single `koneksi.php` (variable: `$koneksi`)
 - **Auth:** Native PHP sessions (`session_start`, `$_SESSION`, `session_destroy`)
-- **DB Setup:** SQL file for manual import via phpMyAdmin/CLI — no auto-bootstrap
+- **DB Setup:** SQL file for manual import (phpMyAdmin/CLI) — no auto-bootstrap
 - **Security:** `password_hash()`/`password_verify()`, prepared statements for all user input
 - **Flow:** HR creates employee → HR provisions account → Employee logs in
 - **Style:** Basic beginner-level PHP CRUD code (reference repo patterns)
@@ -77,7 +77,7 @@ Plans:
 **Requirements:** PROV-01, PROV-02, PROV-03, PROV-04
 **Success Criteria** (what must be TRUE):
   1. HR can click "Buat Akun Login" for any existing employee who doesn't yet have an account
-  2. System auto-generates password from employee data (NIK + tanggal_lahir), hashes it with `password_hash()`, and creates a `users` record linked via karyawan_id FK with role='employee'
+  2. System auto-generates password from employee data (NIK + tanggal_lahir), hashes it with `password_hash()`, and creates a `users` record linked via `karyawan_id` FK with role='employee'
   3. After provisioning, the generated credentials (NIK as username + plaintext password) are displayed exactly once via flash message
   4. A provisioned employee can successfully log in with their NIK and auto-generated password (end-to-end flow validated)
 **Plans:** 2/2 plans complete
@@ -95,7 +95,12 @@ Plans:
   3. Reports page computes leave data live from karyawan table + `hitungHakCuti()` (no session storage), and Excel export produces a valid XLSX from DB query results
   4. HR dashboard shows real employee count and statistics from database queries
   5. All hardcoded `preset_karyawan` arrays, "Preset Demo" badges, sample labels, and session reset buttons are removed from the codebase
-**Plans:** TBD
+**Plans:** 1/4 plans executed
+Plans:
+- [ ] 18-01-PLAN.md — Wave 0 smoke tests, manual checks, and validation contract for Phase 18
+- [ ] 18-02-PLAN.md — Employee-first HR calculator wiring from DB + entry link from employee detail
+- [ ] 18-03-PLAN.md — Live reports and Excel export from DB rows + removal of session report helper
+- [ ] 18-04-PLAN.md — Real HR dashboard stats + focused employee dashboard year 6/7/8 view
 
 ## Requirement Coverage
 
@@ -159,8 +164,8 @@ All phases are sequential. Each phase depends on its predecessor. No paralleliza
 | 14. Database Foundation | 2/2 | Complete   | 2026-03-05 |
 | 15. Authentication & Access Control | 3/3 | Complete    | 2026-03-05 |
 | 16. Employee CRUD & HR Navigation | 3/3 | Complete    | 2026-03-05 |
-| 17. Account Provisioning | 2/2 | Complete   | 2026-03-05 |
-| 18. Data Wiring — Calculator, Reports & Dashboards | 0/? | Not started | - |
+| 17. Account Provisioning | 2/2 | Complete    | 2026-03-05 |
+| 18. Data Wiring — Calculator, Reports & Dashboards | 1/4 | In Progress|  |
 
 ---
 *Roadmap created: 2026-03-05*

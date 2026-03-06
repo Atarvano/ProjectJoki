@@ -2,13 +2,13 @@
 gsd_state_version: 1.0
 milestone: v2.0
 milestone_name: milestone
-status: executing
-last_updated: "2026-03-05T18:14:00.000Z"
+status: planning
+last_updated: "2026-03-06T10:17:08.128Z"
 progress:
   total_phases: 5
   completed_phases: 4
-  total_plans: 10
-  completed_plans: 10
+  total_plans: 14
+  completed_plans: 11
   percent: 100
 ---
 
@@ -23,8 +23,8 @@ progress:
 ## Current Position
 
 **Phase:** 18 — Data Wiring — Calculator, Reports & Dashboards
-**Plan:** Pending planning/execution
-**Status:** Ready for transition
+**Plan:** 02 of 04 next (`18-02-PLAN.md`)
+**Status:** In progress
 **Progress:** [██████████] 100%
 
 ## Performance Metrics
@@ -45,12 +45,15 @@ progress:
 | Phase 16 P02 | 6 min | 2 tasks | 2 files |
 | Phase 17 P01 | 7 min | 3 tasks | 4 files |
 | Phase 17 P02 | 1 min | 2 tasks | 2 files |
+| Phase 18 P01 | 1 min | 2 tasks | 3 files |
 
 ## Accumulated Context
 
 ### Key Decisions
 | Decision | Rationale | Phase |
 |----------|-----------|-------|
+| Wave 0 uses one plain PHP smoke script with calculator, reports, and dashboards groups | Future Phase 18 plans can run one fast grouped command after each rewiring task without adding a test framework | 18 |
+| Phase 18 validation is tracked in one 8-task matrix across Plans 18-01 through 18-04 | Keeping all plan, wave, requirement, and command mappings in one contract prevents stale verification rows during execution | 18 |
 | 5 phases derived from dependency chain | DB → Auth → CRUD → Provisioning → Wiring follows natural build order | Roadmap |
 | DASH requirements distributed across phases | Dashboard items assigned to the phase that creates the feature they depend on (auth UI → P15, nav → P16, stats → P18) | Roadmap |
 | Phase 18 combines calculator + reports + dashboards | All are data-wiring tasks with same pattern (swap demo → DB); independent internally but share the same dependency set | Roadmap |
@@ -84,7 +87,9 @@ progress:
 - HR admin is standalone user (not in karyawan table)
 
 ### TODOs
-- [ ] Start Phase 18 planning/execution (Data Wiring)
+- [ ] Execute Phase 18 Plan 02 (employee-first HR calculator wiring)
+- [ ] Execute Phase 18 Plan 03 (live reports and export wiring)
+- [ ] Execute Phase 18 Plan 04 (dashboard rewiring and cleanup)
 
 ### Blockers
 - None.
@@ -93,14 +98,14 @@ progress:
 
 ### Last Session
 - **Date:** 2026-03-06
-- **Activity:** Completed Phase 17 Plan 02 (one-time credential flash UX + Wave 0 manual validation checklist)
-- **Outcome:** `hr/karyawan.php` now renders provisioning success credentials via structured flash payload with fixed labels and one-time warning; `.planning/phases/17-account-provisioning/17-MANUAL-TEST.md` added for repeatable PROV-01..PROV-04 verification + SQL checks
-- **Next:** Start Phase 18 planning/execution (data wiring: calculator, reports, dashboards)
+- **Activity:** Completed Phase 18 Plan 01 (Wave 0 smoke tests, manual checks, and validation contract)
+- **Outcome:** `tests/phase18_data_wiring_smoke.php` now provides grouped calculator/reports/dashboards smoke checks, `tests/phase18_manual_checks.md` documents repeatable browser/export verification, and `18-VALIDATION.md` now tracks all 8 executable Phase 18 tasks with ready Nyquist frontmatter
+- **Next:** Execute Phase 18 Plan 02 (employee-first HR calculator wiring)
 
 ### Context for Next Session
-- Phase 17 provisioning flow is fully closed (PROV-01..PROV-04 complete)
-- Use `17-MANUAL-TEST.md` when re-validating account provisioning/login behavior
-- Maintain procedural PHP + prepared statement + PRG flash patterns while replacing demo data with DB-backed data in Phase 18
+- Phase 18 Wave 0 validation scaffolding is complete and ready for reuse in later plans
+- Use `php tests/phase18_data_wiring_smoke.php --group=calculator|reports|dashboards` after each relevant rewiring task
+- Maintain procedural PHP + prepared statement patterns while replacing demo/session data with DB-backed flows in Phase 18
 
 ---
 *State initialized: 2026-03-05*
