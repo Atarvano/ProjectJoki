@@ -1,8 +1,8 @@
 # Roadmap: Sicuti HRD Cuti Tracker (v2.0)
 
 **Milestone:** v2.0 — Backend Native PHP + HR-First Employee Onboarding
-**Phases:** 5 (Phase 14–18, continuing from v1.0 which ended at Phase 13)
-**Requirements:** 36 mapped across 5 phases
+**Phases:** 7 (Phase 14–20, continuing from v1.0 which ended at Phase 13)
+**Requirements:** 36 mapped across 7 phases
 **Created:** 2026-03-05
 
 ## Implementation Guardrails
@@ -24,6 +24,8 @@ These constraints apply to ALL phases:
 - [x] **Phase 16: Employee CRUD & HR Navigation** — Full employee management with list/add/edit/delete and sidebar nav (completed 2026-03-05)
 - [x] **Phase 17: Account Provisioning** — HR creates login accounts for employees with auto-generated passwords (completed 2026-03-05)
 - [x] **Phase 18: Data Wiring — Calculator, Reports & Dashboards** — All pages swap from demo/session data to live DB data (completed 2026-03-06)
+- [ ] **Phase 19: Auth Session Revalidation & Identity Consistency** — Revalidate live session state after employee delete and normalize persistent identity display
+- [ ] **Phase 20: Provisioning E2E Verification & Flash Contract Alignment** — Close milestone runtime verification gaps for auth/provisioning and align credential flash contract
 
 ## Phase Details
 
@@ -97,10 +99,34 @@ Plans:
   5. All hardcoded `preset_karyawan` arrays, "Preset Demo" badges, sample labels, and session reset buttons are removed from the codebase
 **Plans:** 4/4 plans complete
 Plans:
-- [x] 18-01-PLAN.md — Wave 0 smoke tests, manual checks, and validation contract for Phase 18
-- [ ] 18-02-PLAN.md — Employee-first HR calculator wiring from DB + entry link from employee detail (completed 2026-03-06)
-- [ ] 18-03-PLAN.md — Live reports and Excel export from DB rows + removal of session report helper
-- [ ] 18-04-PLAN.md — Real HR dashboard stats + focused employee dashboard year 6/7/8 view
+- [x] 18-01-PLAN.md — Wave 0 smoke tests, manual checks, and validation contract for Phase 18 (completed 2026-03-06)
+- [x] 18-02-PLAN.md — Employee-first HR calculator wiring from DB + entry link from employee detail (completed 2026-03-06)
+- [x] 18-03-PLAN.md — Live reports and Excel export from DB rows + removal of session report helper (completed 2026-03-06)
+- [x] 18-04-PLAN.md — Real HR dashboard stats + focused employee dashboard year 6/7/8 view (completed 2026-03-06)
+
+### Phase 19: Auth Session Revalidation & Identity Consistency
+**Goal:** Authentication state stays consistent with live database records, especially after employee deletion, and logged-in identity labels come from persistent user data
+**Depends on:** Phase 18 (closes cross-phase audit gaps across auth, CRUD, provisioning, and employee dashboard flows)
+**Requirements:** CRUD-04, RBAC-03, RBAC-04, DASH-02
+**Gap Closure:** Closes critical audit gaps from `.planning/v2.0-v2.0-MILESTONE-AUDIT.md`
+**Success Criteria** (what must be TRUE):
+  1. `cekLogin()` and `cekRole()` revalidate the active session against live `users` data and reject deleted or inactive accounts
+  2. If HR deletes an employee whose account is currently logged in, the next employee request is forced through a valid auth redirect instead of showing stale-session data or fallback errors
+  3. HR identity shown in topbar/session context is sourced from persistent user data rather than a hardcoded fallback label
+  4. Delete -> auth -> employee dashboard flow has explicit runtime verification coverage and evidence
+**Plans:** 0/0 plans complete
+
+### Phase 20: Provisioning E2E Verification & Flash Contract Alignment
+**Goal:** Milestone auth and provisioning flows have closed runtime evidence, and provisioning credential flash output matches the documented structured contract
+**Depends on:** Phase 19 (requires auth/session fix before final E2E verification)
+**Requirements:** AUTH-01, AUTH-02, AUTH-03, RBAC-01, RBAC-02, RBAC-05, PROV-01, PROV-02, PROV-03, PROV-04, DASH-04
+**Gap Closure:** Closes remaining audit partial requirements and verification debt from `.planning/v2.0-v2.0-MILESTONE-AUDIT.md`
+**Success Criteria** (what must be TRUE):
+  1. Provisioning endpoint and karyawan list use the same structured flash contract for generated credentials
+  2. Browser walkthrough proves HR login, logout, role guards, demo-free UI, provisioning, employee login, and employee dashboard access all work end-to-end
+  3. Phase 15 and Phase 17 verification artifacts can be updated from `human_needed` to closed milestone-ready evidence
+  4. Milestone audit blockers tied to auth/provisioning runtime validation are removed
+**Plans:** 0/0 plans complete
 
 ## Requirement Coverage
 
@@ -112,26 +138,26 @@ Plans:
 | DATA-04 | Phase 14 | Database Foundation |
 | DATA-05 | Phase 14 | Database Foundation |
 | DATA-06 | Phase 14 | Database Foundation |
-| AUTH-01 | Phase 15 | Authentication |
-| AUTH-02 | Phase 15 | Authentication |
-| AUTH-03 | Phase 15 | Authentication |
-| RBAC-01 | Phase 15 | Access Control |
-| RBAC-02 | Phase 15 | Access Control |
-| RBAC-03 | Phase 15 | Access Control |
-| RBAC-04 | Phase 15 | Access Control |
-| RBAC-05 | Phase 15 | Access Control |
-| DASH-02 | Phase 15 | Dashboard (auth UI) |
-| DASH-04 | Phase 15 | Dashboard (auth UI) |
+| AUTH-01 | Phase 20 | Authentication |
+| AUTH-02 | Phase 20 | Authentication |
+| AUTH-03 | Phase 20 | Authentication |
+| RBAC-01 | Phase 20 | Access Control |
+| RBAC-02 | Phase 20 | Access Control |
+| RBAC-03 | Phase 19 | Access Control |
+| RBAC-04 | Phase 19 | Access Control |
+| RBAC-05 | Phase 20 | Access Control |
+| DASH-02 | Phase 19 | Dashboard (auth UI) |
+| DASH-04 | Phase 20 | Dashboard (auth UI) |
 | CRUD-01 | Phase 16 | Employee CRUD |
 | CRUD-02 | Phase 16 | Employee CRUD |
 | CRUD-03 | Phase 16 | Employee CRUD |
-| CRUD-04 | Phase 16 | Employee CRUD |
+| CRUD-04 | Phase 19 | Employee CRUD |
 | CRUD-05 | Phase 16 | Employee CRUD |
 | DASH-03 | Phase 16 | Dashboard (CRUD nav) |
-| PROV-01 | Phase 17 | Provisioning |
-| PROV-02 | Phase 17 | Provisioning |
-| PROV-03 | Phase 17 | Provisioning |
-| PROV-04 | Phase 17 | Provisioning |
+| PROV-01 | Phase 20 | Provisioning |
+| PROV-02 | Phase 20 | Provisioning |
+| PROV-03 | Phase 20 | Provisioning |
+| PROV-04 | Phase 20 | Provisioning |
 | CALC-01 | Phase 18 | Calculator |
 | CALC-02 | Phase 18 | Calculator |
 | CALC-03 | Phase 18 | Calculator |
@@ -153,6 +179,8 @@ Phase 14 (DB Foundation)
             └── Phase 16 (Employee CRUD)
                     └── Phase 17 (Account Provisioning)
                             └── Phase 18 (Data Wiring)
+                                    └── Phase 19 (Auth Session Revalidation)
+                                            └── Phase 20 (Provisioning E2E Closure)
 ```
 
 All phases are sequential. Each phase depends on its predecessor. No parallelization within the critical path (though Phase 18's internal work items — calculator, reports, dashboards — are independent of each other).
@@ -165,7 +193,9 @@ All phases are sequential. Each phase depends on its predecessor. No paralleliza
 | 15. Authentication & Access Control | 3/3 | Complete    | 2026-03-05 |
 | 16. Employee CRUD & HR Navigation | 3/3 | Complete    | 2026-03-05 |
 | 17. Account Provisioning | 2/2 | Complete    | 2026-03-05 |
-| 18. Data Wiring — Calculator, Reports & Dashboards | 4/4 | Complete   | 2026-03-06 |
+| 18. Data Wiring — Calculator, Reports & Dashboards | 4/4 | Complete    | 2026-03-06 |
+| 19. Auth Session Revalidation & Identity Consistency | 0/0 | Planned     | - |
+| 20. Provisioning E2E Verification & Flash Contract Alignment | 0/0 | Planned     | - |
 
 ---
 *Roadmap created: 2026-03-05*

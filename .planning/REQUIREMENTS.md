@@ -20,29 +20,29 @@
 - [x] **CRUD-01**: HR can add a new employee via form with 9 fields (nama, NIK, jabatan, tanggal_bergabung, tanggal_lahir, email, telepon, alamat, departemen)
 - [x] **CRUD-02**: HR can view a list of all employees from the database in an HTML table
 - [x] **CRUD-03**: HR can edit an existing employee's data via pre-filled form
-- [x] **CRUD-04**: HR can permanently delete an employee (hard delete), which also removes their user account via CASCADE
+- [ ] **CRUD-04**: HR can permanently delete an employee (hard delete), which also removes their user account via CASCADE
 - [x] **CRUD-05**: Forms validate required fields, NIK uniqueness, and email format on the server side
 
 ### Authentication & Sessions
 
-- [x] **AUTH-01**: User can log in with NIK + password via POST form, validated against database with `password_verify()`
-- [x] **AUTH-02**: User can log out, which destroys the session and redirects to login page
-- [x] **AUTH-03**: After login, user is redirected to the correct dashboard based on role (HR or Employee)
+- [ ] **AUTH-01**: User can log in with NIK + password via POST form, validated against database with `password_verify()`
+- [ ] **AUTH-02**: User can log out, which destroys the session and redirects to login page
+- [ ] **AUTH-03**: After login, user is redirected to the correct dashboard based on role (HR or Employee)
 
 ### Role-Based Access Control
 
-- [x] **RBAC-01**: App has a single `auth-guard.php` include file with `cekLogin()` and `cekRole()` functions
-- [x] **RBAC-02**: All HR pages are protected — only role='hr' can access them
-- [x] **RBAC-03**: All employee pages are protected — only role='employee' can access them, showing only own data
-- [x] **RBAC-04**: Unauthorized access redirects to login page (not logged in) or own dashboard (wrong role)
-- [x] **RBAC-05**: All demo badges, "Demo v1" notices, and "Akses demo" labels are removed from the UI
+- [ ] **RBAC-01**: App has a single `auth-guard.php` include file with `cekLogin()` and `cekRole()` functions
+- [ ] **RBAC-02**: All HR pages are protected — only role='hr' can access them
+- [ ] **RBAC-03**: All employee pages are protected — only role='employee' can access them, showing only own data
+- [ ] **RBAC-04**: Unauthorized access redirects to login page (not logged in) or own dashboard (wrong role)
+- [ ] **RBAC-05**: All demo badges, "Demo v1" notices, and "Akses demo" labels are removed from the UI
 
 ### HR-First Provisioning
 
-- [x] **PROV-01**: HR can click "Buat Akun Login" button to create a login account for an existing employee
-- [x] **PROV-02**: Password is auto-generated from employee data (NIK + birthdate), hashed with `password_hash()`
-- [x] **PROV-03**: System creates a user record linked to employee via karyawan_id FK, with role='employee'
-- [x] **PROV-04**: After provisioning, generated credentials (NIK + plaintext password) are shown once via flash message
+- [ ] **PROV-01**: HR can click "Buat Akun Login" button to create a login account for an existing employee
+- [ ] **PROV-02**: Password is auto-generated from employee data (NIK + birthdate), hashed with `password_hash()`
+- [ ] **PROV-03**: System creates a user record linked to employee via karyawan_id FK, with role='employee'
+- [ ] **PROV-04**: After provisioning, generated credentials (NIK + plaintext password) are shown once via flash message
 
 ### Calculator Integration
 
@@ -61,9 +61,9 @@
 ### Dashboard & Navigation
 
 - [x] **DASH-01**: HR dashboard shows real employee count and stats from DB queries
-- [x] **DASH-02**: Topbar shows logged-in user's real name and role from session/DB
+- [ ] **DASH-02**: Topbar shows logged-in user's real name and role from session/DB
 - [x] **DASH-03**: HR sidebar includes "Kelola Karyawan" navigation link to CRUD pages
-- [x] **DASH-04**: Sidebar/topbar includes logout ("Keluar") button
+- [ ] **DASH-04**: Sidebar/topbar includes logout ("Keluar") button
 - [x] **DASH-05**: All "Demo v1" badges and demo notices are removed from dashboards
 
 ## Future Requirements (Deferred)
@@ -116,23 +116,23 @@
 | DATA-04 | Phase 14 | Complete |
 | DATA-05 | Phase 14 | Complete |
 | DATA-06 | Phase 14 | Complete |
-| AUTH-01 | Phase 15 | Complete |
-| AUTH-02 | Phase 15 | Complete |
-| AUTH-03 | Phase 15 | Complete |
-| RBAC-01 | Phase 15 | Complete |
-| RBAC-02 | Phase 15 | Complete |
-| RBAC-03 | Phase 15 | Complete |
-| RBAC-04 | Phase 15 | Complete |
-| RBAC-05 | Phase 15 | Complete |
+| AUTH-01 | Phase 20 | Pending |
+| AUTH-02 | Phase 20 | Pending |
+| AUTH-03 | Phase 20 | Pending |
+| RBAC-01 | Phase 20 | Pending |
+| RBAC-02 | Phase 20 | Pending |
+| RBAC-03 | Phase 19 | Pending |
+| RBAC-04 | Phase 19 | Pending |
+| RBAC-05 | Phase 20 | Pending |
 | CRUD-01 | Phase 16 | Complete |
 | CRUD-02 | Phase 16 | Complete |
 | CRUD-03 | Phase 16 | Complete |
-| CRUD-04 | Phase 16 | Complete |
+| CRUD-04 | Phase 19 | Pending |
 | CRUD-05 | Phase 16 | Complete |
-| PROV-01 | Phase 17 | Complete |
-| PROV-02 | Phase 17 | Complete |
-| PROV-03 | Phase 17 | Complete |
-| PROV-04 | Phase 17 | Complete |
+| PROV-01 | Phase 20 | Pending |
+| PROV-02 | Phase 20 | Pending |
+| PROV-03 | Phase 20 | Pending |
+| PROV-04 | Phase 20 | Pending |
 | CALC-01 | Phase 18 | Complete |
 | CALC-02 | Phase 18 | Complete |
 | CALC-03 | Phase 18 | Complete |
@@ -142,15 +142,16 @@
 | RPT-03 | Phase 18 | Complete |
 | RPT-04 | Phase 18 | Complete |
 | DASH-01 | Phase 18 | Complete |
-| DASH-02 | Phase 15 | Complete |
+| DASH-02 | Phase 19 | Pending |
 | DASH-03 | Phase 16 | Complete |
-| DASH-04 | Phase 15 | Complete |
+| DASH-04 | Phase 20 | Pending |
 | DASH-05 | Phase 18 | Complete |
 
 **Coverage:**
 - v2.0 requirements: 36 total
 - Mapped to phases: 36/36 ✓
 - Unmapped: 0
+- Pending gap-closure reassignment: 14
 
 ---
 *Requirements defined: 2026-03-05*
