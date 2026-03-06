@@ -2,13 +2,13 @@
 gsd_state_version: 1.0
 milestone: v2.0
 milestone_name: milestone
-status: planning
-last_updated: "2026-03-06T10:17:08.128Z"
+status: executing
+last_updated: "2026-03-06T10:24:38.395Z"
 progress:
   total_phases: 5
-  completed_phases: 4
+  completed_phases: 5
   total_plans: 14
-  completed_plans: 11
+  completed_plans: 14
   percent: 100
 ---
 
@@ -23,7 +23,7 @@ progress:
 ## Current Position
 
 **Phase:** 18 — Data Wiring — Calculator, Reports & Dashboards
-**Plan:** 02 of 04 next (`18-02-PLAN.md`)
+**Plan:** 03 of 04 next (`18-03-PLAN.md`)
 **Status:** In progress
 **Progress:** [██████████] 100%
 
@@ -32,8 +32,8 @@ progress:
 | Metric | Value |
 |--------|-------|
 | Phases completed | 4/5 |
-| Requirements completed | 25/36 |
-| Plans completed | 10/10 |
+| Requirements completed | 28/36 |
+| Plans completed | 11/14 |
 | Current streak | - |
 | Phase 14 P01 | 2 min | 2 tasks | 3 files |
 | Phase 14 P02 | 3 min | 2 tasks | 2 files |
@@ -46,6 +46,8 @@ progress:
 | Phase 17 P01 | 7 min | 3 tasks | 4 files |
 | Phase 17 P02 | 1 min | 2 tasks | 2 files |
 | Phase 18 P01 | 1 min | 2 tasks | 3 files |
+| Phase 18 P02 | 2 min | 2 tasks | 3 files |
+| Phase 18 P03 | 5 min | 2 tasks | 4 files |
 
 ## Accumulated Context
 
@@ -76,6 +78,9 @@ progress:
 | Password provisioning dipatok ketat ke rumus NIK + DDMMYYYY(tanggal_lahir) dan abort jika tanggal invalid | Menjaga kredensial awal konsisten dengan requirement dan mencegah akun dibuat dengan password salah format | 17 |
 | Flash sukses provisioning di list karyawan memprioritaskan payload `flash.credentials` dengan fallback pesan lama | Menjamin copy kredensial terkunci (2 baris wajib) tetap konsisten tanpa memutus kompatibilitas flash generik | 17 |
 | Verifikasi provisioning Wave 0 didokumentasikan sebagai checklist manual + SQL snippet | Memastikan validasi PROV-01..PROV-04 bisa diulang oleh verifier secara operasional dan terukur | 17 |
+| Calculator now uses GET karyawan_id selection so HR can refresh and bookmark a selected employee context | Menjaga alur kalkulator sederhana, bisa di-refresh, dan tetap terikat ke data karyawan nyata | 18 |
+| Join year is derived from karyawan.tanggal_bergabung and passed into hitungHakCuti() without changing the cuti engine | Memenuhi wiring DB Phase 18 sambil mempertahankan engine cuti v1 yang sudah stabil | 18 |
+| Employee detail is the main HR entry point into leave entitlement via a simple query-string link | Menegaskan employee record sebagai sumber kebenaran untuk melihat hak cuti | 18 |
 
 ### Implementation Guardrails
 - Native procedural PHP only (no OOP/framework)
@@ -87,7 +92,6 @@ progress:
 - HR admin is standalone user (not in karyawan table)
 
 ### TODOs
-- [ ] Execute Phase 18 Plan 02 (employee-first HR calculator wiring)
 - [ ] Execute Phase 18 Plan 03 (live reports and export wiring)
 - [ ] Execute Phase 18 Plan 04 (dashboard rewiring and cleanup)
 
@@ -98,14 +102,14 @@ progress:
 
 ### Last Session
 - **Date:** 2026-03-06
-- **Activity:** Completed Phase 18 Plan 01 (Wave 0 smoke tests, manual checks, and validation contract)
-- **Outcome:** `tests/phase18_data_wiring_smoke.php` now provides grouped calculator/reports/dashboards smoke checks, `tests/phase18_manual_checks.md` documents repeatable browser/export verification, and `18-VALIDATION.md` now tracks all 8 executable Phase 18 tasks with ready Nyquist frontmatter
-- **Next:** Execute Phase 18 Plan 02 (employee-first HR calculator wiring)
+- **Activity:** Completed Phase 18 Plan 02 (employee-first HR calculator wiring)
+- **Outcome:** `hr/kalkulator.php` now loads employee options from the `karyawan` table, derives join year from `tanggal_bergabung` before calling `hitungHakCuti()`, `hr/karyawan-detail.php` now links directly into calculator context, and the Phase 18 calculator smoke group now verifies the rewired employee-first behavior
+- **Next:** Execute Phase 18 Plan 03 (live reports and export wiring)
 
 ### Context for Next Session
-- Phase 18 Wave 0 validation scaffolding is complete and ready for reuse in later plans
+- Phase 18 calculator flow is now employee-first and opens cleanly from employee detail into `hr/kalkulator.php?karyawan_id=...`
 - Use `php tests/phase18_data_wiring_smoke.php --group=calculator|reports|dashboards` after each relevant rewiring task
-- Maintain procedural PHP + prepared statement patterns while replacing demo/session data with DB-backed flows in Phase 18
+- Maintain procedural PHP + prepared statement patterns while replacing remaining demo/session data in reports and dashboards
 
 ---
 *State initialized: 2026-03-05*

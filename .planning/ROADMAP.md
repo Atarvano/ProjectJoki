@@ -23,7 +23,7 @@ These constraints apply to ALL phases:
 - [x] **Phase 15: Authentication & Access Control** — Real login/logout, role guards on all pages, auth-aware UI (completed 2026-03-05)
 - [x] **Phase 16: Employee CRUD & HR Navigation** — Full employee management with list/add/edit/delete and sidebar nav (completed 2026-03-05)
 - [x] **Phase 17: Account Provisioning** — HR creates login accounts for employees with auto-generated passwords (completed 2026-03-05)
-- [ ] **Phase 18: Data Wiring — Calculator, Reports & Dashboards** — All pages swap from demo/session data to live DB data
+- [x] **Phase 18: Data Wiring — Calculator, Reports & Dashboards** — All pages swap from demo/session data to live DB data (completed 2026-03-06)
 
 ## Phase Details
 
@@ -95,7 +95,7 @@ Plans:
   3. Reports page computes leave data live from karyawan table + `hitungHakCuti()` (no session storage), and Excel export produces a valid XLSX from DB query results
   4. HR dashboard shows real employee count and statistics from database queries
   5. All hardcoded `preset_karyawan` arrays, "Preset Demo" badges, sample labels, and session reset buttons are removed from the codebase
-**Plans:** 1/4 plans executed
+**Plans:** 4/4 plans complete
 Plans:
 - [ ] 18-01-PLAN.md — Wave 0 smoke tests, manual checks, and validation contract for Phase 18
 - [ ] 18-02-PLAN.md — Employee-first HR calculator wiring from DB + entry link from employee detail
@@ -165,7 +165,7 @@ All phases are sequential. Each phase depends on its predecessor. No paralleliza
 | 15. Authentication & Access Control | 3/3 | Complete    | 2026-03-05 |
 | 16. Employee CRUD & HR Navigation | 3/3 | Complete    | 2026-03-05 |
 | 17. Account Provisioning | 2/2 | Complete    | 2026-03-05 |
-| 18. Data Wiring — Calculator, Reports & Dashboards | 1/4 | In Progress|  |
+| 18. Data Wiring — Calculator, Reports & Dashboards | 4/4 | Complete   | 2026-03-06 |
 
 ---
 *Roadmap created: 2026-03-05*

@@ -46,17 +46,17 @@
 
 ### Calculator Integration
 
-- [ ] **CALC-01**: HR calculator uses employee dropdown populated from karyawan DB table instead of manual input
-- [ ] **CALC-02**: `hitungHakCuti()` engine receives real DB join date data (no engine changes needed)
+- [x] **CALC-01**: HR calculator uses employee dropdown populated from karyawan DB table instead of manual input
+- [x] **CALC-02**: `hitungHakCuti()` engine receives real DB join date data (no engine changes needed)
 - [ ] **CALC-03**: Employee dashboard auto-loads own leave data from DB based on session user
-- [ ] **CALC-04**: All hardcoded preset_karyawan demo arrays are removed
+- [x] **CALC-04**: All hardcoded preset_karyawan demo arrays are removed
 
 ### Reports & Export
 
-- [ ] **RPT-01**: Reports are live-computed from karyawan table + `hitungHakCuti()` — no session storage
-- [ ] **RPT-02**: Existing laporan.php table UI is maintained, with data source swapped to DB
-- [ ] **RPT-03**: Excel export (PhpSpreadsheet) is fed from DB query results instead of session data
-- [ ] **RPT-04**: "Preset Demo" badges, sample labels, and session reset button are removed
+- [x] **RPT-01**: Reports are live-computed from karyawan table + `hitungHakCuti()` — no session storage
+- [x] **RPT-02**: Existing laporan.php table UI is maintained, with data source swapped to DB
+- [x] **RPT-03**: Excel export (PhpSpreadsheet) is fed from DB query results instead of session data
+- [x] **RPT-04**: "Preset Demo" badges, sample labels, and session reset button are removed
 
 ### Dashboard & Navigation
 
@@ -133,14 +133,14 @@
 | PROV-02 | Phase 17 | Complete |
 | PROV-03 | Phase 17 | Complete |
 | PROV-04 | Phase 17 | Complete |
-| CALC-01 | Phase 18 | Pending |
-| CALC-02 | Phase 18 | Pending |
+| CALC-01 | Phase 18 | Complete |
+| CALC-02 | Phase 18 | Complete |
 | CALC-03 | Phase 18 | Pending |
-| CALC-04 | Phase 18 | Pending |
-| RPT-01 | Phase 18 | Pending |
-| RPT-02 | Phase 18 | Pending |
-| RPT-03 | Phase 18 | Pending |
-| RPT-04 | Phase 18 | Pending |
+| CALC-04 | Phase 18 | Complete |
+| RPT-01 | Phase 18 | Complete |
+| RPT-02 | Phase 18 | Complete |
+| RPT-03 | Phase 18 | Complete |
+| RPT-04 | Phase 18 | Complete |
 | DASH-01 | Phase 18 | Pending |
 | DASH-02 | Phase 15 | Complete |
 | DASH-03 | Phase 16 | Complete |
