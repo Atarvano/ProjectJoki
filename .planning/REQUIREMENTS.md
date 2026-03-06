@@ -48,7 +48,7 @@
 
 - [x] **CALC-01**: HR calculator uses employee dropdown populated from karyawan DB table instead of manual input
 - [x] **CALC-02**: `hitungHakCuti()` engine receives real DB join date data (no engine changes needed)
-- [ ] **CALC-03**: Employee dashboard auto-loads own leave data from DB based on session user
+- [x] **CALC-03**: Employee dashboard auto-loads own leave data from DB based on session user
 - [x] **CALC-04**: All hardcoded preset_karyawan demo arrays are removed
 
 ### Reports & Export
@@ -60,11 +60,11 @@
 
 ### Dashboard & Navigation
 
-- [ ] **DASH-01**: HR dashboard shows real employee count and stats from DB queries
+- [x] **DASH-01**: HR dashboard shows real employee count and stats from DB queries
 - [x] **DASH-02**: Topbar shows logged-in user's real name and role from session/DB
 - [x] **DASH-03**: HR sidebar includes "Kelola Karyawan" navigation link to CRUD pages
 - [x] **DASH-04**: Sidebar/topbar includes logout ("Keluar") button
-- [ ] **DASH-05**: All "Demo v1" badges and demo notices are removed from dashboards
+- [x] **DASH-05**: All "Demo v1" badges and demo notices are removed from dashboards
 
 ## Future Requirements (Deferred)
 
@@ -135,17 +135,17 @@
 | PROV-04 | Phase 17 | Complete |
 | CALC-01 | Phase 18 | Complete |
 | CALC-02 | Phase 18 | Complete |
-| CALC-03 | Phase 18 | Pending |
+| CALC-03 | Phase 18 | Complete |
 | CALC-04 | Phase 18 | Complete |
 | RPT-01 | Phase 18 | Complete |
 | RPT-02 | Phase 18 | Complete |
 | RPT-03 | Phase 18 | Complete |
 | RPT-04 | Phase 18 | Complete |
-| DASH-01 | Phase 18 | Pending |
+| DASH-01 | Phase 18 | Complete |
 | DASH-02 | Phase 15 | Complete |
 | DASH-03 | Phase 16 | Complete |
 | DASH-04 | Phase 15 | Complete |
-| DASH-05 | Phase 18 | Pending |
+| DASH-05 | Phase 18 | Complete |
 
 **Coverage:**
 - v2.0 requirements: 36 total

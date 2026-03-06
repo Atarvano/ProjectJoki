@@ -3,7 +3,7 @@ gsd_state_version: 1.0
 milestone: v2.0
 milestone_name: milestone
 status: executing
-last_updated: "2026-03-06T10:24:38.395Z"
+last_updated: "2026-03-06T10:25:02.568Z"
 progress:
   total_phases: 5
   completed_phases: 5
@@ -23,7 +23,7 @@ progress:
 ## Current Position
 
 **Phase:** 18 — Data Wiring — Calculator, Reports & Dashboards
-**Plan:** 03 of 04 next (`18-03-PLAN.md`)
+**Plan:** 03 of 04 completed (`18-03-PLAN.md`)
 **Status:** In progress
 **Progress:** [██████████] 100%
 
@@ -32,8 +32,8 @@ progress:
 | Metric | Value |
 |--------|-------|
 | Phases completed | 4/5 |
-| Requirements completed | 28/36 |
-| Plans completed | 11/14 |
+| Requirements completed | 30/36 |
+| Plans completed | 13/14 |
 | Current streak | - |
 | Phase 14 P01 | 2 min | 2 tasks | 3 files |
 | Phase 14 P02 | 3 min | 2 tasks | 2 files |
@@ -48,6 +48,7 @@ progress:
 | Phase 18 P01 | 1 min | 2 tasks | 3 files |
 | Phase 18 P02 | 2 min | 2 tasks | 3 files |
 | Phase 18 P03 | 5 min | 2 tasks | 4 files |
+| Phase 18 P04 | 4 min | 2 tasks | 3 files |
 
 ## Accumulated Context
 
@@ -81,6 +82,8 @@ progress:
 | Calculator now uses GET karyawan_id selection so HR can refresh and bookmark a selected employee context | Menjaga alur kalkulator sederhana, bisa di-refresh, dan tetap terikat ke data karyawan nyata | 18 |
 | Join year is derived from karyawan.tanggal_bergabung and passed into hitungHakCuti() without changing the cuti engine | Memenuhi wiring DB Phase 18 sambil mempertahankan engine cuti v1 yang sudah stabil | 18 |
 | Employee detail is the main HR entry point into leave entitlement via a simple query-string link | Menegaskan employee record sebagai sumber kebenaran untuk melihat hak cuti | 18 |
+| Laporan dan export sama-sama membangun row live langsung dari query karyawan terurut NIK agar output halaman dan XLSX tetap sinkron | Menjaga parity antara recap di browser dan file export tanpa storage session terpisah | 18 |
+| Filter status laporan diteruskan ke export supaya hasil unduhan mengikuti recap yang sedang dilihat HR | Memudahkan HR mengekspor subset data yang sedang direview tanpa logika export terpisah | 18 |
 
 ### Implementation Guardrails
 - Native procedural PHP only (no OOP/framework)
@@ -92,7 +95,6 @@ progress:
 - HR admin is standalone user (not in karyawan table)
 
 ### TODOs
-- [ ] Execute Phase 18 Plan 03 (live reports and export wiring)
 - [ ] Execute Phase 18 Plan 04 (dashboard rewiring and cleanup)
 
 ### Blockers
@@ -102,14 +104,14 @@ progress:
 
 ### Last Session
 - **Date:** 2026-03-06
-- **Activity:** Completed Phase 18 Plan 02 (employee-first HR calculator wiring)
-- **Outcome:** `hr/kalkulator.php` now loads employee options from the `karyawan` table, derives join year from `tanggal_bergabung` before calling `hitungHakCuti()`, `hr/karyawan-detail.php` now links directly into calculator context, and the Phase 18 calculator smoke group now verifies the rewired employee-first behavior
-- **Next:** Execute Phase 18 Plan 03 (live reports and export wiring)
+- **Activity:** Completed Phase 18 Plan 03 (live reports and export wiring)
+- **Outcome:** `hr/laporan.php` and `hr/export.php` now build live leave recap rows from `karyawan` data plus `hitungHakCuti()`, and `includes/reports-data.php` has been removed.
+- **Next:** Execute Phase 18 Plan 04 (dashboard rewiring and cleanup)
 
 ### Context for Next Session
-- Phase 18 calculator flow is now employee-first and opens cleanly from employee detail into `hr/kalkulator.php?karyawan_id=...`
-- Use `php tests/phase18_data_wiring_smoke.php --group=calculator|reports|dashboards` after each relevant rewiring task
-- Maintain procedural PHP + prepared statement patterns while replacing remaining demo/session data in reports and dashboards
+- Phase 18 calculator flow is now employee-first and reports/export now share live DB-derived recap rows.
+- Use `php tests/phase18_data_wiring_smoke.php --group=calculator|reports|dashboards` after each relevant rewiring task.
+- Maintain procedural PHP + prepared statement patterns while finishing the remaining dashboard cleanup in Phase 18.
 
 ---
 *State initialized: 2026-03-05*

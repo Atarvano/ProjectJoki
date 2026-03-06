@@ -97,8 +97,8 @@ Plans:
   5. All hardcoded `preset_karyawan` arrays, "Preset Demo" badges, sample labels, and session reset buttons are removed from the codebase
 **Plans:** 4/4 plans complete
 Plans:
-- [ ] 18-01-PLAN.md — Wave 0 smoke tests, manual checks, and validation contract for Phase 18
-- [ ] 18-02-PLAN.md — Employee-first HR calculator wiring from DB + entry link from employee detail
+- [x] 18-01-PLAN.md — Wave 0 smoke tests, manual checks, and validation contract for Phase 18
+- [ ] 18-02-PLAN.md — Employee-first HR calculator wiring from DB + entry link from employee detail (completed 2026-03-06)
 - [ ] 18-03-PLAN.md — Live reports and Excel export from DB rows + removal of session report helper
 - [ ] 18-04-PLAN.md — Real HR dashboard stats + focused employee dashboard year 6/7/8 view
 
