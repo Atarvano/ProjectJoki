@@ -23,17 +23,17 @@ progress:
 ## Current Position
 
 **Phase:** 18 — Data Wiring — Calculator, Reports & Dashboards
-**Plan:** 03 of 04 completed (`18-03-PLAN.md`)
-**Status:** In progress
+**Plan:** 04 of 04 completed (`18-04-PLAN.md`)
+**Status:** Complete
 **Progress:** [██████████] 100%
 
 ## Performance Metrics
 
 | Metric | Value |
 |--------|-------|
-| Phases completed | 4/5 |
-| Requirements completed | 30/36 |
-| Plans completed | 13/14 |
+| Phases completed | 5/5 |
+| Requirements completed | 36/36 |
+| Plans completed | 14/14 |
 | Current streak | - |
 | Phase 14 P01 | 2 min | 2 tasks | 3 files |
 | Phase 14 P02 | 3 min | 2 tasks | 2 files |
@@ -84,6 +84,9 @@ progress:
 | Employee detail is the main HR entry point into leave entitlement via a simple query-string link | Menegaskan employee record sebagai sumber kebenaran untuk melihat hak cuti | 18 |
 | Laporan dan export sama-sama membangun row live langsung dari query karyawan terurut NIK agar output halaman dan XLSX tetap sinkron | Menjaga parity antara recap di browser dan file export tanpa storage session terpisah | 18 |
 | Filter status laporan diteruskan ke export supaya hasil unduhan mengikuti recap yang sedang dilihat HR | Memudahkan HR mengekspor subset data yang sedang direview tanpa logika export terpisah | 18 |
+| HR dashboard menghitung total karyawan dan akun employee langsung dari tabel karyawan dan users | Ringkasan HR selalu mengikuti kondisi database terbaru tanpa counter preset atau laporan session | 18 |
+| Metrik "siap cuti tahun ini" menghitung status tahun berjalan Tersedia atau Menunggu | Definisi ini dikunci di context Phase 18 dan harus diikuti persis pada dashboard HR | 18 |
+| Dashboard employee menonjolkan hanya baris tahun ke-6, 7, dan 8 sambil tetap memakai session-linked own-data lookup | Menjaga tampilan employee tetap fokus dan aman sesuai batasan akses data pribadi | 18 |
 
 ### Implementation Guardrails
 - Native procedural PHP only (no OOP/framework)
@@ -95,7 +98,7 @@ progress:
 - HR admin is standalone user (not in karyawan table)
 
 ### TODOs
-- [ ] Execute Phase 18 Plan 04 (dashboard rewiring and cleanup)
+- [x] Phase 18 complete — no remaining plans in this milestone.
 
 ### Blockers
 - None.
@@ -104,14 +107,14 @@ progress:
 
 ### Last Session
 - **Date:** 2026-03-06
-- **Activity:** Completed Phase 18 Plan 03 (live reports and export wiring)
-- **Outcome:** `hr/laporan.php` and `hr/export.php` now build live leave recap rows from `karyawan` data plus `hitungHakCuti()`, and `includes/reports-data.php` has been removed.
-- **Next:** Execute Phase 18 Plan 04 (dashboard rewiring and cleanup)
+- **Activity:** Completed Phase 18 Plan 04 (dashboard rewiring and cleanup)
+- **Outcome:** `hr/dashboard.php` now uses live database totals plus current-year leave-ready counting, `employee/dashboard.php` now focuses on year 6/7/8 leave rows, and `tests/phase18_data_wiring_smoke.php` verifies the final dashboard rules.
+- **Next:** Milestone complete — ready for verification or next milestone planning.
 
 ### Context for Next Session
-- Phase 18 calculator flow is now employee-first and reports/export now share live DB-derived recap rows.
-- Use `php tests/phase18_data_wiring_smoke.php --group=calculator|reports|dashboards` after each relevant rewiring task.
-- Maintain procedural PHP + prepared statement patterns while finishing the remaining dashboard cleanup in Phase 18.
+- Phase 18 is complete across calculator, reports, export, and dashboards.
+- Full smoke coverage passes with `php tests/phase18_data_wiring_smoke.php` plus each per-group command.
+- Manual DB comparison for dashboard counts still requires a running local MySQL service because CLI connection was unavailable in this execution environment.
 
 ---
 *State initialized: 2026-03-05*
