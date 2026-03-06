@@ -54,10 +54,13 @@ function run_calculator_group()
 
     assert_contains($content, 'require_once __DIR__ . \'/../includes/cuti-calculator.php\';', 'Kalkulator harus tetap memakai engine cuti yang ada.');
     assert_contains($content, 'Kalkulator Hak Cuti', 'Halaman kalkulator harus tetap ada.');
-    assert_contains($content, 'tahun_bergabung', 'Baseline Wave 0 harus masih bisa mendeteksi input tahun bergabung sebelum rewiring Plan 18-02.');
-    assert_contains($content, 'save_report', 'Baseline Wave 0 harus masih bisa mendeteksi alur save report lama sebelum dibersihkan Plan 18-02.');
+    assert_contains($content, 'karyawan_id', 'Kalkulator Phase 18 harus memakai selector karyawan dari database sebagai input utama.');
+    assert_contains($content, 'tanggal_bergabung', 'Kalkulator Phase 18 harus tetap mengambil tanggal bergabung dari data karyawan.');
+    assert_contains($content, 'hitungHakCuti($tahun_bergabung)', 'Kalkulator Phase 18 harus tetap mengirim tahun bergabung turunan DB ke engine cuti.');
+    assert_not_contains($content, 'save_report', 'Flow simpan laporan lama harus dibersihkan dari kalkulator Phase 18.');
+    assert_not_contains($content, 'name="tahun_bergabung"', 'Input manual tahun bergabung tidak boleh lagi menjadi input utama kalkulator.');
 
-    fwrite(STDOUT, "PASS [calculator]: baseline marker kalkulator terbaca; siap dipakai sebagai smoke check Phase 18.\n");
+    fwrite(STDOUT, "PASS [calculator]: marker rewiring kalkulator employee-first terbaca.\n");
 }
 
 function run_reports_group()
@@ -79,12 +82,17 @@ function run_dashboards_group()
     $hr_dashboard = load_page_text('hr/dashboard.php');
     $employee_dashboard = load_page_text('employee/dashboard.php');
 
-    assert_contains($hr_dashboard, 'countPresetKaryawan()', 'Baseline dashboard HR harus masih menandai counter preset sebelum Plan 18-04.');
-    assert_contains($hr_dashboard, 'countReports()', 'Baseline dashboard HR harus masih menandai counter laporan session sebelum Plan 18-04.');
+    assert_contains($hr_dashboard, 'SELECT COUNT(*) AS total FROM karyawan', 'Dashboard HR harus menghitung total karyawan dari database.');
+    assert_contains($hr_dashboard, "role = 'employee' AND karyawan_id IS NOT NULL", 'Dashboard HR harus menghitung akun employee yang sudah terhubung ke karyawan.');
+    assert_contains($hr_dashboard, 'in_array($row[\'status\'], [\'Tersedia\', \'Menunggu\'], true)', 'Dashboard HR harus menghitung siap cuti tahun ini dari status Tersedia dan Menunggu.');
+    assert_not_contains($hr_dashboard, 'countPresetKaryawan()', 'Counter preset lama harus dihapus dari dashboard HR.');
+    assert_not_contains($hr_dashboard, 'countReports()', 'Counter laporan session lama harus dihapus dari dashboard HR.');
     assert_contains($employee_dashboard, '$karyawan_id = isset($_SESSION[\'karyawan_id\']) ? (int) $_SESSION[\'karyawan_id\'] : 0;', 'Dashboard employee harus tetap terhubung ke session karyawan sebagai dasar rewiring Plan 18-04.');
-    assert_contains($employee_dashboard, 'Rincian Hak Cuti 8 Tahun', 'Baseline dashboard employee harus masih menampilkan label 8 tahun penuh sebelum difokuskan di Plan 18-04.');
+    assert_contains($employee_dashboard, 'in_array((int) $row[\'tahun_ke\'], [6, 7, 8], true)', 'Dashboard employee harus memfilter fokus tahun ke-6, 7, dan 8.');
+    assert_contains($employee_dashboard, 'Fokus Hak Cuti Tahun', 'Dashboard employee harus menampilkan judul fokus tahun 6/7/8.');
+    assert_not_contains($employee_dashboard, 'Rincian Hak Cuti 8 Tahun', 'Label 8 tahun penuh harus dihapus dari dashboard employee.');
 
-    fwrite(STDOUT, "PASS [dashboards]: baseline marker dashboard terbaca; siap dipakai sebagai smoke check Phase 18.\n");
+    fwrite(STDOUT, "PASS [dashboards]: marker dashboard live DB dan focus year 6/7/8 terbaca.\n");
 }
 
 if ($target_group === 'all' || $target_group === 'calculator') {
