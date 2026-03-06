@@ -33,6 +33,13 @@ $employee_name = $profile_label;
 $tahun_bergabung = null;
 $hasil = null;
 $load_error = null;
+$focus_rows = [];
+$focus_total_hari = 0;
+$tahun_fokus_label = '6, 7, dan 8';
+$status_sekarang = 'Belum aktif';
+$status_class_sekarang = 'bg-info text-dark';
+$tahun_sekarang = (int) date('Y');
+$periode_message = 'Ringkasan ini menyorot masa hak cuti utama pada tahun kerja ke-6 sampai ke-8.';
 
 if ($karyawan_id <= 0) {
     $load_error = 'Akun Anda belum terhubung ke data karyawan. Silakan hubungi tim HR.';
@@ -64,20 +71,31 @@ if ($karyawan_id <= 0) {
     }
 }
 
-$total_sisa = 0;
-$status_sekarang = 'Rencana';
-$status_class_sekarang = 'bg-secondary';
-$tahun_sekarang = (int) date('Y');
-
 if ($hasil) {
     foreach ($hasil['data'] as $row) {
-        if ($row['tahun_kalender'] >= $tahun_sekarang) {
-            $total_sisa += $row['hari_cuti'];
+        if (in_array((int) $row['tahun_ke'], [6, 7, 8], true)) {
+            $focus_rows[] = $row;
+            $focus_total_hari += (int) $row['hari_cuti'];
         }
-        if ($row['tahun_kalender'] == $tahun_sekarang) {
+
+        if ((int) $row['tahun_kalender'] === $tahun_sekarang) {
             $status_sekarang = $row['status'];
             $status_class_sekarang = $row['status_class'];
         }
+    }
+
+    if ($tahun_sekarang < (int) $hasil['tahun_mulai']) {
+        $periode_message = 'Hak cuti Anda belum aktif pada tahun ini. Hak cuti pertama mulai berlaku pada tahun ' . $hasil['tahun_mulai'] . '.';
+        $status_sekarang = 'Belum aktif';
+        $status_class_sekarang = 'bg-info text-dark';
+    } elseif ($tahun_sekarang > (int) $hasil['tahun_selesai']) {
+        $periode_message = 'Periode 8 tahun pada simulasi ini sudah lewat. Silakan hubungi HR bila Anda memerlukan peninjauan data terbaru.';
+        $status_sekarang = 'Periode selesai';
+        $status_class_sekarang = 'bg-secondary';
+    } elseif ($status_sekarang === 'Menunggu') {
+        $periode_message = 'Hak cuti tahun ini sedang berada pada status menunggu dan akan bergeser menjadi tersedia sesuai periode kalender berjalan.';
+    } elseif ($status_sekarang === 'Tersedia') {
+        $periode_message = 'Hak cuti untuk tahun berjalan sudah tersedia. Gunakan ringkasan ini sebagai acuan saat berkoordinasi dengan HR.';
     }
 }
 
@@ -129,29 +147,30 @@ ob_start();
                         <div class="text-secondary">Bergabung: <strong><?php echo htmlspecialchars((string) $tahun_bergabung); ?></strong></div>
                     </div>
                 </div>
-                <div class="d-flex gap-4 align-items-center">
-                    <div class="text-end">
-                        <div class="small text-secondary fw-semibold mb-1 text-uppercase">Status Tahun Ini</div>
-                        <span class="badge rounded-pill <?php echo $status_class_sekarang; ?> fs-6"><?php echo htmlspecialchars($status_sekarang); ?></span>
-                    </div>
-                    <div class="border-start border-secondary border-opacity-25 ps-4 text-end">
-                        <div class="small text-secondary fw-semibold mb-1 text-uppercase">Sisa Cuti (8 thn)</div>
-                        <h3 class="mb-0 text-primary fw-bold" style="font-family: var(--font-display);"><?php echo (int) $total_sisa; ?> <small class="text-secondary fs-6 fw-normal">hari</small></h3>
+                    <div class="d-flex gap-4 align-items-center">
+                        <div class="text-end">
+                            <div class="small text-secondary fw-semibold mb-1 text-uppercase">Status Tahun Ini</div>
+                            <span class="badge rounded-pill <?php echo $status_class_sekarang; ?> fs-6"><?php echo htmlspecialchars($status_sekarang); ?></span>
+                        </div>
+                        <div class="border-start border-secondary border-opacity-25 ps-4 text-end">
+                            <div class="small text-secondary fw-semibold mb-1 text-uppercase">Total Tahun <?php echo htmlspecialchars($tahun_fokus_label); ?></div>
+                            <h3 class="mb-0 text-primary fw-bold" style="font-family: var(--font-display);"><?php echo (int) $focus_total_hari; ?> <small class="text-secondary fs-6 fw-normal">hari</small></h3>
+                        </div>
                     </div>
                 </div>
-            </div>
         </div>
 
-        <?php if ($hasil['tahun_bergabung'] == $tahun_sekarang): ?>
-            <div class="alert alert-info mb-4">
-                <i class="bi bi-info-circle-fill me-2"></i>
-                Selamat bergabung! Hak cuti Anda mulai berlaku tahun <strong><?php echo $hasil['tahun_mulai']; ?></strong>. Berikut rencana hak cuti Anda selama 8 tahun ke depan.
-            </div>
-        <?php endif; ?>
+        <div class="alert alert-info mb-4 border-0 shadow-sm">
+            <i class="bi bi-info-circle-fill me-2"></i>
+            <?php echo htmlspecialchars($periode_message); ?>
+        </div>
 
         <div class="dashboard-table-shell mb-4">
             <div class="dashboard-table-header">
-                <h5 class="mb-0 text-primary-dark fw-bold" style="font-family: var(--font-display);">Rincian Hak Cuti 8 Tahun</h5>
+                <div>
+                    <h5 class="mb-1 text-primary-dark fw-bold" style="font-family: var(--font-display);">Fokus Hak Cuti Tahun <?php echo htmlspecialchars($tahun_fokus_label); ?></h5>
+                    <p class="mb-0 text-secondary small">Tabel ini menampilkan masa yang paling relevan untuk ringkasan hak cuti Anda saat ini.</p>
+                </div>
             </div>
             <div class="table-responsive">
                 <table class="table mb-0">
@@ -164,7 +183,15 @@ ob_start();
                         </tr>
                     </thead>
                     <tbody>
-                        <?php foreach ($hasil['data'] as $row): ?>
+                        <?php if ($focus_rows === []): ?>
+                            <tr>
+                                <td colspan="4" class="text-center py-4 text-secondary">
+                                    Data fokus tahun 6 sampai 8 belum tersedia untuk ditampilkan dari riwayat kerja Anda saat ini.
+                                </td>
+                            </tr>
+                        <?php endif; ?>
+
+                        <?php foreach ($focus_rows as $row): ?>
                             <tr>
                                 <td class="text-center text-muted"><?php echo $row['tahun_ke']; ?></td>
                                 <td class="fw-bold"><?php echo $row['tahun_kalender']; ?></td>
@@ -183,7 +210,7 @@ ob_start();
             </div>
             <div class="p-3 text-center border-top bg-light">
                 <p class="employee-support-hint text-muted small mb-0 fw-medium">
-                    <i class="bi bi-question-circle-fill me-1 text-primary"></i>Butuh klarifikasi? Hubungi tim HR untuk informasi lebih lanjut.
+                    <i class="bi bi-question-circle-fill me-1 text-primary"></i>Ringkasan ini otomatis mengikuti data kepegawaian akun Anda. Jika ada data yang perlu diperbarui, silakan hubungi tim HR.
                 </p>
             </div>
         </div>

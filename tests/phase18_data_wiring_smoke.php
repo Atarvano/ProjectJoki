@@ -65,16 +65,25 @@ function run_calculator_group()
 
 function run_reports_group()
 {
+    global $root;
+
     $laporan = load_page_text('hr/laporan.php');
     $export = load_page_text('hr/export.php');
 
-    assert_contains($laporan, 'require_once __DIR__ . \'/../includes/reports-data.php\';', 'Baseline laporan harus masih menunjukkan dependensi reports-data sebelum Plan 18-03.');
-    assert_contains($laporan, 'reset_reports', 'Baseline laporan harus masih punya marker reset reports untuk dibersihkan di Plan 18-03.');
+    assert_contains($laporan, 'require_once __DIR__ . \'/../koneksi.php\';', 'Laporan harus memuat koneksi database live.');
+    assert_contains($laporan, 'ORDER BY nik ASC, nama ASC', 'Laporan harus mengurutkan data live berdasarkan NIK lalu nama.');
+    assert_contains($laporan, 'karyawan-detail.php?id=', 'Laporan harus mengarahkan detail ke halaman karyawan.');
     assert_contains($laporan, 'Export Excel', 'Halaman laporan harus tetap menyediakan entry export.');
-    assert_contains($export, 'require_once __DIR__ . \'/../includes/reports-data.php\';', 'Baseline export harus masih menunjukkan sumber reports-data sebelum Plan 18-03.');
-    assert_contains($export, 'getReports()', 'Export baseline harus masih memakai getReports() agar cleanup Plan 18-03 bisa dibuktikan.');
+    assert_not_contains($laporan, 'reset_reports', 'Laporan tidak boleh lagi memiliki reset report berbasis session.');
+    assert_not_contains($laporan, 'reports-data.php', 'Laporan tidak boleh lagi bergantung pada helper session reports.');
+    assert_not_contains($laporan, 'Data Laporan', 'Label saved-report lama harus sudah dihapus dari laporan.');
+    assert_contains($export, 'require_once __DIR__ . \'/../koneksi.php\';', 'Export harus memuat koneksi database live.');
+    assert_contains($export, 'hitungHakCuti', 'Export harus menghitung hak cuti langsung dari data live.');
+    assert_not_contains($export, 'reports-data.php', 'Export tidak boleh lagi bergantung pada helper session reports.');
+    assert_not_contains($export, 'getReports()', 'Export tidak boleh lagi memakai getReports() session.');
+    assert_true(!file_exists($root . DIRECTORY_SEPARATOR . 'includes' . DIRECTORY_SEPARATOR . 'reports-data.php'), 'File includes/reports-data.php harus sudah dihapus.');
 
-    fwrite(STDOUT, "PASS [reports]: baseline marker laporan/export terbaca; siap dipakai sebagai smoke check Phase 18.\n");
+    fwrite(STDOUT, "PASS [reports]: laporan dan export live DB terdeteksi.\n");
 }
 
 function run_dashboards_group()
