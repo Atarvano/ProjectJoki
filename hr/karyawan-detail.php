@@ -98,7 +98,10 @@ ob_start();
                 <p class="text-muted mb-0">Jika data karyawan ini dihapus permanen, akun login yang terhubung juga akan ikut terhapus otomatis.</p>
             </div>
 
-            <div>
+            <div class="d-flex flex-wrap gap-2 justify-content-end">
+                <a href="/hr/kalkulator.php?karyawan_id=<?php echo (int) $karyawan['id']; ?>" class="btn btn-outline-primary">
+                    <i class="bi bi-calculator me-2"></i>Lihat Hak Cuti
+                </a>
                 <?php if ($akun_login_status === 'Belum dibuat'): ?>
                     <form method="post" action="/hr/karyawan-provision.php" class="m-0">
                         <input type="hidden" name="id" value="<?php echo (int) $karyawan['id']; ?>">
