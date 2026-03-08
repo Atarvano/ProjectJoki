@@ -99,6 +99,9 @@ function run_includes_group()
     $employee_dashboard = phase21_load('employee/dashboard.php');
     $employee_logic = phase21_load('employee/logic/dashboard.php');
     $employee_view = phase21_load('employee/views/dashboard.php');
+    $hr_dashboard = phase21_load('hr/dashboard.php');
+    $hr_calculator = phase21_load('hr/kalkulator.php');
+    $hr_export = phase21_load('hr/export.php');
 
     phase21_assert_contains($index, "include 'includes/layout/header.php';", 'index.php harus langsung memakai header dari includes/layout.');
     phase21_assert_contains($index, "include 'includes/layout/footer.php';", 'index.php harus langsung memakai footer dari includes/layout.');
@@ -134,6 +137,22 @@ function run_includes_group()
     phase21_assert_contains($employee_view, 'Hak Cuti', 'View dashboard employee harus tetap berisi markup hak cuti.');
     phase21_assert_not_contains($employee_view, 'mysqli_prepare', 'View dashboard employee tidak boleh lagi menyimpan query SQL.');
     phase21_assert_not_contains($employee_view, 'cekRole(', 'View dashboard employee tidak boleh menyimpan guard role.');
+
+    phase21_assert_contains($hr_dashboard, "require_once __DIR__ . '/../includes/auth/auth-guard.php';", 'Dashboard HR harus memakai auth guard grouped final.');
+    phase21_assert_contains($hr_dashboard, "require_once __DIR__ . '/../koneksi.php';", 'Dashboard HR harus tetap memuat koneksi secara eksplisit.');
+    phase21_assert_contains($hr_dashboard, "require __DIR__ . '/../includes/layout/dashboard-layout.php';", 'Dashboard HR harus memakai layout grouped final.');
+    phase21_assert_not_contains($hr_dashboard, "require_once __DIR__ . '/../includes/auth-guard.php';", 'Dashboard HR tidak boleh kembali ke shim auth lama.');
+    phase21_assert_not_contains($hr_dashboard, "require __DIR__ . '/../includes/dashboard-layout.php';", 'Dashboard HR tidak boleh kembali ke shim layout lama.');
+
+    phase21_assert_contains($hr_calculator, "require_once __DIR__ . '/../includes/auth/auth-guard.php';", 'Kalkulator HR harus memakai auth guard grouped final.');
+    phase21_assert_contains($hr_calculator, "require_once __DIR__ . '/../koneksi.php';", 'Kalkulator HR harus tetap memuat koneksi secara eksplisit.');
+    phase21_assert_contains($hr_calculator, "require __DIR__ . '/../includes/layout/dashboard-layout.php';", 'Kalkulator HR harus memakai layout grouped final.');
+    phase21_assert_not_contains($hr_calculator, "require_once __DIR__ . '/../includes/auth-guard.php';", 'Kalkulator HR tidak boleh kembali ke shim auth lama.');
+    phase21_assert_not_contains($hr_calculator, "require __DIR__ . '/../includes/dashboard-layout.php';", 'Kalkulator HR tidak boleh kembali ke shim layout lama.');
+
+    phase21_assert_contains($hr_export, "require_once __DIR__ . '/../includes/auth/auth-guard.php';", 'Export HR harus memakai auth guard grouped final.');
+    phase21_assert_contains($hr_export, "require_once __DIR__ . '/../koneksi.php';", 'Export HR harus tetap memuat koneksi secara eksplisit.');
+    phase21_assert_not_contains($hr_export, "require_once __DIR__ . '/../includes/auth-guard.php';", 'Export HR tidak boleh kembali ke shim auth lama.');
 
     fwrite(STDOUT, "PASS [includes]: halaman publik dan layout utama sudah menunjuk ke path grouped.\n");
 }
