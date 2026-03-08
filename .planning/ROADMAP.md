@@ -16,7 +16,7 @@
 ## Phases
 
 - [x] **Phase 21: Beginner CRUD Structure Foundation** - Tidy the folder/page structure and lock a readable include contract for the rewrite. (completed 2026-03-08)
-- [ ] **Phase 22: HR Detail-First CRUD Flow** - Make HR employee management revolve around direct CRUD pages and a useful employee detail screen.
+- [x] **Phase 22: HR Detail-First CRUD Flow** - Make HR employee management revolve around direct CRUD pages and a useful employee detail screen. (completed 2026-03-09)
 - [ ] **Phase 23: Employee Leave View and Calculator Retirement** - Move employees onto direct self-view leave pages and fully remove calculator-first navigation.
 - [ ] **Phase 24: Product Messaging and Final Copy Cleanup** - Refresh landing, dashboard, and report copy so the product story matches the rewritten app.
 
@@ -25,7 +25,7 @@
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 21. Beginner CRUD Structure Foundation | 7/7 | Complete   | 2026-03-08 |
-| 22. HR Detail-First CRUD Flow | 3/4 | In Progress |  |
+| 22. HR Detail-First CRUD Flow | 4/4 | Complete   | 2026-03-09 |
 | 23. Employee Leave View and Calculator Retirement | 0/0 | Not started | - |
 | 24. Product Messaging and Final Copy Cleanup | 0/0 | Not started | - |
 
@@ -63,7 +63,7 @@ Plans:
 - [x] 22-00-PLAN.md — Create the Phase 22 smoke-test scaffold for detail-first CRUD flow verification.
 - [x] 22-01-PLAN.md — Expand the employee detail page into the main profile-plus-leave review screen.
 - [x] 22-02-PLAN.md — Rewire create/edit/list CRUD rhythm so normal HR flow lands on employee detail pages.
-- [ ] 22-03-PLAN.md — Shift dashboard/report/sidebar navigation toward employee detail review instead of calculator-first checking.
+- [x] 22-03-PLAN.md — Shift dashboard/report/sidebar navigation toward employee detail review instead of calculator-first checking.
 
 ### Phase 23: Employee Leave View and Calculator Retirement
 **Goal**: Employees can view their own leave entitlement directly from their authenticated area, and the calculator flow is fully removed once the replacement path exists.
@@ -87,4 +87,4 @@ Plans:
 **Plans**: TBD
 
 ---
-*Last updated: 2026-03-09 after Phase 22 Plan 01 completion*
+*Last updated: 2026-03-09 after Phase 22 Plan 03 completion*

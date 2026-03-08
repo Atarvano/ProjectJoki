@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v3.0
 milestone_name: beginner-style-php-rewrite-and-structure-cleanup
 status: in_progress
-last_updated: "2026-03-08T21:10:28Z"
-last_activity: 2026-03-09 - Completed Phase 22 Plan 02 detail-first CRUD rhythm update
+last_updated: "2026-03-08T21:22:56Z"
+last_activity: 2026-03-09 - Completed Phase 22 Plan 03 HR detail-first navigation sweep
 progress:
   total_phases: 4
-  completed_phases: 1
+  completed_phases: 2
   total_plans: 11
-  completed_plans: 10
-  percent: 91
+  completed_plans: 11
+  percent: 100
 ---
 
 # State: Sicuti HRD Cuti Tracker
@@ -18,16 +18,16 @@ progress:
 ## Project Reference
 
 **Core Value:** HR creates employee data first, provisions login credentials, then employees log in with native PHP sessions to view their own leave data through an enforced, real backend flow.
-**Current Focus:** Phase 22 is underway; employee detail now handles profile-plus-leave review and the remaining work should finish the last dashboard/report/sidebar shift toward employee-detail review.
+**Current Focus:** Phase 22 is complete; next work should move employee-side leave viewing and calculator retirement into Phase 23.
 **Roadmap:** See `.planning/ROADMAP.md` and `.planning/PROJECT.md`
 
 ## Current Position
 
 **Phase:** 22 - HR Detail-First CRUD Flow
-**Plan:** 03 next
-**Status:** Plans 00 and 02 complete in this phase slice; Plan 03 remains for the dashboard/report/sidebar navigation shift
-**Progress:** [███████░░░] 75%
-**Last activity:** 2026-03-09 - Completed Phase 22 Plan 01 employee detail-first leave review page
+**Plan:** Phase 22 complete
+**Status:** All four Phase 22 plans are complete, including the final dashboard/report/sidebar navigation shift toward employee-detail review
+**Progress:** [██████████] 100%
+**Last activity:** 2026-03-09 - Completed Phase 22 Plan 03 HR detail-first navigation sweep
 
 ## Performance Metrics
 
@@ -48,6 +48,7 @@ progress:
 | Phase 22 P00 | 20 min | 2 tasks | 5 files |
 | Phase 22 P01 | 10 min | 2 tasks | 2 files |
 | Phase 22 P02 | 1 min | 2 tasks | 4 files |
+| Phase 22 P03 | 1 min | 2 tasks | 4 files |
 
 ## Accumulated Context
 
@@ -80,6 +81,8 @@ progress:
 | Keep back-link state as a simple allowlisted from query value (employees, reports, dashboard) so the flow stays obvious for beginner-style procedural PHP | Preserves source-aware return behavior without introducing helper abstractions or raw return URLs | Phase 22 |
 | Use employee detail as the normal landing page after create and edit success so HR stays in one employee review flow | Keeps HR inside one employee review path instead of bouncing back to the list after every save | Phase 22 |
 | Keep employees.php as the visible CRUD hub with literal Detail, Edit, Delete, and Provision actions instead of hidden row interactions | Matches the beginner-style Absensi-like flow and keeps the list easy to trace line by line | Phase 22 |
+| Keep report source state as a literal from=reports query string so the back flow stays obvious for beginners | Preserves reports-to-detail return context without adding helper abstractions | Phase 22 |
+| Teach the HR review path directly in dashboard copy as dashboard -> employees.php -> employee-detail.php while leaving the calculator visible only as a secondary option | Finishes CRUD-04 with explicit beginner-readable navigation cues instead of generic employee-management wording | Phase 22 |
 
 ### Implementation Guardrails
 - Native procedural PHP only (no OOP/framework)
@@ -104,17 +107,17 @@ progress:
 
 ### Last Session
 - **Date:** 2026-03-09
-- **Activity:** Executed Phase 22 Plan 01 and committed the employee detail-first leave review page.
-- **Outcome:** `hr/logic/employee-detail.php` now reuses the existing leave engine, keeps invalid join-date issues inline, and `hr/views/employee-detail.php` now shows profile-plus-leave review with years 6-8 only.
-- **Next:** Execute Phase 22 Plan 03.
+- **Activity:** Executed Phase 22 Plan 03 and committed the final dashboard/report/sidebar navigation shift.
+- **Outcome:** `hr/views/reports.php` now opens employee detail with `from=reports`, `hr/dashboard.php` now teaches the detail-first HR path explicitly, and `includes/layout/dashboard-sidebar.php` keeps calculator below the main employee-management flow.
+- **Next:** Plan and execute Phase 23.
 
 ### Context for Next Session
 - Phase 21 already left the codebase on grouped `includes/auth/` and `includes/layout/` folders, English HR CRUD routes, and the beginner-readable route -> logic -> view split.
 - `hr/logic/employee-detail.php` and `hr/views/employee-detail.php` now support the detail-first review screen with leave snapshot text, inline join-date warnings, source-aware back links, and a years 6-8 table.
-- `hr/views/employees.php` now acts as the obvious beginner CRUD hub with visible Detail, Edit, Delete, and Provision actions plus helper copy pointing HR to the detail page.
-- `tests/phase22_hr_detail_first_crud_smoke.php --group=crud-flow` is green and should stay green while Plan 03 shifts dashboard/report/sidebar emphasis.
-- Plan 03 should focus on dashboard, reports, and sidebar wording/links so employee detail becomes the primary leave-review path outside the list page too.
+- `hr/views/employees.php`, `hr/views/reports.php`, and `hr/dashboard.php` now all point HR toward employee detail as the normal leave-review destination.
+- `tests/phase22_hr_detail_first_crud_smoke.php --group=navigation` and `--group=crud-flow` are green and now lock the Phase 22 detail-first navigation flow.
+- Phase 23 can focus on employee self-view and calculator retirement because the HR-side replacement path is now complete.
 
 ---
 *State initialized: 2026-03-05*
-*Last updated: 2026-03-09 after Phase 22 Plan 01 completion was recorded*
+*Last updated: 2026-03-09 after Phase 22 Plan 03 completion was recorded*
