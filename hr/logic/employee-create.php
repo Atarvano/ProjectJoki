@@ -84,14 +84,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             );
 
             $insert_ok = mysqli_stmt_execute($insert_stmt);
+            $new_employee_id = mysqli_insert_id($koneksi);
             mysqli_stmt_close($insert_stmt);
 
-            if ($insert_ok) {
+            if ($insert_ok && $new_employee_id > 0) {
                 $_SESSION['flash'] = [
                     'type' => 'success',
-                    'message' => 'Data karyawan berhasil ditambahkan. Silakan cek kembali pada daftar karyawan.',
+                    'message' => 'Data karyawan berhasil ditambahkan. Silakan cek detail karyawan untuk review data yang baru disimpan.',
                 ];
-                header('Location: /hr/employees.php');
+                header('Location: /hr/employee-detail.php?id=' . $new_employee_id);
                 exit;
             }
 

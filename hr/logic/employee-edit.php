@@ -135,9 +135,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if ($update_ok) {
                 $_SESSION['flash'] = [
                     'type' => 'success',
-                    'message' => 'Data karyawan berhasil diperbarui. Silakan cek kembali pada daftar karyawan.',
+                    'message' => 'Data karyawan berhasil diperbarui. Silakan cek detail karyawan untuk review perubahan terbaru.',
                 ];
-                header('Location: /hr/employees.php');
+                header('Location: /hr/employee-detail.php?id=' . $id);
                 exit;
             }
 
