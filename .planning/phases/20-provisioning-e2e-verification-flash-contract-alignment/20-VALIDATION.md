@@ -1,7 +1,7 @@
 ---
 phase: 20
 slug: provisioning-e2e-verification-flash-contract-alignment
-status: draft
+status: verified
 nyquist_compliant: true
 wave_0_complete: true
 created: 2026-03-08
@@ -40,6 +40,7 @@ created: 2026-03-08
 |---------|------|------|-------------|-----------|-------------------|-------------|--------|
 | 20-01-01 | 01 | 1 | PROV-01, PROV-02, PROV-03, PROV-04 | smoke | `php tests/provisioning_endpoint_test.php && php -l hr/karyawan-provision.php` | via plan files | ✅ green |
 | 20-01-02 | 01 | 1 | AUTH-01, AUTH-02, AUTH-03, RBAC-01, RBAC-02, RBAC-05, PROV-01, PROV-04, DASH-04 | docs + manual checkpoint prep | `php -r "exit(file_exists('.planning/phases/20-provisioning-e2e-verification-flash-contract-alignment/20-VALIDATION.md') ? 0 : 1);"` | created in this plan | ✅ green |
+| 20-02-01 | 02 | 2 | AUTH-01, AUTH-02, AUTH-03, RBAC-01, RBAC-02, RBAC-05, PROV-01, PROV-04, DASH-04 | browser walkthrough approval | `php tests/provisioning_endpoint_test.php && php tests/phase18_data_wiring_smoke.php && php tests/phase19_auth_session_smoke.php` | approved runtime evidence below | ✅ green |
 
 *Status: ⬜ pending · ✅ green · ❌ red · ⚠️ flaky*
 
@@ -144,6 +145,14 @@ WHERE username = 'NIK_YANG_BARU_DIPROVISION';
 
 ---
 
+## Approved Runtime Evidence
+
+- **Approval source:** Human checkpoint approval on 2026-03-08 (`approved`).
+- **Walkthrough scope:** Locked Phase 20 path only — HR login -> `hr/karyawan.php` provisioning -> one-time credential flash -> HR logout -> employee login -> wrong-role redirect -> employee logout -> reopen protected page.
+- **Observed outcome:** The approved walkthrough confirmed HR can provision from a real `Belum dibuat` row, the success flash shows `NIK (Username)` + `Password awal` + one-time warning + formula note, the credential block disappears after one refresh, employee login lands on `/employee/dashboard.php`, employee access to `/hr/karyawan.php` is redirected back to `/employee/dashboard.php`, and reopening protected pages after logout returns to `/login.php`.
+- **Demo-free proof:** The tested `login.php`, `hr/karyawan.php`, and `employee/dashboard.php` pages were explicitly confirmed free of `Demo v1` and `Akses demo` labels during the walkthrough.
+- **Automation baseline kept:** `php tests/provisioning_endpoint_test.php && php tests/phase18_data_wiring_smoke.php && php tests/phase19_auth_session_smoke.php`
+
 ## Validation Sign-Off
 
 - [x] Semua task di plan punya verify command atau artifact check
@@ -153,4 +162,4 @@ WHERE username = 'NIK_YANG_BARU_DIPROVISION';
 - [x] Bukti demo-free UI tercakup
 - [x] `nyquist_compliant: true` set di frontmatter
 
-**Approval:** Menunggu browser walkthrough pada Plan 20-02.
+**Approval:** Browser walkthrough Plan 20-02 disetujui; bukti runtime final tercatat di file ini.
