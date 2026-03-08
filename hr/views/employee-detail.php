@@ -18,7 +18,7 @@
                     <i class="bi bi-calculator me-2"></i>Lihat Hak Cuti
                 </a>
                 <?php if ($account_status === 'Belum dibuat'): ?>
-                    <form method="post" action="/hr/karyawan-provision.php" class="m-0">
+                    <form method="post" action="/hr/employee-provision.php" class="m-0">
                         <input type="hidden" name="id" value="<?php echo (int) $employee['id']; ?>">
                         <button type="submit" class="btn btn-success">
                             <i class="bi bi-person-plus me-2"></i>Buat Akun Login

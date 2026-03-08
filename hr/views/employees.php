@@ -106,7 +106,7 @@ if ($flash) {
                                 $tanggal_bergabung = date('d M Y', strtotime($row['tanggal_bergabung']));
                             }
                             ?>
-                            <tr class="karyawan-row" data-edit-url="/hr/karyawan-edit.php?id=<?php echo $id; ?>">
+                            <tr class="karyawan-row" data-edit-url="/hr/employee-edit.php?id=<?php echo $id; ?>">
                                 <td class="ps-4 fw-medium"><?php echo htmlspecialchars($row['nik'] ?? '-'); ?></td>
                                 <td><?php echo htmlspecialchars($row['nama'] ?? '-'); ?></td>
                                 <td><?php echo htmlspecialchars($row['departemen'] ?: '-'); ?></td>
@@ -121,13 +121,13 @@ if ($flash) {
                                     <div class="d-flex justify-content-center gap-2 flex-wrap">
                                         <a href="/hr/employee-detail.php?id=<?php echo $id; ?>" class="btn btn-sm btn-outline-secondary">Detail</a>
                                         <?php if ($akun_login_status === 'Belum dibuat'): ?>
-                                            <form method="post" action="/hr/karyawan-provision.php" class="d-inline">
+                                            <form method="post" action="/hr/employee-provision.php" class="d-inline">
                                                 <input type="hidden" name="id" value="<?php echo $id; ?>">
                                                 <button type="submit" class="btn btn-sm btn-outline-success">Buat Akun Login</button>
                                             </form>
                                         <?php endif; ?>
-                                        <a href="/hr/karyawan-edit.php?id=<?php echo $id; ?>" class="btn btn-sm btn-outline-primary">Edit</a>
-                                        <form method="post" action="/hr/karyawan-hapus.php" onsubmit="return confirm('Data karyawan akan dihapus permanen dan akun login yang terhubung ikut terhapus. Lanjutkan?');" class="d-inline">
+                                        <a href="/hr/employee-edit.php?id=<?php echo $id; ?>" class="btn btn-sm btn-outline-primary">Edit</a>
+                                        <form method="post" action="/hr/employee-delete.php" onsubmit="return confirm('Data karyawan akan dihapus permanen dan akun login yang terhubung ikut terhapus. Lanjutkan?');" class="d-inline">
                                             <input type="hidden" name="id" value="<?php echo $id; ?>">
                                             <button type="submit" class="btn btn-sm btn-outline-danger">Hapus</button>
                                         </form>

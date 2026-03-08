@@ -36,6 +36,7 @@ $endpoint_relative_path = provisioning_pick_existing_path($root, [
     'hr/karyawan-provision.php',
 ]);
 $list_page_relative_path = provisioning_pick_existing_path($root, [
+    'hr/views/employees.php',
     'hr/employees.php',
     'hr/karyawan.php',
 ]);
@@ -44,7 +45,7 @@ $endpoint_path = $root . '/' . $endpoint_relative_path;
 $list_page_path = $root . '/' . $list_page_relative_path;
 
 assert_true(file_exists($endpoint_path), 'Endpoint file final atau bridge provision harus ada.');
-assert_true(file_exists($list_page_path), 'Halaman list final atau bridge harus ada.');
+assert_true(file_exists($list_page_path), 'Renderer list final atau bridge harus ada.');
 
 define('KARYAWAN_PROVISION_TEST_MODE', true);
 require $endpoint_path;
@@ -59,20 +60,23 @@ assert_true($invalid_password === null, 'Tanggal lahir tidak valid harus menghas
 
 $content = file_get_contents($endpoint_path);
 $list_content = file_get_contents($list_page_path);
+$logic_content = file_get_contents($root . '/hr/logic/employee-provision.php');
 assert_true($content !== false, 'Isi endpoint provision harus bisa dibaca.');
-assert_true($list_content !== false, 'Isi halaman list employee harus bisa dibaca.');
-assert_true(strpos($content, "REQUEST_METHOD'] !== 'POST'") !== false, 'Endpoint wajib POST-only.');
-assert_true(strpos($content, 'Aksi hanya bisa lewat tombol Buat Akun Login.') !== false, 'Copy penolakan non-POST harus informatif dan konsisten.');
-assert_true(strpos($content, 'password_hash') !== false, 'Endpoint wajib menggunakan password_hash().');
-assert_true(strpos($content, 'INSERT INTO users') !== false, 'Endpoint wajib memiliki INSERT INTO users.');
-assert_true(strpos($content, 'role, is_active') !== false, 'Insert wajib set role dan is_active.');
-assert_true(strpos($content, 'employee') !== false, 'Role akun baru wajib employee.');
-assert_true(strpos($content, "'credentials' => [") !== false, 'Flash sukses wajib memakai payload credentials terstruktur.');
-assert_true(strpos($content, "'username' => \$username") !== false, 'Payload credentials wajib menyimpan username terstruktur.');
-assert_true(strpos($content, "'password_awal' => \$password_plain") !== false, 'Payload credentials wajib menyimpan password_awal terstruktur.');
-assert_true(strpos($content, "'pattern_example' => \$password_plain") !== false, 'Payload credentials wajib menyimpan pattern_example untuk bantuan pola password.');
+assert_true($list_content !== false, 'Isi renderer list employee harus bisa dibaca.');
+assert_true($logic_content !== false, 'Isi logic provision final harus bisa dibaca.');
+assert_true(strpos($content, "require_once __DIR__ . '/logic/employee-provision.php';") !== false, 'Route provision final harus memanggil logic/employee-provision.php.');
+assert_true(strpos($logic_content, "REQUEST_METHOD'] !== 'POST'") !== false, 'Endpoint wajib POST-only.');
+assert_true(strpos($logic_content, 'Aksi hanya bisa lewat tombol Buat Akun Login.') !== false, 'Copy penolakan non-POST harus informatif dan konsisten.');
+assert_true(strpos($logic_content, 'password_hash') !== false, 'Endpoint wajib menggunakan password_hash().');
+assert_true(strpos($logic_content, 'INSERT INTO users') !== false, 'Endpoint wajib memiliki INSERT INTO users.');
+assert_true(strpos($logic_content, 'role, is_active') !== false, 'Insert wajib set role dan is_active.');
+assert_true(strpos($logic_content, 'employee') !== false, 'Role akun baru wajib employee.');
+assert_true(strpos($logic_content, "'credentials' => [") !== false, 'Flash sukses wajib memakai payload credentials terstruktur.');
+assert_true(strpos($logic_content, "'username' => \$username") !== false, 'Payload credentials wajib menyimpan username terstruktur.');
+assert_true(strpos($logic_content, "'password_awal' => \$password_plain") !== false, 'Payload credentials wajib menyimpan password_awal terstruktur.');
+assert_true(strpos($logic_content, "'pattern_example' => \$password_plain") !== false, 'Payload credentials wajib menyimpan pattern_example untuk bantuan pola password.');
 assert_contains_any(
-    $content,
+    $logic_content,
     [
         "header('Location: /hr/employee-provision.php')",
         "header('Location: /hr/employees.php')",
