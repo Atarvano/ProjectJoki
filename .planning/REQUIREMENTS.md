@@ -15,14 +15,14 @@ Requirements for milestone v3.0. Each maps to exactly one roadmap phase.
 
 ### CRUD and Detail Flow
 
-- [ ] **CRUD-01**: HR can move through employee list, add, detail, edit, and delete pages using direct page-to-page CRUD navigation.
-- [ ] **CRUD-02**: HR can open an employee detail page that shows both employee profile data and leave entitlement details in one screen.
+- [x] **CRUD-01**: HR can move through employee list, add, detail, edit, and delete pages using direct page-to-page CRUD navigation.
+- [x] **CRUD-02**: HR can open an employee detail page that shows both employee profile data and leave entitlement details in one screen.
 - [ ] **CRUD-03**: Employee can open their own page and see direct leave entitlement details from their session-linked account.
-- [ ] **CRUD-04**: HR can move from dashboard and report screens into employee detail pages instead of a calculator-first flow.
+- [x] **CRUD-04**: HR can move from dashboard and report screens into employee detail pages instead of a calculator-first flow.
 
 ### Leave View Replacement
 
-- [ ] **LEAV-01**: HR can view leave entitlement details directly from employee detail pages without using a standalone calculator page.
+- [x] **LEAV-01**: HR can view leave entitlement details directly from employee detail pages without using a standalone calculator page.
 - [ ] **LEAV-02**: Employee can view their leave entitlement directly from their own authenticated page without using a standalone calculator page.
 - [ ] **LEAV-03**: Users no longer see the calculator as part of the main navigation or primary action path.
 - [ ] **LEAV-04**: The standalone calculator page is removed after the detail-based replacement flow is in place.
@@ -68,11 +68,11 @@ Which phases cover which requirements. Updated during roadmap creation.
 | STRU-01 | Phase 21 | Complete |
 | STRU-02 | Phase 21 | Complete |
 | STRU-03 | Phase 21 | Complete |
-| CRUD-01 | Phase 22 | Pending |
-| CRUD-02 | Phase 22 | Pending |
+| CRUD-01 | Phase 22 | Complete |
+| CRUD-02 | Phase 22 | Complete |
 | CRUD-03 | Phase 23 | Pending |
-| CRUD-04 | Phase 22 | Pending |
-| LEAV-01 | Phase 22 | Pending |
+| CRUD-04 | Phase 22 | Complete |
+| LEAV-01 | Phase 22 | Complete |
 | LEAV-02 | Phase 23 | Pending |
 | LEAV-03 | Phase 23 | Pending |
 | LEAV-04 | Phase 23 | Pending |

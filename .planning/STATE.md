@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v3.0
 milestone_name: beginner-style-php-rewrite-and-structure-cleanup
 status: in_progress
-last_updated: "2026-03-08T19:14:50.956Z"
-last_activity: 2026-03-09 - Completed Phase 21 Plan 05 HR reports route rename and shared navigation sweep
+last_updated: "2026-03-08T21:03:20Z"
+last_activity: 2026-03-09 - Completed Phase 22 Plan 00 grouped smoke safety net for HR detail-first CRUD flow
 progress:
   total_phases: 4
-  completed_phases: 0
-  total_plans: 6
-  completed_plans: 5
-  percent: 83
+  completed_phases: 1
+  total_plans: 11
+  completed_plans: 8
+  percent: 73
 ---
 
 # State: Sicuti HRD Cuti Tracker
@@ -18,16 +18,16 @@ progress:
 ## Project Reference
 
 **Core Value:** HR creates employee data first, provisions login credentials, then employees log in with native PHP sessions to view their own leave data through an enforced, real backend flow.
-**Current Focus:** Executing Phase 21 beginner CRUD structure foundation plans with grouped shared includes and beginner-readable route cleanup.
+**Current Focus:** Phase 22 is underway; next work should expand the employee detail-first HR CRUD flow on top of the new grouped smoke safety net.
 **Roadmap:** See `.planning/ROADMAP.md` and `.planning/PROJECT.md`
 
 ## Current Position
 
-**Phase:** 21 - Beginner CRUD Structure Foundation
-**Plan:** 05
-**Status:** Plans 00, 01, 02, 04, and 05 complete
-**Progress:** [████████--] 83%
-**Last activity:** 2026-03-09 - Completed Phase 21 Plan 05 HR reports route rename and shared navigation sweep
+**Phase:** 22 - HR Detail-First CRUD Flow
+**Plan:** 01 next
+**Status:** Plan 00 complete; Plans 01, 02, and 03 remaining
+**Progress:** [███░░░░░░░] 25%
+**Last activity:** 2026-03-09 - Completed Phase 22 Plan 00 grouped smoke safety net for HR detail-first CRUD flow
 
 ## Performance Metrics
 
@@ -42,7 +42,10 @@ progress:
 | Phase 21 P01 | 8 min | 2 tasks | 15 files |
 | Phase 21 P02 | 9 min | 2 tasks | 18 files |
 | Phase 21 P04 | 1 min | 2 tasks | 5 files |
+| Phase 21 P03 | 10 min | 2 tasks | 14 files |
 | Phase 21 P05 | 1 min | 2 tasks | 9 files |
+| Phase 21 P06 | 2 min | 2 tasks | 4 files |
+| Phase 22 P00 | 20 min | 2 tasks | 5 files |
 
 ## Accumulated Context
 
@@ -65,6 +68,12 @@ progress:
 | Keep each protected HR page thin and move SQL/form/query work into page-owned logic files with matching views | Preserves the Absensi-style beginner CRUD feel without introducing shared backend abstraction layers | Phase 21 |
 | Use reports.php as the final visible HR report route while keeping laporan.php only as a redirect bridge during rollout | Lets shared links move to the final English report name immediately without breaking older entry points during the rename sweep | Phase 21 |
 | Keep report SQL and cuti calculation in hr/logic/reports.php so the new route stays thin and beginner-readable | Extends the same beginner route -> logic -> view pattern to the reports screen without hiding logic in shared handlers | Phase 21 |
+| Keep edit, delete, and provision on the same visible auth -> db -> logic -> layout/action recipe as the other HR employee pages | Completes the beginner-readable route family without hiding request handling in shared controllers or helpers | Phase 21 |
+| Use tiny bridge files for old Indonesian action routes so rollout safety stays simple and beginner-readable | Preserves older entry points temporarily while making the final English route names visible immediately | Phase 21 |
+| Make the final grouped include paths visible in the last untouched HR protected routes instead of leaving bridge shims as the readable contract | Closes the final STRU-03 gap and makes the grouped include recipe the visible standard everywhere it matters | Phase 21 |
+| Lock the remaining HR routes into the includes smoke group with both positive and negative path assertions so shim regressions go red immediately | Prevents a quiet fallback to temporary shim paths after Phase 21 is declared complete | Phase 21 |
+| Keep Phase 22 verification as one cheap procedural PHP smoke file with named groups instead of adding PHPUnit or framework tooling | Matches the beginner-style PHP codebase and gives later rewiring plans one fast reusable command | Phase 22 |
+| Assert final detail-first strings directly in source files so unfinished rewiring fails loudly before page behavior changes land | Makes the smoke check useful immediately as a red safety net instead of a placeholder test | Phase 22 |
 
 ### Implementation Guardrails
 - Native procedural PHP only (no OOP/framework)
@@ -89,18 +98,18 @@ progress:
 
 ### Last Session
 - **Date:** 2026-03-09
-- **Activity:** Executed Phase 21 Plan 05 and committed the HR reports route rename plus shared navigation and smoke-test sweep onto final English route names.
-- **Outcome:** HR reports now use `reports.php` with matching logic/view files, `laporan.php` is only a redirect bridge, and shared HR links in the touched files now point to the English route family.
-- **Next:** Execute `21-03-PLAN.md`.
+- **Activity:** Executed Phase 22 Plan 00 and committed the grouped smoke safety net for the HR detail-first CRUD flow.
+- **Outcome:** Phase 22 now has a reusable procedural smoke command with `crud-flow`, `detail-view`, `navigation`, and `leave-focus` groups that intentionally fail until the detail-first rewiring is implemented.
+- **Next:** Execute Phase 22 Plan 01.
 
 ### Context for Next Session
-- Phase 21 now has grouped `includes/auth/` and `includes/layout/` folders, English HR employee list/create/detail routes, the final `hr/reports.php` route family, and employee dashboard route -> logic -> view files on the same visible include contract.
-- Old `karyawan*.php` list/create/detail files and `laporan.php` now act as rollout bridges, so the remaining Plan 21 work should keep moving visible action routes onto the English naming family.
-- Shared HR navigation in the touched dashboard/sidebar/footer files now already points at `employees.php`, `employee-detail.php`, and `reports.php`.
-- Phase 22 should deliver the HR detail-first CRUD flow before calculator retirement is considered complete.
-- Phase 23 should move employee leave viewing to self-view pages and finish calculator removal.
-- Phase 24 should refresh landing/dashboard/report copy so the app no longer reads like demo-v1.
+- Phase 21 already left the codebase on grouped `includes/auth/` and `includes/layout/` folders, English HR CRUD routes, and the beginner-readable route -> logic -> view split.
+- `tests/phase22_hr_detail_first_crud_smoke.php` now provides one fast Phase 22 command plus named groups: `crud-flow`, `detail-view`, `navigation`, and `leave-focus`.
+- The new smoke script is expected to fail right now because create/edit still return to the employee list, detail still lacks inline leave blocks, and dashboard/report copy still leans calculator-first.
+- Phase 22 Plan 01 should use the new smoke groups while expanding `hr/logic/employee-detail.php` and `hr/views/employee-detail.php` into the real profile-plus-leave review page.
+- Phase 22 Plan 02 should rewire create/edit/list rhythm to land on employee detail pages.
+- Phase 22 Plan 03 should shift dashboard/report/sidebar wording and links toward employee detail review.
 
 ---
 *State initialized: 2026-03-05*
-*Last updated: 2026-03-09 after Phase 21 Plan 05 completion was recorded*
+*Last updated: 2026-03-09 after Phase 22 Plan 00 completion was recorded*
