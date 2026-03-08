@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v3.0
 milestone_name: beginner-style-php-rewrite-and-structure-cleanup
 status: in_progress
-last_updated: "2026-03-08T19:00:12.053Z"
-last_activity: 2026-03-08 - Completed Phase 21 Plan 04 employee dashboard split and employee include smoke proof
+last_updated: "2026-03-08T19:14:50.956Z"
+last_activity: 2026-03-09 - Completed Phase 21 Plan 05 HR reports route rename and shared navigation sweep
 progress:
   total_phases: 4
   completed_phases: 0
   total_plans: 6
-  completed_plans: 3
-  percent: 50
+  completed_plans: 5
+  percent: 83
 ---
 
 # State: Sicuti HRD Cuti Tracker
@@ -24,10 +24,10 @@ progress:
 ## Current Position
 
 **Phase:** 21 - Beginner CRUD Structure Foundation
-**Plan:** 04
-**Status:** Plan 04 complete
-**Progress:** [█████-----] 50%
-**Last activity:** 2026-03-08 - Completed Phase 21 Plan 04 employee dashboard split and employee include smoke proof
+**Plan:** 05
+**Status:** Plans 00, 01, 02, 04, and 05 complete
+**Progress:** [████████--] 83%
+**Last activity:** 2026-03-09 - Completed Phase 21 Plan 05 HR reports route rename and shared navigation sweep
 
 ## Performance Metrics
 
@@ -40,7 +40,9 @@ progress:
 | Current streak | - |
 | Phase 21 P00 | 16 min | 2 tasks | 3 files |
 | Phase 21 P01 | 8 min | 2 tasks | 15 files |
+| Phase 21 P02 | 9 min | 2 tasks | 18 files |
 | Phase 21 P04 | 1 min | 2 tasks | 5 files |
+| Phase 21 P05 | 1 min | 2 tasks | 9 files |
 
 ## Accumulated Context
 
@@ -59,6 +61,10 @@ progress:
 | Point public pages directly at `includes/layout/...` paths as soon as the grouped files exist | Makes the new folder structure the visible main contract immediately instead of leaving it hidden behind shims | Phase 21 |
 | Keep the employee dashboard on the same visible auth -> db -> logic -> layout recipe as HR pages | Makes both protected areas easy to scan and keeps the include contract recognizable for beginners | Phase 21 |
 | Keep leave calculation inside the employee page-owned logic file so the route stays short and beginner-readable | Preserves a shallow split without introducing shared helper backends or hiding the dashboard data flow | Phase 21 |
+| Use visible English HR route names immediately while keeping tiny redirect bridge files for old Indonesian paths during rollout | Makes the final beginner-readable route names visible from the `hr/` tree right away without breaking older links during the rename rollout | Phase 21 |
+| Keep each protected HR page thin and move SQL/form/query work into page-owned logic files with matching views | Preserves the Absensi-style beginner CRUD feel without introducing shared backend abstraction layers | Phase 21 |
+| Use reports.php as the final visible HR report route while keeping laporan.php only as a redirect bridge during rollout | Lets shared links move to the final English report name immediately without breaking older entry points during the rename sweep | Phase 21 |
+| Keep report SQL and cuti calculation in hr/logic/reports.php so the new route stays thin and beginner-readable | Extends the same beginner route -> logic -> view pattern to the reports screen without hiding logic in shared handlers | Phase 21 |
 
 ### Implementation Guardrails
 - Native procedural PHP only (no OOP/framework)
@@ -82,18 +88,19 @@ progress:
 ## Session Continuity
 
 ### Last Session
-- **Date:** 2026-03-08
-- **Activity:** Executed Phase 21 Plan 04 and committed the employee dashboard route/logic/view split plus updated employee include smoke proof.
-- **Outcome:** The employee dashboard now matches the grouped auth -> db -> logic -> layout recipe used by protected pages, and smoke tests assert the final employee-side include contract.
-- **Next:** Execute `21-05-PLAN.md`.
+- **Date:** 2026-03-09
+- **Activity:** Executed Phase 21 Plan 05 and committed the HR reports route rename plus shared navigation and smoke-test sweep onto final English route names.
+- **Outcome:** HR reports now use `reports.php` with matching logic/view files, `laporan.php` is only a redirect bridge, and shared HR links in the touched files now point to the English route family.
+- **Next:** Execute `21-03-PLAN.md`.
 
 ### Context for Next Session
-- Phase 21 now has grouped `includes/auth/` and `includes/layout/` folders plus employee dashboard route -> logic -> view files, so the remaining structure plans can finish the visible route cleanup on the same contract.
-- Public pages already use grouped layout includes directly, and employee protected pages now use the final grouped route recipe too.
+- Phase 21 now has grouped `includes/auth/` and `includes/layout/` folders, English HR employee list/create/detail routes, the final `hr/reports.php` route family, and employee dashboard route -> logic -> view files on the same visible include contract.
+- Old `karyawan*.php` list/create/detail files and `laporan.php` now act as rollout bridges, so the remaining Plan 21 work should keep moving visible action routes onto the English naming family.
+- Shared HR navigation in the touched dashboard/sidebar/footer files now already points at `employees.php`, `employee-detail.php`, and `reports.php`.
 - Phase 22 should deliver the HR detail-first CRUD flow before calculator retirement is considered complete.
 - Phase 23 should move employee leave viewing to self-view pages and finish calculator removal.
 - Phase 24 should refresh landing/dashboard/report copy so the app no longer reads like demo-v1.
 
 ---
 *State initialized: 2026-03-05*
-*Last updated: 2026-03-08 after Phase 21 Plan 04 completion*
+*Last updated: 2026-03-09 after Phase 21 Plan 05 completion was recorded*
