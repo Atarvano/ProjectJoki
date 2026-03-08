@@ -17,7 +17,7 @@
 
 - [x] **Phase 21: Beginner CRUD Structure Foundation** - Tidy the folder/page structure and lock a readable include contract for the rewrite. (completed 2026-03-08)
 - [x] **Phase 22: HR Detail-First CRUD Flow** - Make HR employee management revolve around direct CRUD pages and a useful employee detail screen. (completed 2026-03-09)
-- [ ] **Phase 23: Employee Leave View and Calculator Retirement** - Move employees onto direct self-view leave pages and fully remove calculator-first navigation.
+- [x] **Phase 23: Employee Leave View and Calculator Retirement** - Move employees onto direct self-view leave pages and fully remove calculator-first navigation. (completed 2026-03-09)
 - [ ] **Phase 24: Product Messaging and Final Copy Cleanup** - Refresh landing, dashboard, and report copy so the product story matches the rewritten app.
 
 ## Progress Table
@@ -26,7 +26,7 @@
 |-------|----------------|--------|-----------|
 | 21. Beginner CRUD Structure Foundation | 7/7 | Complete   | 2026-03-08 |
 | 22. HR Detail-First CRUD Flow | 4/4 | Complete   | 2026-03-09 |
-| 23. Employee Leave View and Calculator Retirement | 2/3 | In Progress|  |
+| 23. Employee Leave View and Calculator Retirement | 3/3 | Complete   | 2026-03-09 |
 | 24. Product Messaging and Final Copy Cleanup | 0/0 | Not started | - |
 
 ## Phase Details
@@ -77,8 +77,8 @@ Plans:
 **Plans**: 3 plans
 Plans:
 - [x] 23-00-PLAN.md — Create the Phase 23 smoke-test scaffold and validation baseline for self-view, navigation cleanup, and calculator retirement. (completed 2026-03-08)
-- [ ] 23-01-PLAN.md — Rebuild the employee dashboard into the direct leave self-view page with warning-state handling.
-- [ ] 23-02-PLAN.md — Remove calculator-first navigation and retire the old calculator route into a redirect bridge.
+- [x] 23-01-PLAN.md — Rebuild the employee dashboard into the direct leave self-view page with warning-state handling. (completed 2026-03-08)
+- [x] 23-02-PLAN.md — Remove calculator-first navigation and retire the old calculator route into a redirect bridge. (completed 2026-03-09)
 
 ### Phase 24: Product Messaging and Final Copy Cleanup
 **Goal**: Visitors and authenticated users see product copy that matches the real HR-first leave management app and its new detail-first flow.
@@ -91,4 +91,4 @@ Plans:
 **Plans**: TBD
 
 ---
-*Last updated: 2026-03-08 after Phase 23 Plan 00 smoke baseline was completed*
+*Last updated: 2026-03-09 after Phase 23 Plan 02 calculator retirement was completed*
