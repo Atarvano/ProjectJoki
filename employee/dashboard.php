@@ -41,23 +41,17 @@ $status_class_sekarang = 'bg-info text-dark';
 $tahun_sekarang = (int) date('Y');
 $periode_message = 'Ringkasan ini menyorot masa hak cuti utama pada tahun kerja ke-6 sampai ke-8.';
 
-if ($karyawan_id <= 0) {
-    $load_error = 'Akun Anda belum terhubung ke data karyawan. Silakan hubungi tim HR.';
-} else {
+if ($karyawan_id > 0) {
     $stmt = mysqli_prepare($koneksi, 'SELECT nama, tanggal_bergabung FROM karyawan WHERE id = ? LIMIT 1');
 
-    if (!$stmt) {
-        $load_error = 'Data karyawan tidak dapat dimuat saat ini. Silakan coba lagi nanti.';
-    } else {
+    if ($stmt) {
         mysqli_stmt_bind_param($stmt, 'i', $karyawan_id);
         mysqli_stmt_execute($stmt);
         $result = mysqli_stmt_get_result($stmt);
         $karyawan = mysqli_fetch_assoc($result);
         mysqli_stmt_close($stmt);
 
-        if (!$karyawan) {
-            $load_error = 'Data karyawan untuk akun ini tidak ditemukan. Silakan hubungi tim HR.';
-        } else {
+        if ($karyawan) {
             $employee_name = trim((string) ($karyawan['nama'] ?? $profile_label));
             $tanggal_bergabung = $karyawan['tanggal_bergabung'] ?? '';
 
@@ -67,8 +61,14 @@ if ($karyawan_id <= 0) {
                 $tahun_bergabung = (int) date('Y', strtotime($tanggal_bergabung));
                 $hasil = hitungHakCuti($tahun_bergabung);
             }
+        } else {
+            $load_error = 'Data karyawan tidak dapat dimuat saat ini. Silakan coba lagi nanti.';
         }
+    } else {
+        $load_error = 'Data karyawan tidak dapat dimuat saat ini. Silakan coba lagi nanti.';
     }
+} else {
+    $load_error = 'Data karyawan tidak dapat dimuat saat ini. Silakan coba lagi nanti.';
 }
 
 if ($hasil) {
