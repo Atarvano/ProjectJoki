@@ -84,7 +84,7 @@ $role_icon = $is_hr ? 'bi-shield-check' : 'bi-person';
 
 $page_title = "Login $role_label - Sicuti HRD";
 $page_class = "page-login role-$role";
-include 'includes/header.php';
+include 'includes/layout/header.php';
 ?>
 
 <div class="login-split">
@@ -302,4 +302,4 @@ include 'includes/header.php';
     </div>
 </div>
 
-<?php include 'includes/footer.php'; ?>
+<?php include 'includes/layout/footer.php'; ?>

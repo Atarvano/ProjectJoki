@@ -1,7 +1,7 @@
 <?php
 $page_title = 'Sicuti HRD - Kelola Cuti Karyawan dengan Mudah';
 $page_class = 'page-landing';
-include 'includes/header.php';
+include 'includes/layout/header.php';
 ?>
 
 <!-- Navbar -->
@@ -370,4 +370,4 @@ include 'includes/header.php';
     </div>
 </section>
 
-<?php include 'includes/footer.php'; ?>
+<?php include 'includes/layout/footer.php'; ?>
