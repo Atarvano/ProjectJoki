@@ -86,6 +86,7 @@ function run_detail_view_group()
     phase22_assert_contains($employee_detail_view, 'Profil Karyawan', 'View detail harus menampilkan blok profil karyawan lebih dulu.');
     phase22_assert_contains($employee_detail_view, 'Ringkasan Hak Cuti', 'View detail harus menampilkan blok ringkasan hak cuti pada halaman yang sama.');
     phase22_assert_contains($employee_detail_view, 'Hak cuti di bawah ini dihitung dari tanggal bergabung dan engine cuti yang sama dengan halaman lain.', 'View detail harus memberi catatan sederhana bahwa angka cuti berasal dari join date dan engine yang sudah ada.');
+    phase22_assert_contains($employee_detail_view, '$leave_snapshot', 'View detail harus memakai ringkasan leave snapshot yang disiapkan logic detail.');
     phase22_assert_not_contains($employee_detail_view, '/hr/kalkulator.php', 'View detail tidak boleh lagi menjadikan kalkulator sebagai tombol utama untuk review cuti.');
 
     fwrite(STDOUT, "PASS [detail-view]: detail employee sudah memuat profil dan leave block pada halaman yang sama.\n");
@@ -100,12 +101,13 @@ function run_navigation_group()
     phase22_assert_contains($reports_view, 'employee-detail.php?id=<?php echo $report[\'id\']; ?>&from=reports', 'Laporan harus membuka detail employee dengan penanda sumber reports.');
     phase22_assert_contains($reports_view, 'Buka Detail & Hak Cuti', 'Laporan harus menonjolkan detail employee sebagai jalur review hak cuti.');
     phase22_assert_contains($employee_detail_logic, "if ($from === 'reports') {", 'Logic detail harus membaca sumber reports untuk tombol kembali.');
-    phase22_assert_contains($employee_detail_logic, "$back_url = '/hr/reports.php';", 'Logic detail harus bisa kembali ke reports.php bila datang dari laporan.');
-    phase22_assert_contains($employee_detail_logic, "$back_label = 'Kembali ke Laporan';", 'Logic detail harus memberi label kembali ke laporan bila datang dari reports.');
+    phase22_assert_contains($employee_detail_logic, "\$back_url = '/hr/reports.php';", 'Logic detail harus bisa kembali ke reports.php bila datang dari laporan.');
+    phase22_assert_contains($employee_detail_logic, "\$back_label = 'Kembali ke Laporan';", 'Logic detail harus memberi label kembali ke laporan bila datang dari reports.');
 
     phase22_assert_contains($dashboard, "'link' => 'employees.php'", 'Dashboard HR harus tetap mendorong HR ke employees.php sebagai hub utama.');
     phase22_assert_contains($dashboard, 'Kelola Data Karyawan', 'Dashboard HR harus punya ajakan utama untuk kelola data karyawan.');
     phase22_assert_contains($dashboard, 'Buka detail karyawan untuk melihat profil dan hak cuti tanpa mulai dari kalkulator.', 'Dashboard HR harus menekankan detail-first flow untuk review hak cuti.');
+    phase22_assert_contains($dashboard, 'employees.php dan employee-detail.php', 'Dashboard copy harus menempatkan employees.php dan employee-detail.php sebagai alur utama review HR.');
     phase22_assert_contains($dashboard, "'link' => 'reports.php'", 'Dashboard HR harus tetap memberi akses ke laporan sebagai jalur sekunder.');
     phase22_assert_contains($dashboard, "'link' => 'kalkulator.php'", 'Dashboard HR masih boleh menyimpan kalkulator sebagai jalur sekunder fase 22.');
     phase22_assert_not_contains($dashboard, 'Hitung Hak Cuti', 'Dashboard HR tidak boleh lagi memakai copy calculator-first sebagai CTA utama.');
@@ -128,6 +130,9 @@ function run_leave_focus_group()
     phase22_assert_not_contains($employee_detail_view, 'Tahun ke-4', 'View detail tidak boleh lagi menampilkan timeline penuh dari Tahun ke-4.');
     phase22_assert_not_contains($employee_detail_view, 'Tahun ke-5', 'View detail tidak boleh lagi menampilkan timeline penuh dari Tahun ke-5.');
     phase22_assert_contains($employee_detail_view, '$leave_error', 'View detail harus menampilkan area warning inline saat tanggal bergabung belum valid.');
+    phase22_assert_contains($employee_detail_view, 'Kalender', 'View detail harus menampilkan kolom kalender pada tabel 3 baris hak cuti.');
+    phase22_assert_contains($employee_detail_view, 'Hak Cuti', 'View detail harus menampilkan kolom jumlah hak cuti pada tabel 3 baris.');
+    phase22_assert_contains($employee_detail_view, 'Status', 'View detail harus menampilkan kolom status pada tabel 3 baris.');
     phase22_assert_not_contains($employee_detail_logic, "header('Location: /hr/employees.php');", 'Masalah tanggal bergabung tidak boleh membuat halaman detail redirect ke daftar.');
 
     fwrite(STDOUT, "PASS [leave-focus]: detail employee fokus pada tahun 6-8 dan warning tanggal bergabung inline.\n");
