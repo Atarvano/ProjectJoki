@@ -26,7 +26,7 @@
 |-------|----------------|--------|-----------|
 | 21. Beginner CRUD Structure Foundation | 7/7 | Complete   | 2026-03-08 |
 | 22. HR Detail-First CRUD Flow | 4/4 | Complete   | 2026-03-09 |
-| 23. Employee Leave View and Calculator Retirement | 1/3 | In Progress|  |
+| 23. Employee Leave View and Calculator Retirement | 2/3 | In Progress|  |
 | 24. Product Messaging and Final Copy Cleanup | 0/0 | Not started | - |
 
 ## Phase Details

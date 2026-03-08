@@ -3,13 +3,13 @@ gsd_state_version: 1.0
 milestone: v3.0
 milestone_name: beginner-style-php-rewrite-and-structure-cleanup
 status: in_progress
-last_updated: "2026-03-08T22:20:10Z"
-last_activity: 2026-03-08 - Completed Phase 23 Plan 00 smoke baseline for employee self-view and calculator retirement
+last_updated: "2026-03-08T22:27:15Z"
+last_activity: 2026-03-08 - Completed Phase 23 Plan 01 employee self-view warning-state rebuild
 progress:
   total_phases: 4
   completed_phases: 2
   total_plans: 14
-  completed_plans: 12
+  completed_plans: 13
   percent: 100
 ---
 
@@ -18,16 +18,16 @@ progress:
 ## Project Reference
 
 **Core Value:** HR creates employee data first, provisions login credentials, then employees log in with native PHP sessions to view their own leave data through an enforced, real backend flow.
-**Current Focus:** Phase 23 is underway with the Wave 0 smoke baseline complete; next work should implement employee self-view warnings and calculator retirement against the new smoke groups.
+**Current Focus:** Phase 23 now has the employee self-view replacement path live on `/employee/dashboard.php`; next work should remove calculator-first navigation and retire the old calculator route.
 **Roadmap:** See `.planning/ROADMAP.md` and `.planning/PROJECT.md`
 
 ## Current Position
 
 **Phase:** 23 - Employee Leave View and Calculator Retirement
-**Plan:** 00 complete, 01 next
-**Status:** Phase 23 execution in progress; smoke baseline and validation map are now in place
+**Plan:** 00-01 complete, 02 next
+**Status:** Phase 23 execution in progress; employee self-view warning states now work and calculator retirement cleanup is next
 **Progress:** [██████████] 100%
-**Last activity:** 2026-03-08 - Completed Phase 23 Plan 00 smoke baseline and validation map
+**Last activity:** 2026-03-08 - Completed Phase 23 Plan 01 employee self-view warning-state rebuild
 
 ## Performance Metrics
 
@@ -50,6 +50,7 @@ progress:
 | Phase 22 P02 | 1 min | 2 tasks | 4 files |
 | Phase 22 P03 | 1 min | 2 tasks | 4 files |
 | Phase 23 P00 | 1 min | 2 tasks | 2 files |
+| Phase 23 P01 | 2 min | 2 tasks | 5 files |
 
 ## Accumulated Context
 
@@ -86,6 +87,8 @@ progress:
 | Teach the HR review path directly in dashboard copy as dashboard -> employees.php -> employee-detail.php while leaving the calculator visible only as a secondary option | Finishes CRUD-04 with explicit beginner-readable navigation cues instead of generic employee-management wording | Phase 22 |
 | Keep Phase 23 verification as one cheap procedural PHP smoke file with named groups instead of adding PHPUnit or framework tooling | Matches the beginner-style PHP codebase and gives later rewiring plans one fast reusable command | Phase 23 |
 | Add a dedicated missing-data smoke group because Phase 23 must keep employees on their own page with brief HR-contact warnings | Makes the required warning-state behavior explicit before auth-guard and employee-page rewiring begins | Phase 23 |
+| Allow missing linked employee rows to reach the employee self-view shell so the page can render an inline HR-contact warning instead of forcing logout | Keeps the replacement self-view path usable without weakening role checks, inactive-user protection, or malformed sessions | Phase 23 |
+| Keep the employee dashboard route in place and reshape its logic/view so the years 6-8 leave table becomes the main self-view content | Delivers the replacement path without adding another employee route or reintroducing calculator-first behavior | Phase 23 |
 
 ### Implementation Guardrails
 - Native procedural PHP only (no OOP/framework)
@@ -110,9 +113,9 @@ progress:
 
 ### Last Session
 - **Date:** 2026-03-09
-- **Activity:** Executed Phase 23 Plan 00 and committed the smoke baseline plus validation-map update.
-- **Outcome:** Phase 23 now has reusable smoke groups for employee self-view, navigation cleanup, calculator retirement, and missing-data handling.
-- **Next:** Execute Phase 23 Plan 01 against the new `employee-self-view` and `missing-data` checks.
+- **Activity:** Executed Phase 23 Plan 01 and committed the employee self-view warning-state rebuild.
+- **Outcome:** `/employee/dashboard.php` now acts as the real leave self-view destination with on-page warning states for missing employee rows and invalid join dates.
+- **Next:** Execute Phase 23 Plan 02 to remove calculator-first navigation and retire `hr/kalkulator.php` safely.
 
 ### Context for Next Session
 - Phase 21 already left the codebase on grouped `includes/auth/` and `includes/layout/` folders, English HR CRUD routes, and the beginner-readable route -> logic -> view split.
@@ -120,8 +123,9 @@ progress:
 - `hr/views/employees.php`, `hr/views/reports.php`, and `hr/dashboard.php` now all point HR toward employee detail as the normal leave-review destination.
 - `tests/phase22_hr_detail_first_crud_smoke.php --group=navigation` and `--group=crud-flow` are green and now lock the Phase 22 detail-first navigation flow.
 - Phase 23 can focus on employee self-view and calculator retirement because the HR-side replacement path is now complete.
-- `tests/phase23_employee_leave_retirement_smoke.php` now exists and currently goes red on the unresolved sidebar helper, auth-guard logout, and calculator-route behavior gaps that later plans must fix.
+- `tests/phase23_employee_leave_retirement_smoke.php` now has green `employee-self-view` and `missing-data` groups after the auth-guard and employee dashboard rewiring.
+- The remaining Phase 23 work is shared navigation cleanup plus turning `hr/kalkulator.php` into the redirect bridge without leaving dead calculator links.
 
 ---
 *State initialized: 2026-03-05*
-*Last updated: 2026-03-09 after Phase 22 verification passed and completion was recorded*
+*Last updated: 2026-03-09 after Phase 23 Plan 01 employee self-view warning-state rebuild*
