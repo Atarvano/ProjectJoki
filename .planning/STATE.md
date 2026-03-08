@@ -2,14 +2,14 @@
 gsd_state_version: 1.0
 milestone: v2.0
 milestone_name: milestone
-status: executing
-last_updated: "2026-03-06T10:25:02.568Z"
+status: in_progress
+last_updated: "2026-03-08T14:44:21.253Z"
 progress:
-  total_phases: 5
+  total_phases: 7
   completed_phases: 5
-  total_plans: 14
-  completed_plans: 14
-  percent: 100
+  total_plans: 18
+  completed_plans: 15
+  percent: 83
 ---
 
 # State: Sicuti HRD Cuti Tracker
@@ -18,22 +18,22 @@ progress:
 
 **Core Value:** HR creates employee data first, provisions login credentials, then employees log in with native PHP sessions to view their own leave data.
 **Current Milestone:** v2.0 — Backend Native PHP + HR-First Employee Onboarding
-**Roadmap:** 5 phases (14–18), 36 requirements
+**Roadmap:** 7 phases (14–20), 36 requirements
 
 ## Current Position
 
-**Phase:** 18 — Data Wiring — Calculator, Reports & Dashboards
-**Plan:** 04 of 04 completed (`18-04-PLAN.md`)
-**Status:** Complete
-**Progress:** [██████████] 100%
+**Phase:** 19 — Auth Session Revalidation & Identity Consistency
+**Plan:** 00 of 04 completed (`19-00-PLAN.md`)
+**Status:** In progress
+**Progress:** [████████░░] 83%
 
 ## Performance Metrics
 
 | Metric | Value |
 |--------|-------|
-| Phases completed | 5/5 |
+| Phases completed | 5/7 |
 | Requirements completed | 36/36 |
-| Plans completed | 14/14 |
+| Plans completed | 15/18 |
 | Current streak | - |
 | Phase 14 P01 | 2 min | 2 tasks | 3 files |
 | Phase 14 P02 | 3 min | 2 tasks | 2 files |
@@ -49,6 +49,7 @@ progress:
 | Phase 18 P02 | 2 min | 2 tasks | 3 files |
 | Phase 18 P03 | 5 min | 2 tasks | 4 files |
 | Phase 18 P04 | 4 min | 2 tasks | 3 files |
+| Phase 19 P00 | 0 min | 2 tasks | 3 files |
 
 ## Accumulated Context
 
@@ -87,6 +88,8 @@ progress:
 | HR dashboard menghitung total karyawan dan akun employee langsung dari tabel karyawan dan users | Ringkasan HR selalu mengikuti kondisi database terbaru tanpa counter preset atau laporan session | 18 |
 | Metrik "siap cuti tahun ini" menghitung status tahun berjalan Tersedia atau Menunggu | Definisi ini dikunci di context Phase 18 dan harus diikuti persis pada dashboard HR | 18 |
 | Dashboard employee menonjolkan hanya baris tahun ke-6, 7, dan 8 sambil tetap memakai session-linked own-data lookup | Menjaga tampilan employee tetap fokus dan aman sesuai batasan akses data pribadi | 18 |
+| Use AUTH_GUARD_TEST_MODE as one tiny procedural seam so smoke tests can inspect redirect outcomes without real headers | Menjaga auth guard tetap sederhana untuk pemula sambil memberi jalur observasi CLI untuk Phase 19 | 19 |
+| Keep Phase 19 Wave 0 coverage in one plain PHP smoke script with named placeholder cases before live revalidation logic is added | Memberi command verifikasi nyata dan bentuk test procedural stabil untuk plan-plan berikutnya | 19 |
 
 ### Implementation Guardrails
 - Native procedural PHP only (no OOP/framework)
@@ -98,7 +101,8 @@ progress:
 - HR admin is standalone user (not in karyawan table)
 
 ### TODOs
-- [x] Phase 18 complete — no remaining plans in this milestone.
+- [x] Phase 19 Plan 00 complete — Wave 0 smoke scaffold and validation baseline are in place.
+- [ ] Continue with `19-01-PLAN.md` for live auth session revalidation behavior.
 
 ### Blockers
 - None.
@@ -106,16 +110,16 @@ progress:
 ## Session Continuity
 
 ### Last Session
-- **Date:** 2026-03-06
-- **Activity:** Completed Phase 18 Plan 04 (dashboard rewiring and cleanup)
-- **Outcome:** `hr/dashboard.php` now uses live database totals plus current-year leave-ready counting, `employee/dashboard.php` now focuses on year 6/7/8 leave rows, and `tests/phase18_data_wiring_smoke.php` verifies the final dashboard rules.
-- **Next:** Milestone complete — ready for verification or next milestone planning.
+- **Date:** 2026-03-08
+- **Activity:** Completed Phase 19 Plan 00 (Wave 0 smoke scaffold and validation baseline)
+- **Outcome:** `includes/auth-guard.php` now has a tiny CLI-safe redirect seam, `tests/phase19_auth_session_smoke.php` exists with named stale-session cases, and `19-VALIDATION.md` marks Wave 0 as ready.
+- **Next:** Continue with `19-01-PLAN.md` to add live user-row and employee-link revalidation.
 
 ### Context for Next Session
-- Phase 18 is complete across calculator, reports, export, and dashboards.
-- Full smoke coverage passes with `php tests/phase18_data_wiring_smoke.php` plus each per-group command.
-- Manual DB comparison for dashboard counts still requires a running local MySQL service because CLI connection was unavailable in this execution environment.
+- Run `php tests/phase19_auth_session_smoke.php` after each Phase 19 auth guard change.
+- Later tasks should extend the existing smoke scaffold instead of replacing it with PHPUnit or abstractions.
+- `19-VALIDATION.md` task `19-00-01` is the Wave 0 baseline for future verification references.
 
 ---
 *State initialized: 2026-03-05*
-*Last updated: 2026-03-06*
+*Last updated: 2026-03-08*

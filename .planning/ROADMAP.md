@@ -114,7 +114,11 @@ Plans:
   2. If HR deletes an employee whose account is currently logged in, the next employee request is forced through a valid auth redirect instead of showing stale-session data or fallback errors
   3. HR identity shown in topbar/session context is sourced from persistent user data rather than a hardcoded fallback label
   4. Delete -> auth -> employee dashboard flow has explicit runtime verification coverage and evidence
-**Plans:** 0/0 plans complete
+**Plans:** 1/4 plans executed
+Plans:
+- [ ] 19-01-PLAN.md — Shared auth guard revalidation plus a focused stale-session smoke test
+- [ ] 19-02-PLAN.md — Persistent login identity hydration and a short Phase 19 validation checklist
+- [ ] 19-03-PLAN.md — Browser verification for delete redirect and identity consistency
 
 ### Phase 20: Provisioning E2E Verification & Flash Contract Alignment
 **Goal:** Milestone auth and provisioning flows have closed runtime evidence, and provisioning credential flash output matches the documented structured contract
@@ -194,7 +198,7 @@ All phases are sequential. Each phase depends on its predecessor. No paralleliza
 | 16. Employee CRUD & HR Navigation | 3/3 | Complete    | 2026-03-05 |
 | 17. Account Provisioning | 2/2 | Complete    | 2026-03-05 |
 | 18. Data Wiring — Calculator, Reports & Dashboards | 4/4 | Complete    | 2026-03-06 |
-| 19. Auth Session Revalidation & Identity Consistency | 0/0 | Planned     | - |
+| 19. Auth Session Revalidation & Identity Consistency | 1/4 | In Progress|  |
 | 20. Provisioning E2E Verification & Flash Contract Alignment | 0/0 | Planned     | - |
 
 ---

@@ -20,7 +20,7 @@
 - [x] **CRUD-01**: HR can add a new employee via form with 9 fields (nama, NIK, jabatan, tanggal_bergabung, tanggal_lahir, email, telepon, alamat, departemen)
 - [x] **CRUD-02**: HR can view a list of all employees from the database in an HTML table
 - [x] **CRUD-03**: HR can edit an existing employee's data via pre-filled form
-- [ ] **CRUD-04**: HR can permanently delete an employee (hard delete), which also removes their user account via CASCADE
+- [x] **CRUD-04**: HR can permanently delete an employee (hard delete), which also removes their user account via CASCADE
 - [x] **CRUD-05**: Forms validate required fields, NIK uniqueness, and email format on the server side
 
 ### Authentication & Sessions
@@ -33,8 +33,8 @@
 
 - [ ] **RBAC-01**: App has a single `auth-guard.php` include file with `cekLogin()` and `cekRole()` functions
 - [ ] **RBAC-02**: All HR pages are protected — only role='hr' can access them
-- [ ] **RBAC-03**: All employee pages are protected — only role='employee' can access them, showing only own data
-- [ ] **RBAC-04**: Unauthorized access redirects to login page (not logged in) or own dashboard (wrong role)
+- [x] **RBAC-03**: All employee pages are protected — only role='employee' can access them, showing only own data
+- [x] **RBAC-04**: Unauthorized access redirects to login page (not logged in) or own dashboard (wrong role)
 - [ ] **RBAC-05**: All demo badges, "Demo v1" notices, and "Akses demo" labels are removed from the UI
 
 ### HR-First Provisioning
@@ -61,7 +61,7 @@
 ### Dashboard & Navigation
 
 - [x] **DASH-01**: HR dashboard shows real employee count and stats from DB queries
-- [ ] **DASH-02**: Topbar shows logged-in user's real name and role from session/DB
+- [x] **DASH-02**: Topbar shows logged-in user's real name and role from session/DB
 - [x] **DASH-03**: HR sidebar includes "Kelola Karyawan" navigation link to CRUD pages
 - [ ] **DASH-04**: Sidebar/topbar includes logout ("Keluar") button
 - [x] **DASH-05**: All "Demo v1" badges and demo notices are removed from dashboards
@@ -121,13 +121,13 @@
 | AUTH-03 | Phase 20 | Pending |
 | RBAC-01 | Phase 20 | Pending |
 | RBAC-02 | Phase 20 | Pending |
-| RBAC-03 | Phase 19 | Pending |
-| RBAC-04 | Phase 19 | Pending |
+| RBAC-03 | Phase 19 | Complete |
+| RBAC-04 | Phase 19 | Complete |
 | RBAC-05 | Phase 20 | Pending |
 | CRUD-01 | Phase 16 | Complete |
 | CRUD-02 | Phase 16 | Complete |
 | CRUD-03 | Phase 16 | Complete |
-| CRUD-04 | Phase 19 | Pending |
+| CRUD-04 | Phase 19 | Complete |
 | CRUD-05 | Phase 16 | Complete |
 | PROV-01 | Phase 20 | Pending |
 | PROV-02 | Phase 20 | Pending |
@@ -142,7 +142,7 @@
 | RPT-03 | Phase 18 | Complete |
 | RPT-04 | Phase 18 | Complete |
 | DASH-01 | Phase 18 | Complete |
-| DASH-02 | Phase 19 | Pending |
+| DASH-02 | Phase 19 | Complete |
 | DASH-03 | Phase 16 | Complete |
 | DASH-04 | Phase 20 | Pending |
 | DASH-05 | Phase 18 | Complete |
