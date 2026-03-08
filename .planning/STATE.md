@@ -3,13 +3,13 @@ gsd_state_version: 1.0
 milestone: v2.0
 milestone_name: milestone
 status: executing
-last_updated: "2026-03-08T14:48:26.996Z"
+last_updated: "2026-03-08T14:56:16.646Z"
 progress:
   total_phases: 7
   completed_phases: 5
   total_plans: 18
-  completed_plans: 16
-  percent: 89
+  completed_plans: 17
+  percent: 94
 ---
 
 # State: Sicuti HRD Cuti Tracker
@@ -23,9 +23,9 @@ progress:
 ## Current Position
 
 **Phase:** 19 — Auth Session Revalidation & Identity Consistency
-**Plan:** 01 of 04 completed (`19-01-PLAN.md`)
+**Plan:** 02 of 04 completed (`19-02-PLAN.md`)
 **Status:** In progress
-**Progress:** [█████████░] 89%
+**Progress:** [█████████░] 94%
 
 ## Performance Metrics
 
@@ -33,7 +33,7 @@ progress:
 |--------|-------|
 | Phases completed | 5/7 |
 | Requirements completed | 36/36 |
-| Plans completed | 16/18 |
+| Plans completed | 17/18 |
 | Current streak | - |
 | Phase 14 P01 | 2 min | 2 tasks | 3 files |
 | Phase 14 P02 | 3 min | 2 tasks | 2 files |
@@ -51,6 +51,7 @@ progress:
 | Phase 18 P04 | 4 min | 2 tasks | 3 files |
 | Phase 19 P00 | 0 min | 2 tasks | 3 files |
 | Phase 19 P01 | 0 min | 1 tasks | 3 files |
+| Phase 19 P02 | 2 min | 2 tasks | 5 files |
 
 ## Accumulated Context
 
@@ -93,6 +94,9 @@ progress:
 | Keep Phase 19 Wave 0 coverage in one plain PHP smoke script with named placeholder cases before live revalidation logic is added | Memberi command verifikasi nyata dan bentuk test procedural stabil untuk plan-plan berikutnya | 19 |
 | Keep stale-session rejection centralized in includes/auth-guard.php so every protected page gets the same live user check | Menutup gap delete-cascade dan akun inactive dalam satu guard prosedural bersama | 19 |
 | Treat missing or inactive users as logout-to-login, but keep valid wrong-role sessions on their old dashboard redirect flow | Memisahkan logout stale session dari redirect role agar behavior lama yang valid tidak rusak | 19 |
+| Hydrate HR session display name from users.username at login time instead of a hardcoded label | Menjaga topbar tetap session-driven tetapi identitas HR sekarang berasal dari data akun tersimpan | 19 |
+| Keep topbar identity session-driven and add simple fallback variables in hr/dashboard.php instead of new per-request DB profile queries | Menutup gap identitas tanpa menambah profile system atau query baru di setiap request | 19 |
+| Keep Phase 19 validation as one short checklist tied to the existing smoke commands | Checklist tetap mudah dipakai verifier dan tidak keluar dari pola smoke test phase ini | 19 |
 
 ### Implementation Guardrails
 - Native procedural PHP only (no OOP/framework)
@@ -106,7 +110,8 @@ progress:
 ### TODOs
 - [x] Phase 19 Plan 00 complete — Wave 0 smoke scaffold and validation baseline are in place.
 - [x] Phase 19 Plan 01 complete — live auth session revalidation now blocks stale employee access in the shared guard.
-- [ ] Continue with `19-02-PLAN.md` for persistent identity hydration and checklist work.
+- [x] Phase 19 Plan 02 complete — login identity hydration and validation checklist now use saved account identity.
+- [ ] Continue with `19-03-PLAN.md` for browser verification evidence.
 
 ### Blockers
 - None.
@@ -115,14 +120,14 @@ progress:
 
 ### Last Session
 - **Date:** 2026-03-08
-- **Activity:** Completed Phase 19 Plan 01 (shared auth guard session revalidation)
-- **Outcome:** `includes/auth-guard.php` now revalidates live `users` rows and employee links on protected requests, `employee/dashboard.php` relies on the guard first, and `tests/phase19_auth_session_smoke.php` covers stale-session and wrong-role behavior.
-- **Next:** Continue with `19-02-PLAN.md` to hydrate persistent identity labels and finish the Phase 19 checklist.
+- **Activity:** Completed Phase 19 Plan 02 (persistent login identity hydration and checklist refresh)
+- **Outcome:** `login.php` now hydrates `$_SESSION['nama']` from saved account data, `hr/dashboard.php` and `includes/dashboard-topbar.php` use neutral session fallbacks, `tests/phase19_auth_session_smoke.php` covers identity markers, and `19-VALIDATION.md` lists the short browser checklist.
+- **Next:** Continue with `19-03-PLAN.md` to capture browser verification evidence for delete redirect and identity consistency.
 
 ### Context for Next Session
-- Run `php tests/phase19_auth_session_smoke.php` after each Phase 19 auth guard change.
-- Later tasks should extend the existing smoke script instead of replacing it with PHPUnit or abstractions.
-- Shared guard now owns stale-session rejection; future tasks should not put delete-session protection back into page-level fallback warnings.
+- Run `php tests/phase19_auth_session_smoke.php` after each remaining Phase 19 auth-related change.
+- Keep topbar identity session-driven; do not add per-request DB profile hydration in the remaining Phase 19 work.
+- Use the browser checklist in `19-VALIDATION.md` when collecting verification evidence for the final Phase 19 plan.
 
 ---
 *State initialized: 2026-03-05*
