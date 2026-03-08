@@ -51,6 +51,18 @@ function phase23_assert_not_contains($content, $needle, $message)
     phase23_assert_true(strpos($content, $needle) === false, $message);
 }
 
+function phase23_assert_not_contains_between($content, $start, $end, $needle, $message)
+{
+    $start_pos = strpos($content, $start);
+    phase23_assert_true($start_pos !== false, "Penanda awal tidak ditemukan untuk assertion: {$start}");
+
+    $end_pos = strpos($content, $end, $start_pos);
+    phase23_assert_true($end_pos !== false, "Penanda akhir tidak ditemukan untuk assertion: {$end}");
+
+    $segment = substr($content, $start_pos, $end_pos - $start_pos);
+    phase23_assert_true(strpos($segment, $needle) === false, $message);
+}
+
 function run_employee_self_view_group()
 {
     $employee_route = phase23_load('employee/dashboard.php');
@@ -123,8 +135,15 @@ function run_missing_data_group()
     $employee_logic = phase23_load('employee/logic/dashboard.php');
     $employee_view = phase23_load('employee/views/dashboard.php');
 
-    phase23_assert_not_contains($auth_guard, 'if (!authGuardEmployeeExists($karyawan_id)) {', 'Auth guard employee tidak boleh lagi langsung logout saat data karyawan hilang karena Phase 23 perlu warning inline pada self-view.');
-    phase23_assert_not_contains($auth_guard, 'return authGuardLogoutRedirect();', 'Auth guard employee tidak boleh lagi memakai logout paksa untuk kasus data employee hilang pada self-view.');
+    phase23_assert_contains($auth_guard, 'if (!authGuardEmployeeExists($karyawan_id)) {', 'Auth guard employee tetap harus punya cabang cek row karyawan yang eksplisit.');
+    phase23_assert_contains($auth_guard, 'self-view warning state', 'Auth guard employee harus menjelaskan bahwa row hilang dipakai untuk warning state self-view.');
+    phase23_assert_not_contains_between(
+        $auth_guard,
+        'if (!authGuardEmployeeExists($karyawan_id)) {',
+        'if (AUTH_GUARD_TEST_MODE) {',
+        'return authGuardLogoutRedirect();',
+        'Auth guard employee tidak boleh lagi logout paksa tepat pada cabang row karyawan hilang.'
+    );
 
     phase23_assert_contains($employee_logic, '$load_error', 'Logic employee harus menyiapkan warning state bila data tidak lengkap atau tidak ditemukan.');
     phase23_assert_contains($employee_logic, 'Data karyawan', 'Logic employee harus punya pesan warning untuk data karyawan yang tidak dapat dimuat.');

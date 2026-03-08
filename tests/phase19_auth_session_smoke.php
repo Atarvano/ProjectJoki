@@ -144,10 +144,10 @@ $_SESSION = [
     'nama' => 'Dewi',
 ];
 $case_missing_employee_link = cekRole('employee');
-phase19_assert_equals(false, $case_missing_employee_link['allowed'], 'Employee tanpa row karyawan harus ditolak.');
-phase19_assert_equals('/login.php', $case_missing_employee_link['redirect'], 'Employee tanpa row karyawan harus diarahkan ke login.');
-phase19_assert_equals(true, $case_missing_employee_link['session_cleared'], 'Employee tanpa row karyawan harus membersihkan session.');
-phase19_assert_equals([], $_SESSION, 'Session employee tanpa row karyawan harus kosong.');
+phase19_assert_equals(true, $case_missing_employee_link['allowed'], 'Employee dengan session valid tetap boleh masuk ke self-view saat row karyawan hilang.');
+phase19_assert_equals(null, $case_missing_employee_link['redirect'], 'Employee dengan row karyawan hilang tidak boleh dipaksa redirect dari self-view.');
+phase19_assert_equals(false, $case_missing_employee_link['session_cleared'], 'Employee dengan row karyawan hilang tidak boleh diperlakukan sebagai logout paksa.');
+phase19_assert_true(isset($_SESSION['user_id']), 'Session employee dengan row karyawan hilang harus tetap ada untuk warning state self-view.');
 
 phase19_reset_test_data();
 $GLOBALS['AUTH_GUARD_TEST_USERS'][25] = [
@@ -206,7 +206,8 @@ phase19_assert_case_name($scaffold_text, 'includes/layout/dashboard-topbar.php')
 $auth_guard_text = file_get_contents($root . '/' . $auth_guard_relative_path);
 phase19_assert_true($auth_guard_text !== false, 'File auth guard harus bisa dibaca.');
 phase19_assert_true(strpos($auth_guard_text, 'SELECT id, username, karyawan_id, is_active FROM users WHERE id = ? LIMIT 1') !== false, 'Guard harus query users live setiap request.');
-phase19_assert_true(strpos($auth_guard_text, 'SELECT id FROM karyawan WHERE id = ? LIMIT 1') !== false, 'Guard employee harus cek row karyawan live.');
+phase19_assert_true(strpos($auth_guard_text, 'SELECT id FROM karyawan WHERE id = ? LIMIT 1') !== false, 'Guard employee harus tetap bisa cek row karyawan live.');
+phase19_assert_true(strpos($auth_guard_text, 'self-view warning state') !== false, 'Guard employee harus menjelaskan bahwa pengecualian row hilang hanya untuk warning state self-view.');
 
 $login_text = file_get_contents($root . '/login.php');
 phase19_assert_true($login_text !== false, 'File login harus bisa dibaca.');
@@ -264,7 +265,7 @@ phase19_assert_true(strpos($topbar_text, 'Admin HR') === false, 'Topbar shared t
 
 fwrite(STDOUT, "PASS [case_missing_user_row]: user row hilang dipaksa logout ke /login.php.\n");
 fwrite(STDOUT, "PASS [case_inactive_user_row]: user inactive dipaksa logout ke /login.php.\n");
-fwrite(STDOUT, "PASS [case_missing_employee_link]: employee tanpa row karyawan dipaksa logout ke /login.php.\n");
+fwrite(STDOUT, "PASS [case_missing_employee_link]: employee dengan row karyawan hilang tetap boleh masuk agar warning self-view bisa tampil.\n");
 fwrite(STDOUT, "PASS [case_valid_employee_session]: employee valid tetap boleh lanjut.\n");
 fwrite(STDOUT, "PASS [case_wrong_role_redirect]: wrong-role valid tetap redirect ke dashboard sendiri.\n");
 fwrite(STDOUT, "PASS [case_session_identity_markers]: marker identity session tetap ada di dashboard employee.\n");

@@ -196,7 +196,23 @@ function cekRole($required_role)
         }
 
         if (!authGuardEmployeeExists($karyawan_id)) {
-            return authGuardLogoutRedirect();
+            // Phase 23 self-view warning state:
+            // keep an authenticated employee session alive when the linked
+            // karyawan row is missing, so /employee/dashboard.php can render
+            // its inline HR-contact warning instead of forcing logout.
+            // This is intentionally a narrow self-view warning state exception,
+            // not a broader bypass for invalid role, inactive user, or empty
+            // karyawan_id sessions.
+            if (AUTH_GUARD_TEST_MODE) {
+                return [
+                    'allowed' => true,
+                    'redirect' => null,
+                    'session_cleared' => false,
+                    'user' => $user,
+                ];
+            }
+
+            return true;
         }
     }
 
