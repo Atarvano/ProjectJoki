@@ -26,9 +26,12 @@ if ($flash) {
 ?>
 
 <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
-    <h2 class="h3 mb-0 text-gray-800">Employees</h2>
+    <div>
+        <h2 class="h3 mb-1 text-gray-800">Employees</h2>
+        <p class="text-muted mb-0">Halaman ini adalah pusat CRUD karyawan. Mulai dari daftar ini, lalu buka detail karyawan untuk review data, hak cuti, edit, hapus, atau buat akun login.</p>
+    </div>
     <a href="/hr/employee-create.php" class="btn btn-primary">
-        <i class="bi bi-plus-circle me-2"></i>Tambah Karyawan
+        <i class="bi bi-plus-circle me-2"></i>Tambah Karyawan Baru
     </a>
 </div>
 
@@ -81,6 +84,10 @@ if ($flash) {
 
 <?php if ($query_error === null && count($employee_list) > 0): ?>
     <div class="card border-0 shadow-sm">
+        <div class="card-body border-bottom bg-light">
+            <p class="mb-1 fw-semibold">Alur yang disarankan:</p>
+            <p class="mb-0 text-muted">Pilih <strong>Detail</strong> untuk review satu karyawan lebih lengkap. Dari halaman detail, HR bisa lanjut edit, hapus, atau buat akun login bila masih diperlukan.</p>
+        </div>
         <div class="card-body p-0">
             <div class="table-responsive">
                 <table class="table table-hover align-middle mb-0">
@@ -106,7 +113,7 @@ if ($flash) {
                                 $tanggal_bergabung = date('d M Y', strtotime($row['tanggal_bergabung']));
                             }
                             ?>
-                            <tr class="karyawan-row" data-edit-url="/hr/employee-edit.php?id=<?php echo $id; ?>">
+                            <tr>
                                 <td class="ps-4 fw-medium"><?php echo htmlspecialchars($row['nik'] ?? '-'); ?></td>
                                 <td><?php echo htmlspecialchars($row['nama'] ?? '-'); ?></td>
                                 <td><?php echo htmlspecialchars($row['departemen'] ?: '-'); ?></td>
@@ -119,14 +126,14 @@ if ($flash) {
                                 </td>
                                 <td class="text-center pe-4 action-area">
                                     <div class="d-flex justify-content-center gap-2 flex-wrap">
-                                        <a href="/hr/employee-detail.php?id=<?php echo $id; ?>" class="btn btn-sm btn-outline-secondary">Detail</a>
+                                        <a href="/hr/employee-detail.php?id=<?php echo $id; ?>" class="btn btn-sm btn-secondary">Detail</a>
+                                        <a href="/hr/employee-edit.php?id=<?php echo $id; ?>" class="btn btn-sm btn-outline-primary">Edit</a>
                                         <?php if ($akun_login_status === 'Belum dibuat'): ?>
                                             <form method="post" action="/hr/employee-provision.php" class="d-inline">
                                                 <input type="hidden" name="id" value="<?php echo $id; ?>">
                                                 <button type="submit" class="btn btn-sm btn-outline-success">Buat Akun Login</button>
                                             </form>
                                         <?php endif; ?>
-                                        <a href="/hr/employee-edit.php?id=<?php echo $id; ?>" class="btn btn-sm btn-outline-primary">Edit</a>
                                         <form method="post" action="/hr/employee-delete.php" onsubmit="return confirm('Data karyawan akan dihapus permanen dan akun login yang terhubung ikut terhapus. Lanjutkan?');" class="d-inline">
                                             <input type="hidden" name="id" value="<?php echo $id; ?>">
                                             <button type="submit" class="btn btn-sm btn-outline-danger">Hapus</button>
@@ -141,18 +148,3 @@ if ($flash) {
         </div>
     </div>
 <?php endif; ?>
-
-<script>
-document.querySelectorAll('.karyawan-row').forEach(function (row) {
-    row.addEventListener('dblclick', function (event) {
-        if (event.target.closest('.action-area') || event.target.closest('a') || event.target.closest('button') || event.target.closest('form') || event.target.closest('input')) {
-            return;
-        }
-
-        var editUrl = row.getAttribute('data-edit-url');
-        if (editUrl) {
-            window.location.href = editUrl;
-        }
-    });
-});
-</script>
