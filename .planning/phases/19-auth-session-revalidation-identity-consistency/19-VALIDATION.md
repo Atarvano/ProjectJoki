@@ -65,11 +65,38 @@ created: 2026-03-08
 
 ## Manual-Only Verifications
 
-| Behavior | Requirement | Why Manual | Test Instructions |
-|----------|-------------|------------|-------------------|
-| Reopen `employee/dashboard.php` in the same browser after HR deletes that employee | CRUD-04, RBAC-03, RBAC-04 | Needs real browser session cookie + redirect observation | Log in as employee, keep tab open, delete that employee from HR in another session, refresh employee dashboard, confirm redirect to `/login.php` |
-| Confirm valid employee session still opens own dashboard after guard changes | RBAC-03 | Browser flow proves normal protected page access still works | Log in as a valid employee account and open `employee/dashboard.php`, confirm dashboard loads without stale-session warning |
-| Confirm topbar identity stays session-driven but uses persistent login data | DASH-02 | Visual label check needs rendered UI | Log in as HR and employee, open protected page topbar, confirm displayed name matches stored account identity and role label remains correct |
+Gunakan checklist singkat ini saat ambil bukti browser Phase 19:
+
+1. **Hapus karyawan lalu refresh tab dashboard employee lama**
+   - Login sebagai employee dan biarkan tab `employee/dashboard.php` tetap terbuka.
+   - Dari sesi HR lain, hapus data karyawan yang sama.
+   - Kembali ke tab employee lama lalu refresh.
+   - **Hasil yang harus terlihat:** browser langsung pindah ke `/login.php`.
+
+2. **Pastikan employee valid masih bisa masuk normal**
+   - Login sebagai employee yang masih valid.
+   - Buka `employee/dashboard.php`.
+   - **Hasil yang harus terlihat:** dashboard terbuka normal, tidak ada warning stale session atau akun tidak terhubung.
+
+3. **Pastikan nama dan role topbar cocok dengan akun tersimpan**
+   - Login sebagai HR lalu lihat topbar pada halaman HR.
+   - Logout, lalu login sebagai employee dan lihat topbar pada halaman employee.
+   - **Hasil yang harus terlihat:** nama topbar mengikuti identitas akun yang tersimpan, dan label role tetap benar (`HR` atau `Karyawan`).
+
+## Command Checklist
+
+- **Quick run saat edit:** `php tests/phase19_auth_session_smoke.php`
+- **Full suite sebelum tutup plan:** `php tests/provisioning_endpoint_test.php && php tests/phase18_data_wiring_smoke.php && php tests/phase19_auth_session_smoke.php`
+
+## Status Update
+
+| Task ID | Plan | Wave | Requirement | Test Type | Automated Command | File Exists | Status |
+|---------|------|------|-------------|-----------|-------------------|-------------|--------|
+| 19-00-01 | 00 | 0 | CRUD-04, RBAC-03, RBAC-04, DASH-02 | smoke foundation | `php -l includes/auth-guard.php && php -l tests/phase19_auth_session_smoke.php && php tests/phase19_auth_session_smoke.php` | ready in Wave 0 | ✅ green |
+| 19-01-01 | 01 | 1 | CRUD-04, RBAC-03, RBAC-04 | smoke | `php tests/phase19_auth_session_smoke.php` | via 19-00 | ✅ green |
+| 19-02-01 | 02 | 2 | DASH-02 | smoke | `php tests/phase19_auth_session_smoke.php` | via 19-00 | ✅ green |
+| 19-02-02 | 02 | 2 | DASH-02 | smoke + manual | `php tests/provisioning_endpoint_test.php && php tests/phase18_data_wiring_smoke.php && php tests/phase19_auth_session_smoke.php` | via 19-00 | ✅ green |
+| 19-03-01 | 03 | 3 | CRUD-04, RBAC-03, RBAC-04, DASH-02 | checkpoint baseline | `php tests/provisioning_endpoint_test.php && php tests/phase18_data_wiring_smoke.php && php tests/phase19_auth_session_smoke.php` | via 19-00 | ⬜ pending |
 
 ---
 
