@@ -31,6 +31,7 @@ $dashboard_context = [
 
 $karyawan_id = isset($_SESSION['karyawan_id']) ? (int) $_SESSION['karyawan_id'] : 0;
 $employee_name = $profile_label;
+$employee_join_date_label = '-';
 $tahun_bergabung = null;
 $hasil = null;
 $load_error = null;
@@ -60,6 +61,10 @@ if ($karyawan_id > 0) {
                 $employee_name = $profile_label;
             }
 
+            if ($tanggal_bergabung !== '' && strtotime($tanggal_bergabung) !== false) {
+                $employee_join_date_label = date('d M Y', strtotime($tanggal_bergabung));
+            }
+
             if ($tanggal_bergabung === '' || strtotime($tanggal_bergabung) === false) {
                 $load_error = 'Tanggal bergabung pada data Anda belum valid. Silakan hubungi tim HR.';
             } else {
@@ -67,13 +72,13 @@ if ($karyawan_id > 0) {
                 $hasil = hitungHakCuti($tahun_bergabung);
             }
         } else {
-            $load_error = 'Data karyawan tidak dapat dimuat saat ini. Silakan coba lagi nanti.';
+            $load_error = 'Data karyawan Anda belum ditemukan. Silakan hubungi tim HR.';
         }
     } else {
-        $load_error = 'Data karyawan tidak dapat dimuat saat ini. Silakan coba lagi nanti.';
+        $load_error = 'Data karyawan Anda belum ditemukan. Silakan hubungi tim HR.';
     }
 } else {
-    $load_error = 'Data karyawan tidak dapat dimuat saat ini. Silakan coba lagi nanti.';
+    $load_error = 'Data karyawan Anda belum ditemukan. Silakan hubungi tim HR.';
 }
 
 if ($hasil) {
