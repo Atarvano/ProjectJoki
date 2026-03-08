@@ -53,7 +53,7 @@ Each task was committed atomically:
 1. **Task 1: Create grouped include folders and leave bridge shims behind** - `d1077e6` (feat)
 2. **Task 2: Point shared and public pages at the grouped include locations** - `3ea3744` (feat)
 
-**Plan metadata:** Pending (will be filled after docs commit)
+**Plan metadata:** `dc6eee3` (docs)
 
 ## Files Created/Modified
 - `includes/auth/auth-guard.php` - Final grouped auth guard implementation.
