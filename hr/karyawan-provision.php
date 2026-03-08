@@ -128,11 +128,12 @@ mysqli_stmt_close($stmt_insert);
 if ($ok_insert) {
     $_SESSION['flash'] = [
         'type' => 'success',
-        'message' => "Akun login karyawan berhasil dibuat.\n"
-            . "NIK (Username): {$username}\n"
-            . "Password awal: {$password_plain}\n"
-            . "Pola password: NIK + DDMMYYYY(tanggal lahir).\n"
-            . 'Simpan dan sampaikan kredensial ini sekarang karena ditampilkan sekali.'
+        'message' => 'Akun login karyawan berhasil dibuat.',
+        'credentials' => [
+            'username' => $username,
+            'password_awal' => $password_plain,
+            'pattern_example' => $password_plain,
+        ],
     ];
 } else {
     $_SESSION['flash'] = [
