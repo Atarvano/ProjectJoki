@@ -105,6 +105,7 @@ function run_navigation_group()
 
     phase22_assert_contains($reports_view, 'employee-detail.php?id=<?php echo $report[\'id\']; ?>&from=reports', 'Laporan harus membuka detail employee dengan penanda sumber reports.');
     phase22_assert_contains($reports_view, 'Buka Detail & Hak Cuti', 'Laporan harus menonjolkan detail employee sebagai jalur review hak cuti.');
+    phase22_assert_contains($reports_view, 'Pilih satu baris lalu lanjutkan review di halaman detail karyawan untuk melihat profil dan hak cuti dari sumber laporan ini.', 'Laporan harus memberi arahan sederhana bahwa HR perlu lanjut ke halaman detail karyawan dari rekap laporan.');
     phase22_assert_contains($employee_detail_logic, "if (\$from === 'reports') {", 'Logic detail harus membaca sumber reports untuk tombol kembali.');
     phase22_assert_contains($employee_detail_logic, "\$back_url = '/hr/reports.php';", 'Logic detail harus bisa kembali ke reports.php bila datang dari laporan.');
     phase22_assert_contains($employee_detail_logic, "\$back_label = 'Kembali ke Laporan';", 'Logic detail harus memberi label kembali ke laporan bila datang dari reports.');

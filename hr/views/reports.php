@@ -43,6 +43,9 @@
             <i class="bi bi-info-circle text-primary"></i>
             <small>Gunakan filter status untuk melihat posisi hak cuti tahun berjalan, lalu buka detail karyawan untuk meninjau data sumbernya.</small>
         </div>
+        <div class="mt-2">
+            <small class="text-secondary">Pilih satu baris lalu lanjutkan review di halaman detail karyawan untuk melihat profil dan hak cuti dari sumber laporan ini.</small>
+        </div>
         <?php if ($invalid_join_date_count > 0): ?>
             <div class="alert alert-warning mt-3 mb-0 py-2 px-3 small">
                 Ada <?php echo $invalid_join_date_count; ?> karyawan yang belum bisa dihitung karena tanggal bergabung belum valid.
@@ -111,8 +114,8 @@
                                     </span>
                                 </td>
                                 <td class="text-center pe-4">
-                                    <a href="employee-detail.php?id=<?php echo $report['id']; ?>" class="btn btn-sm btn-outline-primary">
-                                        <i class="bi bi-eye me-2"></i>Detail Karyawan
+                                    <a href="employee-detail.php?id=<?php echo $report['id']; ?>&from=reports" class="btn btn-sm btn-outline-primary">
+                                        <i class="bi bi-eye me-2"></i>Buka Detail & Hak Cuti
                                     </a>
                                 </td>
                             </tr>
