@@ -2,14 +2,14 @@
 gsd_state_version: 1.0
 milestone: v2.0
 milestone_name: milestone
-status: in_progress
-last_updated: "2026-03-08T14:44:21.253Z"
+status: executing
+last_updated: "2026-03-08T14:48:26.996Z"
 progress:
   total_phases: 7
   completed_phases: 5
   total_plans: 18
-  completed_plans: 15
-  percent: 83
+  completed_plans: 16
+  percent: 89
 ---
 
 # State: Sicuti HRD Cuti Tracker
@@ -23,9 +23,9 @@ progress:
 ## Current Position
 
 **Phase:** 19 — Auth Session Revalidation & Identity Consistency
-**Plan:** 00 of 04 completed (`19-00-PLAN.md`)
+**Plan:** 01 of 04 completed (`19-01-PLAN.md`)
 **Status:** In progress
-**Progress:** [████████░░] 83%
+**Progress:** [█████████░] 89%
 
 ## Performance Metrics
 
@@ -33,7 +33,7 @@ progress:
 |--------|-------|
 | Phases completed | 5/7 |
 | Requirements completed | 36/36 |
-| Plans completed | 15/18 |
+| Plans completed | 16/18 |
 | Current streak | - |
 | Phase 14 P01 | 2 min | 2 tasks | 3 files |
 | Phase 14 P02 | 3 min | 2 tasks | 2 files |
@@ -50,6 +50,7 @@ progress:
 | Phase 18 P03 | 5 min | 2 tasks | 4 files |
 | Phase 18 P04 | 4 min | 2 tasks | 3 files |
 | Phase 19 P00 | 0 min | 2 tasks | 3 files |
+| Phase 19 P01 | 0 min | 1 tasks | 3 files |
 
 ## Accumulated Context
 
@@ -90,6 +91,8 @@ progress:
 | Dashboard employee menonjolkan hanya baris tahun ke-6, 7, dan 8 sambil tetap memakai session-linked own-data lookup | Menjaga tampilan employee tetap fokus dan aman sesuai batasan akses data pribadi | 18 |
 | Use AUTH_GUARD_TEST_MODE as one tiny procedural seam so smoke tests can inspect redirect outcomes without real headers | Menjaga auth guard tetap sederhana untuk pemula sambil memberi jalur observasi CLI untuk Phase 19 | 19 |
 | Keep Phase 19 Wave 0 coverage in one plain PHP smoke script with named placeholder cases before live revalidation logic is added | Memberi command verifikasi nyata dan bentuk test procedural stabil untuk plan-plan berikutnya | 19 |
+| Keep stale-session rejection centralized in includes/auth-guard.php so every protected page gets the same live user check | Menutup gap delete-cascade dan akun inactive dalam satu guard prosedural bersama | 19 |
+| Treat missing or inactive users as logout-to-login, but keep valid wrong-role sessions on their old dashboard redirect flow | Memisahkan logout stale session dari redirect role agar behavior lama yang valid tidak rusak | 19 |
 
 ### Implementation Guardrails
 - Native procedural PHP only (no OOP/framework)
@@ -102,7 +105,8 @@ progress:
 
 ### TODOs
 - [x] Phase 19 Plan 00 complete — Wave 0 smoke scaffold and validation baseline are in place.
-- [ ] Continue with `19-01-PLAN.md` for live auth session revalidation behavior.
+- [x] Phase 19 Plan 01 complete — live auth session revalidation now blocks stale employee access in the shared guard.
+- [ ] Continue with `19-02-PLAN.md` for persistent identity hydration and checklist work.
 
 ### Blockers
 - None.
@@ -111,14 +115,14 @@ progress:
 
 ### Last Session
 - **Date:** 2026-03-08
-- **Activity:** Completed Phase 19 Plan 00 (Wave 0 smoke scaffold and validation baseline)
-- **Outcome:** `includes/auth-guard.php` now has a tiny CLI-safe redirect seam, `tests/phase19_auth_session_smoke.php` exists with named stale-session cases, and `19-VALIDATION.md` marks Wave 0 as ready.
-- **Next:** Continue with `19-01-PLAN.md` to add live user-row and employee-link revalidation.
+- **Activity:** Completed Phase 19 Plan 01 (shared auth guard session revalidation)
+- **Outcome:** `includes/auth-guard.php` now revalidates live `users` rows and employee links on protected requests, `employee/dashboard.php` relies on the guard first, and `tests/phase19_auth_session_smoke.php` covers stale-session and wrong-role behavior.
+- **Next:** Continue with `19-02-PLAN.md` to hydrate persistent identity labels and finish the Phase 19 checklist.
 
 ### Context for Next Session
 - Run `php tests/phase19_auth_session_smoke.php` after each Phase 19 auth guard change.
-- Later tasks should extend the existing smoke scaffold instead of replacing it with PHPUnit or abstractions.
-- `19-VALIDATION.md` task `19-00-01` is the Wave 0 baseline for future verification references.
+- Later tasks should extend the existing smoke script instead of replacing it with PHPUnit or abstractions.
+- Shared guard now owns stale-session rejection; future tasks should not put delete-session protection back into page-level fallback warnings.
 
 ---
 *State initialized: 2026-03-05*
