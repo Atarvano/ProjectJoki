@@ -96,6 +96,9 @@ function run_includes_group()
     $index = phase21_load('index.php');
     $login = phase21_load('login.php');
     $layout = phase21_load('includes/layout/dashboard-layout.php');
+    $employee_dashboard = phase21_load('employee/dashboard.php');
+    $employee_logic = phase21_load('employee/logic/dashboard.php');
+    $employee_view = phase21_load('employee/views/dashboard.php');
 
     phase21_assert_contains($index, "include 'includes/layout/header.php';", 'index.php harus langsung memakai header dari includes/layout.');
     phase21_assert_contains($index, "include 'includes/layout/footer.php';", 'index.php harus langsung memakai footer dari includes/layout.');
@@ -111,6 +114,26 @@ function run_includes_group()
     phase21_assert_contains($layout, "include __DIR__ . '/dashboard-sidebar.php';", 'Layout grouped harus memakai sidebar grouped.');
     phase21_assert_contains($layout, "include __DIR__ . '/dashboard-topbar.php';", 'Layout grouped harus memakai topbar grouped.');
     phase21_assert_contains($layout, "include __DIR__ . '/footer.php';", 'Layout grouped harus memakai footer grouped.');
+
+    phase21_assert_contains($employee_dashboard, "require_once __DIR__ . '/../includes/auth/auth-guard.php';", 'Dashboard employee harus memakai auth guard grouped final.');
+    phase21_assert_contains($employee_dashboard, "cekLogin();", 'Dashboard employee harus tetap memanggil cekLogin.');
+    phase21_assert_contains($employee_dashboard, "cekRole('employee');", 'Dashboard employee harus tetap memanggil cekRole employee.');
+    phase21_assert_contains($employee_dashboard, "require_once __DIR__ . '/../koneksi.php';", 'Dashboard employee harus tetap menampilkan include koneksi.');
+    phase21_assert_contains($employee_dashboard, "require_once __DIR__ . '/logic/dashboard.php';", 'Dashboard employee harus memanggil logic dashboard final.');
+    phase21_assert_contains($employee_dashboard, "require_once __DIR__ . '/../includes/layout/dashboard-layout.php';", 'Dashboard employee harus memanggil layout grouped final.');
+    phase21_assert_not_contains($employee_dashboard, "require_once __DIR__ . '/../includes/cuti-calculator.php';", 'Route dashboard employee tidak boleh lagi memuat kalkulator langsung.');
+
+    phase21_assert_contains($employee_logic, "require_once __DIR__ . '/../../includes/cuti-calculator.php';", 'Logic dashboard employee harus memuat kalkulator dari logic file.');
+    phase21_assert_contains($employee_logic, "'role' => 'employee',", 'Logic dashboard employee harus tetap menyiapkan role employee.');
+    phase21_assert_contains($employee_logic, "'active_nav' => 'hak-cuti',", 'Logic dashboard employee harus tetap menyiapkan nav hak-cuti.');
+    phase21_assert_contains($employee_logic, "'profile_label' => " . '$profile_label,', 'Logic dashboard employee harus tetap meneruskan profile_label.');
+    phase21_assert_contains($employee_logic, "'profile_role' => 'Karyawan',", 'Logic dashboard employee harus tetap meneruskan profile_role.');
+    phase21_assert_contains($employee_logic, 'hitungHakCuti', 'Logic dashboard employee harus tetap menghitung hak cuti.');
+    phase21_assert_contains($employee_logic, "require __DIR__ . '/../views/dashboard.php';", 'Logic dashboard employee harus memanggil view dashboard final.');
+
+    phase21_assert_contains($employee_view, 'Hak Cuti', 'View dashboard employee harus tetap berisi markup hak cuti.');
+    phase21_assert_not_contains($employee_view, 'mysqli_prepare', 'View dashboard employee tidak boleh lagi menyimpan query SQL.');
+    phase21_assert_not_contains($employee_view, 'cekRole(', 'View dashboard employee tidak boleh menyimpan guard role.');
 
     fwrite(STDOUT, "PASS [includes]: halaman publik dan layout utama sudah menunjuk ke path grouped.\n");
 }

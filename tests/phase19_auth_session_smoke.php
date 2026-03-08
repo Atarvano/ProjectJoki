@@ -220,17 +220,25 @@ phase19_assert_true($employee_dashboard_text !== false, 'File dashboard employee
 phase19_assert_true(strpos($employee_dashboard_text, "cekLogin();\ncekRole('employee');") !== false, 'Dashboard employee harus tetap guard-first.');
 phase19_assert_true(strpos($employee_dashboard_text, 'Akun Anda belum terhubung ke data karyawan') === false, 'Dashboard employee tidak boleh lagi mengandalkan fallback akun belum terhubung sebagai proteksi utama.');
 phase19_assert_true(strpos($employee_dashboard_text, 'Data karyawan untuk akun ini tidak ditemukan') === false, 'Dashboard employee tidak boleh lagi memakai fallback row hilang sebagai proteksi utama.');
-phase19_assert_true(strpos($employee_dashboard_text, 'profile_label') !== false, 'Marker profile_label harus tetap ada di dashboard employee.');
-phase19_assert_true(strpos($employee_dashboard_text, 'profile_role') !== false, 'Marker profile_role harus tetap ada di dashboard employee.');
-phase19_assert_true(strpos($employee_dashboard_text, '$_SESSION[\'nama\']') !== false, 'Dashboard employee harus tetap memakai nama dari session.');
-phase19_assert_contains_any(
-    $employee_dashboard_text,
-    [
-        "require_once __DIR__ . '/../includes/auth/auth-guard.php';",
-        "require_once __DIR__ . '/../includes/auth-guard.php';",
-    ],
-    'Dashboard employee harus menerima path auth guard akhir atau bridge lama.'
-);
+phase19_assert_true(strpos($employee_dashboard_text, "require_once __DIR__ . '/../includes/auth/auth-guard.php';") !== false, 'Dashboard employee harus memakai path auth guard grouped final.');
+phase19_assert_true(strpos($employee_dashboard_text, "require_once __DIR__ . '/../koneksi.php';") !== false, 'Dashboard employee harus tetap menampilkan include koneksi secara langsung.');
+phase19_assert_true(strpos($employee_dashboard_text, "require_once __DIR__ . '/logic/dashboard.php';") !== false, 'Dashboard employee harus memanggil logic dashboard final.');
+phase19_assert_true(strpos($employee_dashboard_text, "require_once __DIR__ . '/../includes/layout/dashboard-layout.php';") !== false, 'Dashboard employee harus memanggil layout grouped final.');
+phase19_assert_true(strpos($employee_dashboard_text, "require_once __DIR__ . '/../includes/cuti-calculator.php';") === false, 'Route dashboard employee tidak boleh lagi memuat kalkulator langsung setelah split.');
+
+$employee_dashboard_logic_text = file_get_contents($root . '/employee/logic/dashboard.php');
+phase19_assert_true($employee_dashboard_logic_text !== false, 'Logic dashboard employee harus bisa dibaca.');
+phase19_assert_true(strpos($employee_dashboard_logic_text, 'profile_label') !== false, 'Marker profile_label harus tetap ada di logic dashboard employee.');
+phase19_assert_true(strpos($employee_dashboard_logic_text, 'profile_role') !== false, 'Marker profile_role harus tetap ada di logic dashboard employee.');
+phase19_assert_true(strpos($employee_dashboard_logic_text, '$_SESSION[\'nama\']') !== false, 'Logic dashboard employee harus tetap memakai nama dari session.');
+phase19_assert_true(strpos($employee_dashboard_logic_text, 'hitungHakCuti') !== false, 'Logic dashboard employee harus tetap menghitung hak cuti.');
+phase19_assert_true(strpos($employee_dashboard_logic_text, "require __DIR__ . '/../views/dashboard.php';") !== false, 'Logic dashboard employee harus memanggil view dashboard final.');
+
+$employee_dashboard_view_text = file_get_contents($root . '/employee/views/dashboard.php');
+phase19_assert_true($employee_dashboard_view_text !== false, 'View dashboard employee harus bisa dibaca.');
+phase19_assert_true(strpos($employee_dashboard_view_text, 'Hak Cuti') !== false, 'View dashboard employee harus tetap menampilkan judul Hak Cuti.');
+phase19_assert_true(strpos($employee_dashboard_view_text, 'mysqli_prepare') === false, 'View dashboard employee harus tetap markup-only tanpa query SQL.');
+phase19_assert_true(strpos($employee_dashboard_view_text, 'cekRole(') === false, 'View dashboard employee tidak boleh berisi guard role.');
 
 $hr_dashboard_text = file_get_contents($root . '/hr/dashboard.php');
 phase19_assert_true($hr_dashboard_text !== false, 'File dashboard HR harus bisa dibaca.');
