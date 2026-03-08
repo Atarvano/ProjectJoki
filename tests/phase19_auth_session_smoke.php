@@ -174,6 +174,13 @@ phase19_assert_true($auth_guard_text !== false, 'File auth guard harus bisa diba
 phase19_assert_true(strpos($auth_guard_text, 'SELECT id, username, karyawan_id, is_active FROM users WHERE id = ? LIMIT 1') !== false, 'Guard harus query users live setiap request.');
 phase19_assert_true(strpos($auth_guard_text, 'SELECT id FROM karyawan WHERE id = ? LIMIT 1') !== false, 'Guard employee harus cek row karyawan live.');
 
+$login_text = file_get_contents($root . '/login.php');
+phase19_assert_true($login_text !== false, 'File login harus bisa dibaca.');
+phase19_assert_true(strpos($login_text, "\$_SESSION['nama'] = 'Admin HR';") === false, 'Login HR tidak boleh lagi memakai label Admin HR yang di-hardcode.');
+phase19_assert_true(strpos($login_text, "if (\$user['role'] === 'hr') {") !== false, 'Login harus tetap punya percabangan role HR.');
+phase19_assert_true(strpos($login_text, "\$_SESSION['nama'] = \$user['username'];") !== false, 'Login harus mengisi nama session dari users.username.');
+phase19_assert_true(strpos($login_text, "SELECT nama FROM karyawan WHERE id = ? LIMIT 1") !== false, 'Login employee tetap harus bisa ambil nama karyawan saat tersedia.');
+
 $employee_dashboard_text = file_get_contents($root . '/employee/dashboard.php');
 phase19_assert_true($employee_dashboard_text !== false, 'File dashboard employee harus bisa dibaca.');
 phase19_assert_true(strpos($employee_dashboard_text, "cekLogin();\ncekRole('employee');") !== false, 'Dashboard employee harus tetap guard-first.');
@@ -182,6 +189,17 @@ phase19_assert_true(strpos($employee_dashboard_text, 'Data karyawan untuk akun i
 phase19_assert_true(strpos($employee_dashboard_text, 'profile_label') !== false, 'Marker profile_label harus tetap ada di dashboard employee.');
 phase19_assert_true(strpos($employee_dashboard_text, 'profile_role') !== false, 'Marker profile_role harus tetap ada di dashboard employee.');
 phase19_assert_true(strpos($employee_dashboard_text, '$_SESSION[\'nama\']') !== false, 'Dashboard employee harus tetap memakai nama dari session.');
+
+$hr_dashboard_text = file_get_contents($root . '/hr/dashboard.php');
+phase19_assert_true($hr_dashboard_text !== false, 'File dashboard HR harus bisa dibaca.');
+phase19_assert_true(strpos($hr_dashboard_text, "'profile_label' => \$_SESSION['nama']") !== false, 'Dashboard HR harus tetap meneruskan nama dari session ke topbar.');
+phase19_assert_true(strpos($hr_dashboard_text, "'profile_initials' => strtoupper(substr(\$_SESSION['nama'], 0, 2))") === false, 'Dashboard HR harus memakai fallback aman untuk initials, bukan langsung substr session mentah.');
+phase19_assert_true(strpos($hr_dashboard_text, 'profile_initials') !== false, 'Dashboard HR harus tetap kirim profile_initials ke topbar.');
+
+$topbar_text = file_get_contents($root . '/includes/dashboard-topbar.php');
+phase19_assert_true($topbar_text !== false, 'File topbar harus bisa dibaca.');
+phase19_assert_true(strpos($topbar_text, "\$profile_label = \$dashboard_context['profile_label'] ?? 'Admin HR';") === false, 'Topbar shared tidak boleh lagi default ke Admin HR.');
+phase19_assert_true(strpos($topbar_text, 'Admin HR') === false, 'Topbar shared tidak boleh menyimpan label Admin HR sama sekali.');
 
 fwrite(STDOUT, "PASS [case_missing_user_row]: user row hilang dipaksa logout ke /login.php.\n");
 fwrite(STDOUT, "PASS [case_inactive_user_row]: user inactive dipaksa logout ke /login.php.\n");
