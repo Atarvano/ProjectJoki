@@ -55,18 +55,23 @@ function run_crud_flow_group()
 {
     $employee_create_logic = phase22_load('hr/logic/employee-create.php');
     $employee_edit_logic = phase22_load('hr/logic/employee-edit.php');
-    $employee_detail_view = phase22_load('hr/views/employee-detail.php');
+    $employees_view = phase22_load('hr/views/employees.php');
 
     phase22_assert_contains($employee_create_logic, "mysqli_insert_id(", 'Create employee harus mengambil id baru dengan mysqli_insert_id agar bisa pindah ke detail karyawan yang baru dibuat.');
     phase22_assert_contains($employee_create_logic, "header('Location: /hr/employee-detail.php?id=' . ", 'Create employee harus redirect ke employee-detail.php?id=... setelah simpan berhasil.');
+    phase22_assert_contains($employee_create_logic, 'Data karyawan berhasil ditambahkan. Silakan cek detail karyawan untuk review data yang baru disimpan.', 'Create employee harus memakai flash yang mengarahkan HR ke halaman detail karyawan.');
     phase22_assert_not_contains($employee_create_logic, "header('Location: /hr/employees.php');", 'Create employee tidak boleh lagi kembali ke daftar sebagai alur utama setelah simpan.');
+    phase22_assert_not_contains($employee_create_logic, 'Silakan cek kembali pada daftar karyawan.', 'Create employee tidak boleh lagi memberi arahan kembali ke daftar karyawan.');
 
-    phase22_assert_contains($employee_edit_logic, "header('Location: /hr/employee-detail.php?id=' . $id);", 'Edit employee harus kembali ke employee-detail.php?id=... setelah perubahan disimpan.');
-    phase22_assert_not_contains($employee_edit_logic, "header('Location: /hr/employees.php');", 'Edit employee tidak boleh lagi kembali ke daftar sebagai alur utama setelah simpan.');
+    phase22_assert_contains($employee_edit_logic, "header('Location: /hr/employee-detail.php?id=' . \$id);", 'Edit employee harus kembali ke employee-detail.php?id=... setelah perubahan disimpan.');
+    phase22_assert_contains($employee_edit_logic, 'Data karyawan berhasil diperbarui. Silakan cek detail karyawan untuk review perubahan terbaru.', 'Edit employee harus memakai flash yang mengarahkan HR kembali ke halaman detail karyawan.');
+    phase22_assert_not_contains($employee_edit_logic, 'Data karyawan berhasil diperbarui. Silakan cek kembali pada daftar karyawan.', 'Edit employee tidak boleh lagi memakai flash lama yang mengarahkan HR kembali ke daftar.');
+    phase22_assert_not_contains($employee_edit_logic, 'Silakan cek kembali pada daftar karyawan.', 'Edit employee tidak boleh lagi memberi arahan kembali ke daftar karyawan.');
 
-    phase22_assert_contains($employee_detail_view, '/hr/employee-edit.php?id=', 'Detail employee harus punya link edit langsung.');
-    phase22_assert_contains($employee_detail_view, '/hr/employee-delete.php', 'Detail employee harus tetap punya form delete langsung.');
-    phase22_assert_contains($employee_detail_view, '/hr/employee-provision.php', 'Detail employee harus tetap punya form provision langsung.');
+    phase22_assert_contains($employees_view, '/hr/employee-detail.php?id=<?php echo $id; ?>', 'Daftar employee harus punya link detail langsung pada setiap baris.');
+    phase22_assert_contains($employees_view, '/hr/employee-edit.php?id=<?php echo $id; ?>', 'Daftar employee harus punya link edit langsung pada setiap baris.');
+    phase22_assert_contains($employees_view, '/hr/employee-delete.php', 'Daftar employee harus tetap punya form delete langsung.');
+    phase22_assert_contains($employees_view, '/hr/employee-provision.php', 'Daftar employee harus tetap punya form provision langsung.');
 
     fwrite(STDOUT, "PASS [crud-flow]: alur create/edit/detail/provision/delete sudah mengarah ke detail-first CRUD.\n");
 }
@@ -100,7 +105,7 @@ function run_navigation_group()
 
     phase22_assert_contains($reports_view, 'employee-detail.php?id=<?php echo $report[\'id\']; ?>&from=reports', 'Laporan harus membuka detail employee dengan penanda sumber reports.');
     phase22_assert_contains($reports_view, 'Buka Detail & Hak Cuti', 'Laporan harus menonjolkan detail employee sebagai jalur review hak cuti.');
-    phase22_assert_contains($employee_detail_logic, "if ($from === 'reports') {", 'Logic detail harus membaca sumber reports untuk tombol kembali.');
+    phase22_assert_contains($employee_detail_logic, "if (\$from === 'reports') {", 'Logic detail harus membaca sumber reports untuk tombol kembali.');
     phase22_assert_contains($employee_detail_logic, "\$back_url = '/hr/reports.php';", 'Logic detail harus bisa kembali ke reports.php bila datang dari laporan.');
     phase22_assert_contains($employee_detail_logic, "\$back_label = 'Kembali ke Laporan';", 'Logic detail harus memberi label kembali ke laporan bila datang dari reports.');
 
