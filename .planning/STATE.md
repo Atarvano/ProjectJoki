@@ -3,7 +3,7 @@ gsd_state_version: 1.0
 milestone: v2.0
 milestone_name: milestone
 status: completed
-last_updated: "2026-03-08T16:35:46.161Z"
+last_updated: "2026-03-08T16:54:58.856Z"
 progress:
   total_phases: 7
   completed_phases: 7
@@ -17,14 +17,14 @@ progress:
 ## Project Reference
 
 **Core Value:** HR creates employee data first, provisions login credentials, then employees log in with native PHP sessions to view their own leave data.
-**Current Milestone:** v2.0 — Backend Native PHP + HR-First Employee Onboarding
-**Roadmap:** 7 phases (14–20), 36 requirements
+**Current Focus:** Planning next milestone
+**Roadmap:** See `.planning/ROADMAP.md` and `.planning/PROJECT.md`
 
 ## Current Position
 
 **Phase:** 20 — Provisioning E2E Verification & Flash Contract Alignment
 **Plan:** 03 of 03 completed (`20-03-PLAN.md`)
-**Status:** Milestone complete
+**Status:** v2.0 milestone complete
 **Progress:** [██████████] 100%
 
 ## Performance Metrics
@@ -119,13 +119,9 @@ progress:
 - HR admin is standalone user (not in karyawan table)
 
 ### TODOs
-- [x] Phase 19 Plan 00 complete — Wave 0 smoke scaffold and validation baseline are in place.
-- [x] Phase 19 Plan 01 complete — live auth session revalidation now blocks stale employee access in the shared guard.
-- [x] Phase 19 Plan 02 complete — login identity hydration and validation checklist now use saved account identity.
-- [x] Continue with `19-03-PLAN.md` for browser verification evidence.
-- [x] Phase 20 Plan 01 complete — flash contract provisioning sekarang sejajar dan checklist browser final sudah siap.
-- [x] Continue with `20-02-PLAN.md` for browser walkthrough evidence and verification closure.
-- [x] Phase 20 Plan 03 complete — milestone audit wording now matches the approved Phase 20 closure evidence.
+- [ ] Define the next milestone with `/gsd-new-milestone`.
+- [ ] Create fresh `.planning/REQUIREMENTS.md` for the next milestone.
+- [ ] Optionally clean up validation-document drift in Phases 15, 16, 17, and 19.
 
 ### Blockers
 - None.
@@ -134,14 +130,14 @@ progress:
 
 ### Last Session
 - **Date:** 2026-03-08
-- **Activity:** Completed Phase 20 Plan 03 (milestone audit documentary alignment)
-- **Outcome:** `.planning/v2.0-v2.0-MILESTONE-AUDIT.md` now consistently reflects approved Phase 20 auth/provisioning closure while keeping the delete-cascade/session invalidation blocker open.
-- **Next:** Milestone execution is complete; only the separate delete-cascade/session invalidation audit blocker remains for future follow-up.
+- **Activity:** Completed v2.0 milestone archival and project-state rollover.
+- **Outcome:** v2.0 roadmap and requirements were archived, milestone history was updated, and planning is now reset for the next milestone.
+- **Next:** Start `/gsd-new-milestone` and define fresh requirements.
 
 ### Context for Next Session
-- Start from `.planning/phases/20-provisioning-e2e-verification-flash-contract-alignment/20-03-SUMMARY.md` for the final milestone-audit documentary closure context.
-- Auth and provisioning browser evidence is now closed; do not reopen that debt unless behavior regresses.
-- Remaining milestone risk is isolated to the delete-cascade/session invalidation audit gap.
+- Start from `.planning/PROJECT.md` for the brownfield current-state view.
+- v2.0 is archived at `.planning/milestones/v2.0-ROADMAP.md` and `.planning/milestones/v2.0-REQUIREMENTS.md`.
+- Fresh milestone planning should begin with new requirements instead of editing archived v2.0 scope.
 
 ---
 *State initialized: 2026-03-05*

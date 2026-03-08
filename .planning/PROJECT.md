@@ -2,35 +2,75 @@
 
 ## What This Is
 
-Sicuti HRD Cuti Tracker adalah aplikasi web internal HR/employee untuk menghitung, menyimpan, dan meninjau hak cuti. Setelah milestone v1 (frontend demo) selesai, milestone v2 berfokus pada backend nyata berbasis native procedural PHP + MySQLi.
+Sicuti HRD Cuti Tracker is an internal HR/employee leave entitlement application. It now runs as a real native procedural PHP + MySQLi system where HR owns employee onboarding, provisions login credentials, and both HR and employees work against live database-backed leave data.
 
 ## Core Value
 
-HR dapat membuat data karyawan terlebih dahulu, memprovisioning akun login, lalu karyawan login dengan session native PHP untuk melihat data cuti dengan alur yang valid.
+HR creates employee data first, provisions login credentials, then employees log in with native PHP sessions to view their own leave data through an enforced, real backend flow.
 
 ## Current State
 
-Milestone aktif: **v2.0 - Backend Native PHP + HR-First Onboarding** (started 2026-03-05).
+- **Latest shipped milestone:** `v2.0` - Backend Native PHP + HR-First Employee Onboarding
+- **Shipped on:** 2026-03-08
+- **Product state:** Real database-backed employee CRUD, authentication, role guards, provisioning, live calculator, live reports/export, and live dashboards are in place.
+- **Audit posture:** Functional definition of done is met; milestone archive is accepted with documentation-only tech debt remaining.
 
-Target utama v2.0:
-- Koneksi DB terpusat lewat `koneksi.php` (MySQLi) di Laragon localhost.
-- CRUD master karyawan oleh HR.
-- Login nyata dari database + session native PHP (role `hr` / `employee`).
-- Flow baru: HR buat data karyawan -> HR provisioning akun -> karyawan baru bisa login.
-- Migrasi bertahap dari data session-array demo ke DB agar laporan/export konsisten.
+## Next Milestone Goals
 
-## Current Milestone: v2.0 Backend Native PHP + HR-First Employee Onboarding
+- Define the next milestone from fresh requirements rather than carrying forward the archived v2.0 list.
+- Decide whether the next priority is workflow expansion (for example leave requests/approvals), admin usability improvements, or technical debt cleanup.
+- Clean up lingering validation-document drift from Phases 15, 16, 17, and 19 if milestone audit hygiene should be restored early.
 
-**Goal:** Mentransformasi demo v1 menjadi backend procedural PHP nyata dengan MySQLi di Laragon/XAMPP, session auth native PHP, dan alur HR-first onboarding karyawan.
+## Requirements
 
-**Target features:**
-- HR dapat CRUD data karyawan ke database lewat `koneksi.php` + MySQLi prepared statements.
-- HR membuat/mengaktifkan akun login dari data karyawan yang sudah dibuat.
-- Login/logout serta guard role HR/Employee berjalan dengan session native PHP.
-- Flow web baru: HR input data karyawan dulu, baru karyawan bisa login.
-- Output cuti employee fokus tampilan tahun ke-6, ke-7, dan ke-8.
+### Validated
+
+- ✓ All `v1.0` requirements met (archive: `.planning/milestones/v1.0-REQUIREMENTS.md`).
+- ✓ All `v2.0` requirements met (archive: `.planning/milestones/v2.0-REQUIREMENTS.md`).
+
+### Active
+
+- None yet - define fresh requirements for the next milestone with `/gsd-new-milestone`.
+
+### Out of Scope
+
+- Framework/OOP refactor (Laravel, class-based architecture).
+- Open employee self-signup.
+- Token/JWT auth migration.
+- Major UI redesign unless a future milestone explicitly targets it.
+
+## Context
+
+- The app has completed the transition from v1 demo mode to a real Laragon-hosted native PHP + MySQL backend.
+- The leave entitlement engine from v1 remains reused as the business-calculation core, now fed by database-backed employee data.
+- The current open debt is mostly planning/validation artifact cleanup rather than missing user-facing core functionality.
+
+## Constraints
+
+- **Architecture:** Native procedural PHP only (no OOP app architecture, no classes, no frameworks).
+- **Database API:** MySQLi procedural via single `koneksi.php` file.
+- **Environment:** Laragon localhost (compatible with XAMPP local).
+- **Security baseline:** `password_hash()` / `password_verify()`, prepared statements for user input.
+- **Business flow:** HR-first onboarding, not employee self-registration.
+- **DB setup:** SQL file for manual import - no auto-bootstrap script needed.
+- **Employee delete:** Hard delete (permanent removal from DB).
+- **Password provisioning:** Auto-generated from employee data (for example NIK + birthdate).
 
 ## Milestone History
+
+<details>
+<summary>Archived milestone history</summary>
+
+### v2.0 (Shipped: 2026-03-08)
+
+Delivered:
+- Real MySQL-backed employee data model, auth/session flow, and HR-first provisioning.
+- Full HR employee CRUD plus live calculator, reports/export, and dashboard wiring.
+- Runtime verification closure for auth/provisioning and session identity consistency.
+
+Accepted debt:
+- Validation/Nyquist documents for some phases still lag the shipped state.
+- Dummy topbar placeholders remain in shared UI.
 
 ### v1.0 (Shipped: 2026-03-04)
 
@@ -40,42 +80,12 @@ Delivered:
 - Session-backed report save/list/detail flow.
 - Excel-compatible export via isolated PhpSpreadsheet usage.
 
-Known debt accepted at v1 completion:
-- Data layer masih campuran demo/session, belum DB canonical.
-- Login masih visual-only (belum real auth).
-- Route demo masih bisa diakses langsung.
+Accepted debt:
+- Data layer still mixed demo/session, not DB canonical.
+- Login was visual-only (not real auth).
+- Demo routes directly reachable.
 
-## Requirements
-
-### Validated
-
-- ✓ Seluruh requirement v1.0 terpenuhi (archive ada di `.planning/milestones/v1.0-REQUIREMENTS.md`).
-
-### Active (v2.0)
-
-Lihat detail lengkap di `.planning/REQUIREMENTS.md`.
-
-Fokus aktif:
-- DATA-01..03 (fondasi DB + koneksi + migration repeatable)
-- EMPCRUD-01..04 (CRUD karyawan oleh HR)
-- FLOW-01..03 (HR-first provisioning)
-- AUTH-01..04 (login/session/logout/role guard)
-- SEC-01..02 (password hash + prepared statements)
-
-### Out of Scope
-
-- Refactor ke framework/OOP (Laravel/class architecture).
-- Open self-signup karyawan.
-- Migrasi token/JWT auth.
-- Redesign UI besar; visual bukan prioritas milestone ini.
-
-## Constraints
-
-- **Arsitektur:** Native procedural PHP (tanpa OOP app architecture).
-- **Database API:** MySQLi procedural via `koneksi.php`.
-- **Environment:** Laragon localhost (harus tetap kompatibel XAMPP lokal).
-- **Security baseline:** `password_hash()` / `password_verify()`, prepared statements untuk input user.
-- **Flow bisnis utama:** HR-first onboarding, bukan employee self-registration.
+</details>
 
 ## Implementation References (User-Provided)
 
@@ -88,11 +98,16 @@ Fokus aktif:
 
 | Decision | Rationale | Outcome |
 |----------|-----------|---------|
-| Mulai milestone v2.0 dengan backend foundation dulu | Menghindari split-brain data dan rewrite yang berisiko | Active |
-| Gunakan satu koneksi `koneksi.php` berbasis MySQLi | Menjaga konsistensi procedural native PHP | Active |
-| Terapkan flow HR-first provisioning | Sesuai kebutuhan: HR buat data karyawan dulu baru login aktif | Active |
-| Pertahankan engine kalkulasi cuti existing | Menjaga parity output saat backend dimigrasikan | Active |
-| Session login wajib native PHP | Sesuai constraint proyek dan cocok untuk server-rendered app | Active |
+| Fresh v2.0 plan replacing previous attempt | Previous planning was overengineered; redone with simpler scope | Shipped in v2.0 |
+| Single `koneksi.php` with MySQLi | Keeps procedural native PHP consistent | Shipped in v2.0 |
+| HR-first provisioning flow | Business need: HR creates employee data before login is active | Shipped in v2.0 |
+| Reuse v1 calculator engine as-is | Stable, working engine - just wire to DB data | Shipped in v2.0 |
+| Native PHP session for login | Matches project constraints, fits server-rendered app | Shipped in v2.0 |
+| SQL file import for DB setup | Simplest approach - manual import via phpMyAdmin or CLI | Shipped in v2.0 |
+| Auto-generated password on provisioning | HR doesn't manually set passwords; system generates from employee data | Shipped in v2.0 |
+| Hard delete for employees | Permanent removal, no soft-delete complexity | Shipped in v2.0 |
+| Basic beginner-style PHP CRUD code | Match user references - popular patterns, nothing fancy | Shipped in v2.0 |
+| Keep milestone completion despite documentation-only tech debt | Functional DoD is complete; remaining work is audit hygiene, not missing product behavior | Accepted at v2.0 ship |
 
 ---
-*Last updated: 2026-03-05 (milestone v2.0 initialized)*
+*Last updated: 2026-03-08 after v2.0 milestone completion*
