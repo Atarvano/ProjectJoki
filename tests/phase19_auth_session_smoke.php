@@ -192,7 +192,8 @@ phase19_assert_true(strpos($employee_dashboard_text, '$_SESSION[\'nama\']') !== 
 
 $hr_dashboard_text = file_get_contents($root . '/hr/dashboard.php');
 phase19_assert_true($hr_dashboard_text !== false, 'File dashboard HR harus bisa dibaca.');
-phase19_assert_true(strpos($hr_dashboard_text, "'profile_label' => \$_SESSION['nama']") !== false, 'Dashboard HR harus tetap meneruskan nama dari session ke topbar.');
+phase19_assert_true(strpos($hr_dashboard_text, "\$profile_label = trim((string) (\$_SESSION['nama'] ?? ''));") !== false, 'Dashboard HR harus tetap mulai dari nama session.');
+phase19_assert_true(strpos($hr_dashboard_text, "'profile_label' => \$profile_label") !== false, 'Dashboard HR harus meneruskan profile_label hasil fallback aman ke topbar.');
 phase19_assert_true(strpos($hr_dashboard_text, "'profile_initials' => strtoupper(substr(\$_SESSION['nama'], 0, 2))") === false, 'Dashboard HR harus memakai fallback aman untuk initials, bukan langsung substr session mentah.');
 phase19_assert_true(strpos($hr_dashboard_text, 'profile_initials') !== false, 'Dashboard HR harus tetap kirim profile_initials ke topbar.');
 

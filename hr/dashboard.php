@@ -82,6 +82,19 @@ $helper_cards = [
     ],
 ];
 
+$profile_label = trim((string) ($_SESSION['nama'] ?? ''));
+if ($profile_label === '') {
+    $profile_label = trim((string) ($_SESSION['username'] ?? ''));
+}
+if ($profile_label === '') {
+    $profile_label = 'Pengguna';
+}
+
+$profile_initials = strtoupper(substr($profile_label, 0, 2));
+if ($profile_initials === '') {
+    $profile_initials = 'PG';
+}
+
 $dashboard_context = [
     'role' => 'hr',
     'active_nav' => 'dashboard',
@@ -89,8 +102,8 @@ $dashboard_context = [
     'breadcrumb' => [
         ['label' => 'Dashboard HR', 'url' => '#']
     ],
-    'profile_label' => $_SESSION['nama'],
-    'profile_initials' => strtoupper(substr($_SESSION['nama'], 0, 2)),
+    'profile_label' => $profile_label,
+    'profile_initials' => $profile_initials,
 ];
 
 ob_start();

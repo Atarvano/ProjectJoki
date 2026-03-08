@@ -1,8 +1,15 @@
 <?php
 $page_title = $dashboard_context['page_title'] ?? 'Dashboard';
 $breadcrumb = $dashboard_context['breadcrumb'] ?? [];
-$profile_label = $dashboard_context['profile_label'] ?? 'Admin HR';
-$profile_initials = $dashboard_context['profile_initials'] ?? 'HR';
+$profile_label = trim((string) ($dashboard_context['profile_label'] ?? ''));
+if ($profile_label === '') {
+    $profile_label = 'Pengguna';
+}
+
+$profile_initials = trim((string) ($dashboard_context['profile_initials'] ?? ''));
+if ($profile_initials === '') {
+    $profile_initials = 'PG';
+}
 $role_key = strtolower((string) ($dashboard_context['role'] ?? 'hr'));
 $profile_role = trim((string) ($dashboard_context['profile_role'] ?? ''));
 if ($profile_role === '') {
