@@ -12,7 +12,7 @@ foreach ($argv as $argument) {
 $valid_groups = ['all', 'calculator', 'reports', 'dashboards'];
 if (!in_array($target_group, $valid_groups, true)) {
     fwrite(STDERR, "FAIL: Group tidak dikenal. Pakai --group=calculator, --group=reports, atau --group=dashboards.\n");
-    fwrite(STDERR, "Tips cek syntax: php -l hr/kalkulator.php && php -l hr/laporan.php && php -l hr/export.php && php -l hr/dashboard.php && php -l employee/dashboard.php\n");
+    fwrite(STDERR, "Tips cek syntax: php -l hr/kalkulator.php && php -l hr/reports.php && php -l hr/export.php && php -l hr/dashboard.php && php -l employee/dashboard.php\n");
     exit(1);
 }
 
@@ -20,7 +20,7 @@ function assert_true($condition, $message)
 {
     if (!$condition) {
         fwrite(STDERR, "FAIL: {$message}\n");
-        fwrite(STDERR, "Tips cek syntax: php -l hr/kalkulator.php && php -l hr/laporan.php && php -l hr/export.php && php -l hr/dashboard.php && php -l employee/dashboard.php\n");
+        fwrite(STDERR, "Tips cek syntax: php -l hr/kalkulator.php && php -l hr/reports.php && php -l hr/export.php && php -l hr/dashboard.php && php -l employee/dashboard.php\n");
         exit(1);
     }
 }
@@ -67,23 +67,27 @@ function run_reports_group()
 {
     global $root;
 
-    $laporan = load_page_text('hr/laporan.php');
+    $laporan = load_page_text('hr/reports.php');
+    $laporan_logic = load_page_text('hr/logic/reports.php');
+    $laporan_view = load_page_text('hr/views/reports.php');
     $export = load_page_text('hr/export.php');
 
     assert_contains($laporan, 'require_once __DIR__ . \'/../koneksi.php\';', 'Laporan harus memuat koneksi database live.');
-    assert_contains($laporan, 'ORDER BY nik ASC, nama ASC', 'Laporan harus mengurutkan data live berdasarkan NIK lalu nama.');
-    assert_contains($laporan, 'karyawan-detail.php?id=', 'Laporan harus mengarahkan detail ke halaman karyawan.');
-    assert_contains($laporan, 'Export Excel', 'Halaman laporan harus tetap menyediakan entry export.');
+    assert_contains($laporan, 'require_once __DIR__ . \'/logic/reports.php\';', 'Route laporan akhir harus memakai logic/reports.php.');
+    assert_contains($laporan_logic, 'ORDER BY nik ASC, nama ASC', 'Laporan harus mengurutkan data live berdasarkan NIK lalu nama.');
+    assert_contains($laporan_logic, 'hitungHakCuti($tahun_bergabung)', 'Logic laporan harus tetap menghitung hak cuti dari tanggal bergabung.');
+    assert_contains($laporan_view, 'employee-detail.php?id=', 'Laporan harus mengarahkan detail ke halaman karyawan final.');
+    assert_contains($laporan_view, 'Export Excel', 'Halaman laporan harus tetap menyediakan entry export.');
     assert_not_contains($laporan, 'reset_reports', 'Laporan tidak boleh lagi memiliki reset report berbasis session.');
-    assert_not_contains($laporan, 'reports-data.php', 'Laporan tidak boleh lagi bergantung pada helper session reports.');
-    assert_not_contains($laporan, 'Data Laporan', 'Label saved-report lama harus sudah dihapus dari laporan.');
+    assert_not_contains($laporan_logic, 'reports-data.php', 'Laporan tidak boleh lagi bergantung pada helper session reports.');
+    assert_not_contains($laporan_view, 'Data Laporan', 'Label saved-report lama harus sudah dihapus dari laporan.');
     assert_contains($export, 'require_once __DIR__ . \'/../koneksi.php\';', 'Export harus memuat koneksi database live.');
     assert_contains($export, 'hitungHakCuti', 'Export harus menghitung hak cuti langsung dari data live.');
     assert_not_contains($export, 'reports-data.php', 'Export tidak boleh lagi bergantung pada helper session reports.');
     assert_not_contains($export, 'getReports()', 'Export tidak boleh lagi memakai getReports() session.');
     assert_true(!file_exists($root . DIRECTORY_SEPARATOR . 'includes' . DIRECTORY_SEPARATOR . 'reports-data.php'), 'File includes/reports-data.php harus sudah dihapus.');
 
-    fwrite(STDOUT, "PASS [reports]: laporan dan export live DB terdeteksi.\n");
+    fwrite(STDOUT, "PASS [reports]: reports dan export live DB terdeteksi.\n");
 }
 
 function run_dashboards_group()

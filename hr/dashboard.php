@@ -77,7 +77,7 @@ $helper_cards = [
     [
         'label' => 'Lihat Rekap',
         'text' => 'Gunakan halaman laporan untuk meninjau ringkasan hak cuti semua karyawan dari database.',
-        'link' => 'laporan.php',
+        'link' => 'reports.php',
         'icon' => 'bi-journal-text',
     ],
 ];
@@ -121,7 +121,7 @@ ob_start();
                         <a href="kalkulator.php" class="btn btn-primary btn-lg px-4" style="background: linear-gradient(135deg, var(--color-primary), var(--color-primary-light)); border: none; box-shadow: 0 4px 15px rgba(15, 76, 92, 0.3); font-weight: 700;">
                             <i class="bi bi-calculator me-2"></i> Hitung Hak Cuti
                         </a>
-                        <a href="laporan.php" class="btn btn-outline-primary btn-lg px-4 fw-bold">
+                        <a href="reports.php" class="btn btn-outline-primary btn-lg px-4 fw-bold">
                             <i class="bi bi-journal-text me-2"></i> Kelola Laporan
                         </a>
                     </div>
