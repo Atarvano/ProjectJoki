@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v3.0
 milestone_name: beginner-style-php-rewrite-and-structure-cleanup
 status: in_progress
-last_updated: "2026-03-08T21:03:20Z"
-last_activity: 2026-03-09 - Completed Phase 22 Plan 00 grouped smoke safety net for HR detail-first CRUD flow
+last_updated: "2026-03-08T21:10:28Z"
+last_activity: 2026-03-09 - Completed Phase 22 Plan 02 detail-first CRUD rhythm update
 progress:
   total_phases: 4
   completed_phases: 1
   total_plans: 11
-  completed_plans: 8
-  percent: 73
+  completed_plans: 10
+  percent: 91
 ---
 
 # State: Sicuti HRD Cuti Tracker
@@ -18,16 +18,16 @@ progress:
 ## Project Reference
 
 **Core Value:** HR creates employee data first, provisions login credentials, then employees log in with native PHP sessions to view their own leave data through an enforced, real backend flow.
-**Current Focus:** Phase 22 is underway; next work should expand the employee detail-first HR CRUD flow on top of the new grouped smoke safety net.
+**Current Focus:** Phase 22 is underway; next work should finish the last dashboard/report/sidebar shift toward employee-detail review.
 **Roadmap:** See `.planning/ROADMAP.md` and `.planning/PROJECT.md`
 
 ## Current Position
 
 **Phase:** 22 - HR Detail-First CRUD Flow
-**Plan:** 01 next
-**Status:** Plan 00 complete; Plans 01, 02, and 03 remaining
-**Progress:** [███░░░░░░░] 25%
-**Last activity:** 2026-03-09 - Completed Phase 22 Plan 00 grouped smoke safety net for HR detail-first CRUD flow
+**Plan:** 03 next
+**Status:** Plans 00 and 02 complete in this phase slice; Plan 03 remains for the dashboard/report/sidebar navigation shift
+**Progress:** [███████░░░] 75%
+**Last activity:** 2026-03-09 - Completed Phase 22 Plan 02 detail-first CRUD rhythm update
 
 ## Performance Metrics
 
@@ -46,6 +46,8 @@ progress:
 | Phase 21 P05 | 1 min | 2 tasks | 9 files |
 | Phase 21 P06 | 2 min | 2 tasks | 4 files |
 | Phase 22 P00 | 20 min | 2 tasks | 5 files |
+| Phase 22 P01 | 10 min | 2 tasks | 2 files |
+| Phase 22 P02 | 1 min | 2 tasks | 4 files |
 
 ## Accumulated Context
 
@@ -74,6 +76,8 @@ progress:
 | Lock the remaining HR routes into the includes smoke group with both positive and negative path assertions so shim regressions go red immediately | Prevents a quiet fallback to temporary shim paths after Phase 21 is declared complete | Phase 21 |
 | Keep Phase 22 verification as one cheap procedural PHP smoke file with named groups instead of adding PHPUnit or framework tooling | Matches the beginner-style PHP codebase and gives later rewiring plans one fast reusable command | Phase 22 |
 | Assert final detail-first strings directly in source files so unfinished rewiring fails loudly before page behavior changes land | Makes the smoke check useful immediately as a red safety net instead of a placeholder test | Phase 22 |
+| Use employee detail as the normal landing page after create and edit success so HR stays in one employee review flow | Keeps HR inside one employee review path instead of bouncing back to the list after every save | Phase 22 |
+| Keep employees.php as the visible CRUD hub with literal Detail, Edit, Delete, and Provision actions instead of hidden row interactions | Matches the beginner-style Absensi-like flow and keeps the list easy to trace line by line | Phase 22 |
 
 ### Implementation Guardrails
 - Native procedural PHP only (no OOP/framework)
@@ -92,24 +96,23 @@ progress:
 - [ ] Validate calculator removal, detail-first leave flow, and copy cleanup before milestone closure.
 
 ### Blockers
-- None.
+- `gsd-tools state advance-plan`, `state add-decision`, and `requirements mark-complete` did not apply because current planner files no longer match the tool parser assumptions; metadata was updated manually for this plan.
 
 ## Session Continuity
 
 ### Last Session
 - **Date:** 2026-03-09
-- **Activity:** Executed Phase 22 Plan 00 and committed the grouped smoke safety net for the HR detail-first CRUD flow.
-- **Outcome:** Phase 22 now has a reusable procedural smoke command with `crud-flow`, `detail-view`, `navigation`, and `leave-focus` groups that intentionally fail until the detail-first rewiring is implemented.
-- **Next:** Execute Phase 22 Plan 01.
+- **Activity:** Executed Phase 22 Plan 02 and committed the detail-first CRUD rhythm updates.
+- **Outcome:** Successful create/edit now land on `employee-detail.php`, employees.php explains the list -> detail review flow in plain beginner-style copy, and the grouped `crud-flow` smoke check passes.
+- **Next:** Execute Phase 22 Plan 03.
 
 ### Context for Next Session
 - Phase 21 already left the codebase on grouped `includes/auth/` and `includes/layout/` folders, English HR CRUD routes, and the beginner-readable route -> logic -> view split.
-- `tests/phase22_hr_detail_first_crud_smoke.php` now provides one fast Phase 22 command plus named groups: `crud-flow`, `detail-view`, `navigation`, and `leave-focus`.
-- The new smoke script is expected to fail right now because create/edit still return to the employee list, detail still lacks inline leave blocks, and dashboard/report copy still leans calculator-first.
-- Phase 22 Plan 01 should use the new smoke groups while expanding `hr/logic/employee-detail.php` and `hr/views/employee-detail.php` into the real profile-plus-leave review page.
-- Phase 22 Plan 02 should rewire create/edit/list rhythm to land on employee detail pages.
-- Phase 22 Plan 03 should shift dashboard/report/sidebar wording and links toward employee detail review.
+- `hr/logic/employee-detail.php` and `hr/views/employee-detail.php` now support the detail-first review screen, while `employee-create.php` and `employee-edit.php` both return HR to that page after save.
+- `hr/views/employees.php` now acts as the obvious beginner CRUD hub with visible Detail, Edit, Delete, and Provision actions plus helper copy pointing HR to the detail page.
+- `tests/phase22_hr_detail_first_crud_smoke.php --group=crud-flow` is green and should stay green while Plan 03 shifts dashboard/report/sidebar emphasis.
+- Plan 03 should focus on dashboard, reports, and sidebar wording/links so employee detail becomes the primary leave-review path outside the list page too.
 
 ---
 *State initialized: 2026-03-05*
-*Last updated: 2026-03-09 after Phase 22 Plan 00 completion was recorded*
+*Last updated: 2026-03-09 after Phase 22 Plan 02 completion was recorded*

@@ -25,7 +25,7 @@
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 21. Beginner CRUD Structure Foundation | 7/7 | Complete   | 2026-03-08 |
-| 22. HR Detail-First CRUD Flow | 1/4 | In Progress|  |
+| 22. HR Detail-First CRUD Flow | 3/4 | In Progress |  |
 | 23. Employee Leave View and Calculator Retirement | 0/0 | Not started | - |
 | 24. Product Messaging and Final Copy Cleanup | 0/0 | Not started | - |
 
@@ -61,8 +61,8 @@ Plans:
 **Plans**: 4 plans
 Plans:
 - [x] 22-00-PLAN.md — Create the Phase 22 smoke-test scaffold for detail-first CRUD flow verification.
-- [ ] 22-01-PLAN.md — Expand the employee detail page into the main profile-plus-leave review screen.
-- [ ] 22-02-PLAN.md — Rewire create/edit/list CRUD rhythm so normal HR flow lands on employee detail pages.
+- [x] 22-01-PLAN.md — Expand the employee detail page into the main profile-plus-leave review screen.
+- [x] 22-02-PLAN.md — Rewire create/edit/list CRUD rhythm so normal HR flow lands on employee detail pages.
 - [ ] 22-03-PLAN.md — Shift dashboard/report/sidebar navigation toward employee detail review instead of calculator-first checking.
 
 ### Phase 23: Employee Leave View and Calculator Retirement
@@ -87,4 +87,4 @@ Plans:
 **Plans**: TBD
 
 ---
-*Last updated: 2026-03-09 after Phase 22 Plan 00 completion*
+*Last updated: 2026-03-09 after Phase 22 Plan 02 completion*
