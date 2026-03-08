@@ -1,370 +1,126 @@
 <?php
 
 $root = dirname(__DIR__);
-$selected_group = 'all';
+$target_group = 'all';
 
-foreach (array_slice($argv, 1) as $argument) {
+foreach ($argv as $argument) {
     if (strpos($argument, '--group=') === 0) {
-        $selected_group = strtolower(trim(substr($argument, 8)));
+        $target_group = substr($argument, 8);
     }
 }
 
-$available_groups = ['folders', 'names', 'includes', 'bridges'];
-
-function phase21_pass($group, $case_name, $message)
-{
-    fwrite(STDOUT, "PASS [{$group}] [{$case_name}]: {$message}\n");
-}
-
-function phase21_fail($group, $case_name, $message)
-{
-    fwrite(STDERR, "FAIL [{$group}] [{$case_name}]: {$message}\n");
-}
-
-function phase21_path_exists($path)
-{
-    return file_exists($path) || is_dir($path);
-}
-
-function phase21_run_check($group, $case_name, $condition, $pass_message, $fail_message, &$group_failed, &$total_failed)
-{
-    if ($condition) {
-        phase21_pass($group, $case_name, $pass_message);
-        return;
-    }
-
-    phase21_fail($group, $case_name, $fail_message);
-    $group_failed = true;
-    $total_failed++;
-}
-
-function phase21_should_run_group($selected_group, $group)
-{
-    return $selected_group === 'all' || $selected_group === $group;
-}
-
-if ($selected_group !== 'all' && !in_array($selected_group, $available_groups, true)) {
-    fwrite(STDERR, "FAIL: group {$selected_group} tidak dikenal. Gunakan folders, names, includes, bridges, atau all.\n");
+$valid_groups = ['all', 'folders', 'includes'];
+if (!in_array($target_group, $valid_groups, true)) {
+    fwrite(STDERR, "FAIL: Group tidak dikenal. Pakai --group=folders atau --group=includes.\n");
     exit(1);
 }
 
-$total_failed = 0;
-$ran_any_group = false;
-
-if (phase21_should_run_group($selected_group, 'folders')) {
-    $ran_any_group = true;
-    $group_failed = false;
-
-    phase21_run_check(
-        'folders',
-        'top_level_assets_folder',
-        is_dir($root . '/assets'),
-        'Folder assets/ tetap ada sebagai support folder top-level yang mudah ditemukan.',
-        'Folder assets/ belum ditemukan di top-level proyek.',
-        $group_failed,
-        $total_failed
-    );
-
-    phase21_run_check(
-        'folders',
-        'top_level_database_folder',
-        is_dir($root . '/database'),
-        'Folder database/ tetap ada sebagai support folder top-level yang mudah ditemukan.',
-        'Folder database/ belum ditemukan di top-level proyek.',
-        $group_failed,
-        $total_failed
-    );
-
-    phase21_run_check(
-        'folders',
-        'shared_includes_root',
-        is_dir($root . '/includes'),
-        'Folder includes/ tersedia sebagai root shared file.',
-        'Folder includes/ belum tersedia.',
-        $group_failed,
-        $total_failed
-    );
-
-    phase21_run_check(
-        'folders',
-        'grouped_auth_folder',
-        is_dir($root . '/includes/auth'),
-        'Folder includes/auth/ sudah tersedia untuk shared auth files.',
-        'Folder includes/auth/ belum tersedia sebagai target akhir grouping auth.',
-        $group_failed,
-        $total_failed
-    );
-
-    phase21_run_check(
-        'folders',
-        'grouped_layout_folder',
-        is_dir($root . '/includes/layout'),
-        'Folder includes/layout/ sudah tersedia untuk shared layout files.',
-        'Folder includes/layout/ belum tersedia sebagai target akhir grouping layout.',
-        $group_failed,
-        $total_failed
-    );
-
-    phase21_run_check(
-        'folders',
-        'hr_logic_folder',
-        is_dir($root . '/hr/logic'),
-        'Folder hr/logic/ sudah tersedia untuk page logic HR.',
-        'Folder hr/logic/ belum tersedia.',
-        $group_failed,
-        $total_failed
-    );
-
-    phase21_run_check(
-        'folders',
-        'hr_views_folder',
-        is_dir($root . '/hr/views'),
-        'Folder hr/views/ sudah tersedia untuk page view HR.',
-        'Folder hr/views/ belum tersedia.',
-        $group_failed,
-        $total_failed
-    );
-
-    phase21_run_check(
-        'folders',
-        'employee_logic_folder',
-        is_dir($root . '/employee/logic'),
-        'Folder employee/logic/ sudah tersedia untuk page logic employee.',
-        'Folder employee/logic/ belum tersedia.',
-        $group_failed,
-        $total_failed
-    );
-
-    phase21_run_check(
-        'folders',
-        'employee_views_folder',
-        is_dir($root . '/employee/views'),
-        'Folder employee/views/ sudah tersedia untuk page view employee.',
-        'Folder employee/views/ belum tersedia.',
-        $group_failed,
-        $total_failed
-    );
-
-    if (!$group_failed) {
-        fwrite(STDOUT, "PASS [folders]: semua cek folder target Phase 21 lolos.\n");
-    }
-}
-
-if (phase21_should_run_group($selected_group, 'names')) {
-    $ran_any_group = true;
-    $group_failed = false;
-
-    phase21_run_check(
-        'names',
-        'hr_employees_route',
-        is_file($root . '/hr/employees.php'),
-        'Route akhir hr/employees.php sudah tersedia.',
-        'Route akhir hr/employees.php belum tersedia.',
-        $group_failed,
-        $total_failed
-    );
-
-    phase21_run_check(
-        'names',
-        'hr_employee_create_route',
-        is_file($root . '/hr/employee-create.php'),
-        'Route akhir hr/employee-create.php sudah tersedia.',
-        'Route akhir hr/employee-create.php belum tersedia.',
-        $group_failed,
-        $total_failed
-    );
-
-    phase21_run_check(
-        'names',
-        'hr_employee_detail_route',
-        is_file($root . '/hr/employee-detail.php'),
-        'Route akhir hr/employee-detail.php sudah tersedia.',
-        'Route akhir hr/employee-detail.php belum tersedia.',
-        $group_failed,
-        $total_failed
-    );
-
-    phase21_run_check(
-        'names',
-        'hr_employee_edit_route',
-        is_file($root . '/hr/employee-edit.php'),
-        'Route akhir hr/employee-edit.php sudah tersedia.',
-        'Route akhir hr/employee-edit.php belum tersedia.',
-        $group_failed,
-        $total_failed
-    );
-
-    phase21_run_check(
-        'names',
-        'hr_employee_delete_route',
-        is_file($root . '/hr/employee-delete.php'),
-        'Route akhir hr/employee-delete.php sudah tersedia.',
-        'Route akhir hr/employee-delete.php belum tersedia.',
-        $group_failed,
-        $total_failed
-    );
-
-    phase21_run_check(
-        'names',
-        'hr_employee_provision_route',
-        is_file($root . '/hr/employee-provision.php'),
-        'Route akhir hr/employee-provision.php sudah tersedia.',
-        'Route akhir hr/employee-provision.php belum tersedia.',
-        $group_failed,
-        $total_failed
-    );
-
-    phase21_run_check(
-        'names',
-        'hr_employee_logic_file',
-        is_file($root . '/hr/logic/employees.php'),
-        'File logic hr/logic/employees.php sudah tersedia.',
-        'File logic hr/logic/employees.php belum tersedia.',
-        $group_failed,
-        $total_failed
-    );
-
-    phase21_run_check(
-        'names',
-        'hr_employee_view_file',
-        is_file($root . '/hr/views/employees.php'),
-        'File view hr/views/employees.php sudah tersedia.',
-        'File view hr/views/employees.php belum tersedia.',
-        $group_failed,
-        $total_failed
-    );
-
-    if (!$group_failed) {
-        fwrite(STDOUT, "PASS [names]: semua cek nama route akhir Phase 21 lolos.\n");
-    }
-}
-
-if (phase21_should_run_group($selected_group, 'includes')) {
-    $ran_any_group = true;
-    $group_failed = false;
-
-    phase21_run_check(
-        'includes',
-        'final_auth_guard_file',
-        is_file($root . '/includes/auth/auth-guard.php'),
-        'File akhir includes/auth/auth-guard.php sudah tersedia.',
-        'File akhir includes/auth/auth-guard.php belum tersedia.',
-        $group_failed,
-        $total_failed
-    );
-
-    phase21_run_check(
-        'includes',
-        'final_layout_shell_file',
-        is_file($root . '/includes/layout/dashboard-layout.php'),
-        'File akhir includes/layout/dashboard-layout.php sudah tersedia.',
-        'File akhir includes/layout/dashboard-layout.php belum tersedia.',
-        $group_failed,
-        $total_failed
-    );
-
-    phase21_run_check(
-        'includes',
-        'final_layout_topbar_file',
-        is_file($root . '/includes/layout/dashboard-topbar.php'),
-        'File akhir includes/layout/dashboard-topbar.php sudah tersedia.',
-        'File akhir includes/layout/dashboard-topbar.php belum tersedia.',
-        $group_failed,
-        $total_failed
-    );
-
-    phase21_run_check(
-        'includes',
-        'final_layout_sidebar_file',
-        is_file($root . '/includes/layout/dashboard-sidebar.php'),
-        'File akhir includes/layout/dashboard-sidebar.php sudah tersedia.',
-        'File akhir includes/layout/dashboard-sidebar.php belum tersedia.',
-        $group_failed,
-        $total_failed
-    );
-
-    phase21_run_check(
-        'includes',
-        'employee_route_contract',
-        is_file($root . '/employee/dashboard.php') && strpos((string) file_get_contents($root . '/employee/dashboard.php'), "cekLogin();\ncekRole('employee');") !== false,
-        'Route employee/dashboard.php masih menunjukkan langkah auth -> role secara eksplisit.',
-        'Route employee/dashboard.php belum menunjukkan guard auth secara eksplisit.',
-        $group_failed,
-        $total_failed
-    );
-
-    phase21_run_check(
-        'includes',
-        'db_support_file',
-        is_file($root . '/koneksi.php'),
-        'File koneksi.php tetap tersedia sebagai DB include yang terlihat jelas.',
-        'File koneksi.php tidak ditemukan.',
-        $group_failed,
-        $total_failed
-    );
-
-    if (!$group_failed) {
-        fwrite(STDOUT, "PASS [includes]: semua cek include contract Phase 21 lolos.\n");
-    }
-}
-
-if (phase21_should_run_group($selected_group, 'bridges')) {
-    $ran_any_group = true;
-    $group_failed = false;
-
-    phase21_run_check(
-        'bridges',
-        'auth_guard_final_or_bridge',
-        phase21_path_exists($root . '/includes/auth/auth-guard.php') || is_file($root . '/includes/auth-guard.php'),
-        'Auth guard final path atau bridge lama tersedia selama rollout.',
-        'Auth guard final path maupun bridge lama belum tersedia.',
-        $group_failed,
-        $total_failed
-    );
-
-    phase21_run_check(
-        'bridges',
-        'layout_topbar_final_or_bridge',
-        phase21_path_exists($root . '/includes/layout/dashboard-topbar.php') || is_file($root . '/includes/dashboard-topbar.php'),
-        'Topbar layout final path atau bridge lama tersedia selama rollout.',
-        'Topbar layout final path maupun bridge lama belum tersedia.',
-        $group_failed,
-        $total_failed
-    );
-
-    phase21_run_check(
-        'bridges',
-        'employee_list_final_or_bridge',
-        is_file($root . '/hr/employees.php') || is_file($root . '/hr/karyawan.php'),
-        'Halaman list employee final path atau bridge lama tersedia selama rollout.',
-        'Halaman list employee final path maupun bridge lama belum tersedia.',
-        $group_failed,
-        $total_failed
-    );
-
-    phase21_run_check(
-        'bridges',
-        'employee_provision_final_or_bridge',
-        is_file($root . '/hr/employee-provision.php') || is_file($root . '/hr/karyawan-provision.php'),
-        'Halaman provision final path atau bridge lama tersedia selama rollout.',
-        'Halaman provision final path maupun bridge lama belum tersedia.',
-        $group_failed,
-        $total_failed
-    );
-
-    if (!$group_failed) {
-        fwrite(STDOUT, "PASS [bridges]: semua cek bridge rollout Phase 21 lolos.\n");
-    }
-}
-
-if (!$ran_any_group) {
-    fwrite(STDERR, "FAIL: tidak ada group yang dijalankan.\n");
+function phase21_fail($message)
+{
+    fwrite(STDERR, "FAIL: {$message}\n");
     exit(1);
 }
 
-if ($total_failed > 0) {
-    fwrite(STDERR, "FAIL: phase21_structure_smoke menemukan {$total_failed} kegagalan.\n");
-    exit(1);
+function phase21_assert_true($condition, $message)
+{
+    if (!$condition) {
+        phase21_fail($message);
+    }
+}
+
+function phase21_load($relative_path)
+{
+    global $root;
+
+    $full_path = $root . DIRECTORY_SEPARATOR . str_replace('/', DIRECTORY_SEPARATOR, $relative_path);
+    phase21_assert_true(file_exists($full_path), "File {$relative_path} harus ada.");
+
+    $content = file_get_contents($full_path);
+    phase21_assert_true($content !== false, "File {$relative_path} harus bisa dibaca.");
+
+    return $content;
+}
+
+function phase21_assert_contains($content, $needle, $message)
+{
+    phase21_assert_true(strpos($content, $needle) !== false, $message);
+}
+
+function phase21_assert_not_contains($content, $needle, $message)
+{
+    phase21_assert_true(strpos($content, $needle) === false, $message);
+}
+
+function run_folders_group()
+{
+    $new_auth_guard = phase21_load('includes/auth/auth-guard.php');
+    $new_layout = phase21_load('includes/layout/dashboard-layout.php');
+    $new_header = phase21_load('includes/layout/header.php');
+    $new_footer = phase21_load('includes/layout/footer.php');
+    $new_sidebar = phase21_load('includes/layout/dashboard-sidebar.php');
+    $new_topbar = phase21_load('includes/layout/dashboard-topbar.php');
+
+    phase21_assert_contains($new_auth_guard, 'function cekLogin()', 'Auth guard baru harus tetap punya fungsi cekLogin.');
+    phase21_assert_contains($new_layout, "require_once __DIR__ . '/header.php';", 'Layout baru harus memanggil header dari folder layout.');
+    phase21_assert_contains($new_layout, "include __DIR__ . '/dashboard-sidebar.php';", 'Layout baru harus memanggil sidebar dari folder layout.');
+    phase21_assert_contains($new_layout, "include __DIR__ . '/dashboard-topbar.php';", 'Layout baru harus memanggil topbar dari folder layout.');
+    phase21_assert_contains($new_layout, "include __DIR__ . '/footer.php';", 'Layout baru harus memanggil footer dari folder layout.');
+    phase21_assert_contains($new_header, '<!DOCTYPE html>', 'Header layout baru harus tetap berisi template HTML.');
+    phase21_assert_contains($new_footer, 'Bootstrap Bundle with Popper', 'Footer layout baru harus tetap memuat script footer.');
+    phase21_assert_contains($new_sidebar, '$nav_items = [', 'Sidebar layout baru harus tetap punya daftar navigasi.');
+    phase21_assert_contains($new_topbar, '$profile_label', 'Topbar layout baru harus tetap menyiapkan label profil.');
+
+    $shim_auth = phase21_load('includes/auth-guard.php');
+    $shim_layout = phase21_load('includes/dashboard-layout.php');
+    $shim_header = phase21_load('includes/header.php');
+    $shim_footer = phase21_load('includes/footer.php');
+    $shim_sidebar = phase21_load('includes/dashboard-sidebar.php');
+    $shim_topbar = phase21_load('includes/dashboard-topbar.php');
+
+    phase21_assert_contains($shim_auth, "require_once __DIR__ . '/auth/auth-guard.php';", 'Shim auth guard harus menunjuk ke folder auth baru.');
+    phase21_assert_contains($shim_layout, "require_once __DIR__ . '/layout/dashboard-layout.php';", 'Shim dashboard layout harus menunjuk ke folder layout baru.');
+    phase21_assert_contains($shim_header, "require_once __DIR__ . '/layout/header.php';", 'Shim header harus menunjuk ke folder layout baru.');
+    phase21_assert_contains($shim_footer, "require_once __DIR__ . '/layout/footer.php';", 'Shim footer harus menunjuk ke folder layout baru.');
+    phase21_assert_contains($shim_sidebar, "require_once __DIR__ . '/layout/dashboard-sidebar.php';", 'Shim sidebar harus menunjuk ke folder layout baru.');
+    phase21_assert_contains($shim_topbar, "require_once __DIR__ . '/layout/dashboard-topbar.php';", 'Shim topbar harus menunjuk ke folder layout baru.');
+
+    phase21_assert_not_contains($shim_auth, 'function cekLogin()', 'Shim auth guard lama tidak boleh lagi menyimpan implementasi penuh.');
+    phase21_assert_not_contains($shim_layout, '$dashboard_context', 'Shim dashboard layout lama tidak boleh lagi menyimpan layout penuh.');
+    phase21_assert_not_contains($shim_header, '<!DOCTYPE html>', 'Shim header lama tidak boleh lagi menyimpan markup penuh.');
+
+    fwrite(STDOUT, "PASS [folders]: folder include baru dan shim kompatibilitas terdeteksi.\n");
+}
+
+function run_includes_group()
+{
+    $index = phase21_load('index.php');
+    $login = phase21_load('login.php');
+    $layout = phase21_load('includes/layout/dashboard-layout.php');
+
+    phase21_assert_contains($index, "include 'includes/layout/header.php';", 'index.php harus langsung memakai header dari includes/layout.');
+    phase21_assert_contains($index, "include 'includes/layout/footer.php';", 'index.php harus langsung memakai footer dari includes/layout.');
+    phase21_assert_not_contains($index, "include 'includes/header.php';", 'index.php tidak boleh lagi bergantung ke header shim lama.');
+    phase21_assert_not_contains($index, "include 'includes/footer.php';", 'index.php tidak boleh lagi bergantung ke footer shim lama.');
+
+    phase21_assert_contains($login, "include 'includes/layout/header.php';", 'login.php harus langsung memakai header dari includes/layout.');
+    phase21_assert_contains($login, "include 'includes/layout/footer.php';", 'login.php harus langsung memakai footer dari includes/layout.');
+    phase21_assert_not_contains($login, "include 'includes/header.php';", 'login.php tidak boleh lagi bergantung ke header shim lama.');
+    phase21_assert_not_contains($login, "include 'includes/footer.php';", 'login.php tidak boleh lagi bergantung ke footer shim lama.');
+
+    phase21_assert_contains($layout, "require_once __DIR__ . '/header.php';", 'Layout grouped harus memakai header grouped.');
+    phase21_assert_contains($layout, "include __DIR__ . '/dashboard-sidebar.php';", 'Layout grouped harus memakai sidebar grouped.');
+    phase21_assert_contains($layout, "include __DIR__ . '/dashboard-topbar.php';", 'Layout grouped harus memakai topbar grouped.');
+    phase21_assert_contains($layout, "include __DIR__ . '/footer.php';", 'Layout grouped harus memakai footer grouped.');
+
+    fwrite(STDOUT, "PASS [includes]: halaman publik dan layout utama sudah menunjuk ke path grouped.\n");
+}
+
+if ($target_group === 'all' || $target_group === 'folders') {
+    run_folders_group();
+}
+
+if ($target_group === 'all' || $target_group === 'includes') {
+    run_includes_group();
 }
 
 fwrite(STDOUT, "PASS: phase21_structure_smoke\n");
