@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v3.0
 milestone_name: beginner-style-php-rewrite-and-structure-cleanup
 status: in_progress
-last_updated: "2026-03-08T18:51:37.034Z"
-last_activity: 2026-03-08 - Completed Phase 21 Plan 01 shared include regroup and grouped path rewiring
+last_updated: "2026-03-08T19:00:12.053Z"
+last_activity: 2026-03-08 - Completed Phase 21 Plan 04 employee dashboard split and employee include smoke proof
 progress:
   total_phases: 4
   completed_phases: 0
   total_plans: 6
-  completed_plans: 2
-  percent: 33
+  completed_plans: 3
+  percent: 50
 ---
 
 # State: Sicuti HRD Cuti Tracker
@@ -24,10 +24,10 @@ progress:
 ## Current Position
 
 **Phase:** 21 - Beginner CRUD Structure Foundation
-**Plan:** 01
-**Status:** Plan 01 complete
-**Progress:** [███-------] 33%
-**Last activity:** 2026-03-08 - Completed Phase 21 Plan 01 shared include regroup and grouped path rewiring
+**Plan:** 04
+**Status:** Plan 04 complete
+**Progress:** [█████-----] 50%
+**Last activity:** 2026-03-08 - Completed Phase 21 Plan 04 employee dashboard split and employee include smoke proof
 
 ## Performance Metrics
 
@@ -40,6 +40,7 @@ progress:
 | Current streak | - |
 | Phase 21 P00 | 16 min | 2 tasks | 3 files |
 | Phase 21 P01 | 8 min | 2 tasks | 15 files |
+| Phase 21 P04 | 1 min | 2 tasks | 5 files |
 
 ## Accumulated Context
 
@@ -56,6 +57,8 @@ progress:
 | Prefer final target paths in smoke assertions while tolerating temporary bridge files | Rename rollout spans multiple plans, so tests should point to final structure without going red too early | Phase 21 |
 | Group shared includes into `includes/auth` and `includes/layout` while keeping flat filenames as bridge shims | Gives the codebase an obvious final shared-file home without breaking older paths during the rollout | Phase 21 |
 | Point public pages directly at `includes/layout/...` paths as soon as the grouped files exist | Makes the new folder structure the visible main contract immediately instead of leaving it hidden behind shims | Phase 21 |
+| Keep the employee dashboard on the same visible auth -> db -> logic -> layout recipe as HR pages | Makes both protected areas easy to scan and keeps the include contract recognizable for beginners | Phase 21 |
+| Keep leave calculation inside the employee page-owned logic file so the route stays short and beginner-readable | Preserves a shallow split without introducing shared helper backends or hiding the dashboard data flow | Phase 21 |
 
 ### Implementation Guardrails
 - Native procedural PHP only (no OOP/framework)
@@ -80,17 +83,17 @@ progress:
 
 ### Last Session
 - **Date:** 2026-03-08
-- **Activity:** Executed Phase 21 Plan 01 and committed the grouped include regroup plus direct public-page rewiring.
-- **Outcome:** Shared auth/layout files now live in grouped folders, old flat include names are bridge shims, and Phase 21 has a dedicated structure smoke test for both folders and direct include paths.
-- **Next:** Execute `21-02-PLAN.md`.
+- **Activity:** Executed Phase 21 Plan 04 and committed the employee dashboard route/logic/view split plus updated employee include smoke proof.
+- **Outcome:** The employee dashboard now matches the grouped auth -> db -> logic -> layout recipe used by protected pages, and smoke tests assert the final employee-side include contract.
+- **Next:** Execute `21-05-PLAN.md`.
 
 ### Context for Next Session
-- Phase 21 now has grouped `includes/auth/` and `includes/layout/` folders plus bridge shims, so next plans can focus on route renames and route -> logic -> view splits.
-- Public pages already use grouped layout includes directly; protected pages can keep moving onto the same visible contract.
+- Phase 21 now has grouped `includes/auth/` and `includes/layout/` folders plus employee dashboard route -> logic -> view files, so the remaining structure plans can finish the visible route cleanup on the same contract.
+- Public pages already use grouped layout includes directly, and employee protected pages now use the final grouped route recipe too.
 - Phase 22 should deliver the HR detail-first CRUD flow before calculator retirement is considered complete.
 - Phase 23 should move employee leave viewing to self-view pages and finish calculator removal.
 - Phase 24 should refresh landing/dashboard/report copy so the app no longer reads like demo-v1.
 
 ---
 *State initialized: 2026-03-05*
-*Last updated: 2026-03-08*
+*Last updated: 2026-03-08 after Phase 21 Plan 04 completion*

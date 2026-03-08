@@ -24,7 +24,7 @@
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 21. Beginner CRUD Structure Foundation | 2/6 | In Progress | - |
+| 21. Beginner CRUD Structure Foundation | 3/6 | In Progress | - |
 | 22. HR Detail-First CRUD Flow | 0/0 | Not started | - |
 | 23. Employee Leave View and Calculator Retirement | 0/0 | Not started | - |
 | 24. Product Messaging and Final Copy Cleanup | 0/0 | Not started | - |
@@ -45,7 +45,7 @@ Plans:
 - [x] 21-01-PLAN.md — Regroup shared include files into beginner-readable auth/layout folders with compatibility shims.
 - [ ] 21-02-PLAN.md — Rename and split the main HR list/create/detail pages into English route, logic, and view files.
 - [ ] 21-03-PLAN.md — Finish the HR employee action-route renames for edit, delete, and provisioning with page-owned logic files.
-- [ ] 21-04-PLAN.md — Apply the same route/logic/view contract to the employee dashboard and lock employee-side include proof.
+- [x] 21-04-PLAN.md — Apply the same route/logic/view contract to the employee dashboard and lock employee-side include proof.
 - [ ] 21-05-PLAN.md — Rename the HR reports route and sweep shared navigation/tests onto the final English names.
 
 ### Phase 22: HR Detail-First CRUD Flow
@@ -81,4 +81,4 @@ Plans:
 **Plans**: TBD
 
 ---
-*Last updated: 2026-03-08 after Phase 21 Plan 01 completion*
+*Last updated: 2026-03-08 after Phase 21 Plan 04 completion*
