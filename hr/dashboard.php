@@ -65,7 +65,7 @@ $helper_cards = [
     [
         'label' => 'Data Karyawan',
         'text' => 'Kelola data induk karyawan sebagai dasar seluruh perhitungan dan akses login.',
-        'link' => 'karyawan.php',
+        'link' => 'employees.php',
         'icon' => 'bi-people',
     ],
     [

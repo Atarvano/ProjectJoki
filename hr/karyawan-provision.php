@@ -34,7 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
         'type' => 'info',
         'message' => 'Aksi hanya bisa lewat tombol Buat Akun Login.'
     ];
-    header('Location: /hr/karyawan.php');
+    header('Location: /hr/employees.php');
     exit;
 }
 
@@ -44,7 +44,7 @@ if ($id <= 0) {
         'type' => 'danger',
         'message' => 'Data karyawan tidak valid. Silakan ulangi dari daftar karyawan.'
     ];
-    header('Location: /hr/karyawan.php');
+    header('Location: /hr/employees.php');
     exit;
 }
 
@@ -61,7 +61,7 @@ if (!$stmt_get) {
         'type' => 'danger',
         'message' => 'Akun login belum bisa dibuat saat ini. Silakan coba lagi.'
     ];
-    header('Location: /hr/karyawan.php');
+    header('Location: /hr/employees.php');
     exit;
 }
 
@@ -80,7 +80,7 @@ if (!$karyawan) {
         'type' => 'danger',
         'message' => 'Data karyawan tidak ditemukan atau sudah dihapus.'
     ];
-    header('Location: /hr/karyawan.php');
+    header('Location: /hr/employees.php');
     exit;
 }
 
@@ -89,7 +89,7 @@ if (!empty($karyawan['user_id'])) {
         'type' => 'info',
         'message' => 'Akun login untuk karyawan ini sudah ada. Tidak ada perubahan data.'
     ];
-    header('Location: /hr/karyawan.php');
+    header('Location: /hr/employees.php');
     exit;
 }
 
@@ -101,7 +101,7 @@ if ($password_plain === null) {
         'type' => 'danger',
         'message' => 'Tanggal lahir karyawan tidak valid, akun login belum bisa dibuat.'
     ];
-    header('Location: /hr/karyawan.php');
+    header('Location: /hr/employees.php');
     exit;
 }
 
@@ -116,7 +116,7 @@ if (!$stmt_insert) {
         'type' => 'danger',
         'message' => 'Akun login belum bisa dibuat saat ini. Silakan coba lagi.'
     ];
-    header('Location: /hr/karyawan.php');
+    header('Location: /hr/employees.php');
     exit;
 }
 
@@ -142,5 +142,5 @@ if ($ok_insert) {
     ];
 }
 
-header('Location: /hr/karyawan.php');
+header('Location: /hr/employees.php');
 exit;

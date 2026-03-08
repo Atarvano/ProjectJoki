@@ -153,7 +153,7 @@ ob_start();
                     <h4 class="h5 mb-2">Belum Ada Rekap yang Bisa Ditampilkan</h4>
                     <p class="mb-4">Tambahkan atau lengkapi data karyawan terlebih dahulu agar laporan hak cuti dapat dihitung otomatis.</p>
                     <div class="d-flex justify-content-center gap-2 flex-wrap">
-                        <a href="karyawan.php" class="btn btn-primary px-4">
+                        <a href="employees.php" class="btn btn-primary px-4">
                             <i class="bi bi-people me-2"></i>Kelola Karyawan
                         </a>
                         <a href="dashboard.php" class="btn btn-outline-secondary px-4">Kembali ke Dashboard</a>
@@ -200,7 +200,7 @@ ob_start();
                                     </span>
                                 </td>
                                 <td class="text-center pe-4">
-                                    <a href="karyawan-detail.php?id=<?php echo $report['id']; ?>" class="btn btn-sm btn-outline-primary">
+                                    <a href="employee-detail.php?id=<?php echo $report['id']; ?>" class="btn btn-sm btn-outline-primary">
                                         <i class="bi bi-eye me-2"></i>Detail Karyawan
                                     </a>
                                 </td>

@@ -88,7 +88,7 @@ ob_start();
         <h2 class="h3 mb-1 text-gray-800">Kalkulator Hak Cuti</h2>
         <p class="text-muted mb-0">Pilih karyawan untuk melihat hak cuti berdasarkan tanggal bergabung yang tersimpan di database.</p>
     </div>
-    <a href="/hr/karyawan.php" class="btn btn-outline-secondary">
+    <a href="/hr/employees.php" class="btn btn-outline-secondary">
         <i class="bi bi-people me-2"></i>Kelola Karyawan
     </a>
 </div>
@@ -101,7 +101,7 @@ ob_start();
             </div>
             <h3 class="h4 mb-3">Belum ada data karyawan</h3>
             <p class="text-muted mb-4">Tambahkan data karyawan terlebih dahulu agar HR bisa membuka hak cuti per karyawan.</p>
-            <a href="/hr/karyawan.php" class="btn btn-primary">
+            <a href="/hr/employees.php" class="btn btn-primary">
                 <i class="bi bi-arrow-right-circle me-2"></i>Buka Kelola Karyawan
             </a>
         </div>
@@ -198,7 +198,7 @@ ob_start();
                                     </div>
                                 </div>
                             </div>
-                            <a href="/hr/karyawan-detail.php?id=<?php echo (int) $selected_karyawan['id']; ?>" class="btn btn-outline-primary btn-sm">
+                            <a href="/hr/employee-detail.php?id=<?php echo (int) $selected_karyawan['id']; ?>" class="btn btn-outline-primary btn-sm">
                                 <i class="bi bi-person-lines-fill me-2"></i>Kembali ke Detail Karyawan
                             </a>
                         </div>

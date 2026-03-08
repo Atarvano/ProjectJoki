@@ -9,9 +9,9 @@ foreach ($argv as $argument) {
     }
 }
 
-$valid_groups = ['all', 'folders', 'includes'];
+$valid_groups = ['all', 'folders', 'includes', 'names', 'bridges'];
 if (!in_array($target_group, $valid_groups, true)) {
-    fwrite(STDERR, "FAIL: Group tidak dikenal. Pakai --group=folders atau --group=includes.\n");
+    fwrite(STDERR, "FAIL: Group tidak dikenal. Pakai --group=folders, --group=includes, --group=names, atau --group=bridges.\n");
     exit(1);
 }
 
@@ -138,12 +138,76 @@ function run_includes_group()
     fwrite(STDOUT, "PASS [includes]: halaman publik dan layout utama sudah menunjuk ke path grouped.\n");
 }
 
+function run_names_group()
+{
+    $employees_route = phase21_load('hr/employees.php');
+    $employee_create_route = phase21_load('hr/employee-create.php');
+    $employee_detail_route = phase21_load('hr/employee-detail.php');
+    $employees_logic = phase21_load('hr/logic/employees.php');
+    $employee_create_logic = phase21_load('hr/logic/employee-create.php');
+    $employee_detail_logic = phase21_load('hr/logic/employee-detail.php');
+    $employees_view = phase21_load('hr/views/employees.php');
+    $employee_create_view = phase21_load('hr/views/employee-create.php');
+    $employee_detail_view = phase21_load('hr/views/employee-detail.php');
+
+    phase21_assert_contains($employees_route, "require_once __DIR__ . '/logic/employees.php';", 'Route employees harus memanggil logic/employees.php.');
+    phase21_assert_contains($employees_route, "require_once __DIR__ . '/../includes/layout/dashboard-layout.php';", 'Route employees harus memanggil dashboard layout grouped.');
+    phase21_assert_contains($employee_create_route, "require_once __DIR__ . '/logic/employee-create.php';", 'Route employee-create harus memanggil logic/employee-create.php.');
+    phase21_assert_contains($employee_detail_route, "require_once __DIR__ . '/logic/employee-detail.php';", 'Route employee-detail harus memanggil logic/employee-detail.php.');
+
+    phase21_assert_contains($employees_logic, 'LEFT JOIN users u ON u.karyawan_id = k.id', 'Logic employees harus tetap memuat join user untuk status akun login.');
+    phase21_assert_contains($employees_logic, "require __DIR__ . '/../views/employees.php';", 'Logic employees harus merender view employees.');
+    phase21_assert_contains($employee_create_logic, 'INSERT INTO karyawan', 'Logic employee-create harus menyimpan data karyawan.');
+    phase21_assert_contains($employee_create_logic, "header('Location: /hr/employees.php');", 'Logic employee-create harus kembali ke route akhir employees.php.');
+    phase21_assert_contains($employee_detail_logic, "require __DIR__ . '/../views/employee-detail.php';", 'Logic employee-detail harus merender view employee-detail.');
+
+    phase21_assert_contains($employees_view, '/hr/employee-create.php', 'View employees harus menaut ke route create English.');
+    phase21_assert_contains($employees_view, '/hr/employee-detail.php?id=', 'View employees harus menaut ke route detail English.');
+    phase21_assert_contains($employee_create_view, 'action="/hr/employee-create.php"', 'View create harus submit ke route create English.');
+    phase21_assert_contains($employee_detail_view, 'Detail Karyawan', 'View detail harus tetap memuat judul Detail Karyawan.');
+
+    fwrite(STDOUT, "PASS [names]: route English dan split route/logic/view terdeteksi.\n");
+}
+
+function run_bridges_group()
+{
+    $old_list = phase21_load('hr/karyawan.php');
+    $old_create = phase21_load('hr/karyawan-tambah.php');
+    $old_detail = phase21_load('hr/karyawan-detail.php');
+    $sidebar = phase21_load('includes/layout/dashboard-sidebar.php');
+    $dashboard = phase21_load('hr/dashboard.php');
+    $calculator = phase21_load('hr/kalkulator.php');
+    $report = phase21_load('hr/laporan.php');
+    $provision = phase21_load('hr/karyawan-provision.php');
+
+    phase21_assert_contains($old_list, "/hr/employees.php", 'Bridge karyawan.php harus mengarah ke employees.php.');
+    phase21_assert_contains($old_create, "/hr/employee-create.php", 'Bridge karyawan-tambah.php harus mengarah ke employee-create.php.');
+    phase21_assert_contains($old_detail, "/hr/employee-detail.php", 'Bridge karyawan-detail.php harus mengarah ke employee-detail.php.');
+    phase21_assert_contains($sidebar, "'href' => '/hr/employees.php'", 'Sidebar HR harus memakai route employees.php.');
+    phase21_assert_contains($dashboard, "'link' => 'employees.php'", 'Dashboard HR helper card harus memakai route employees.php.');
+    phase21_assert_contains($calculator, '/hr/employees.php', 'Kalkulator HR harus kembali ke route employees.php.');
+    phase21_assert_contains($calculator, '/hr/employee-detail.php?id=', 'Kalkulator HR harus menaut ke detail English.');
+    phase21_assert_contains($report, 'href="employees.php"', 'Laporan HR harus mengarah ke employees.php saat kosong.');
+    phase21_assert_contains($report, 'href="employee-detail.php?id=', 'Laporan HR harus mengarah ke employee-detail.php.');
+    phase21_assert_contains($provision, "header('Location: /hr/employees.php');", 'Provision route harus kembali ke employees.php setelah proses.');
+
+    fwrite(STDOUT, "PASS [bridges]: bridge file dan link rollout ke route English terdeteksi.\n");
+}
+
 if ($target_group === 'all' || $target_group === 'folders') {
     run_folders_group();
 }
 
 if ($target_group === 'all' || $target_group === 'includes') {
     run_includes_group();
+}
+
+if ($target_group === 'all' || $target_group === 'names') {
+    run_names_group();
+}
+
+if ($target_group === 'all' || $target_group === 'bridges') {
+    run_bridges_group();
 }
 
 fwrite(STDOUT, "PASS: phase21_structure_smoke\n");
