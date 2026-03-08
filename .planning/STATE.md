@@ -3,13 +3,13 @@ gsd_state_version: 1.0
 milestone: v3.0
 milestone_name: beginner-style-php-rewrite-and-structure-cleanup
 status: in_progress
-last_updated: "2026-03-09T00:00:00Z"
-last_activity: 2026-03-09 - Phase 22 verified and marked complete after human approval
+last_updated: "2026-03-08T22:20:10Z"
+last_activity: 2026-03-08 - Completed Phase 23 Plan 00 smoke baseline for employee self-view and calculator retirement
 progress:
   total_phases: 4
   completed_phases: 2
-  total_plans: 11
-  completed_plans: 11
+  total_plans: 14
+  completed_plans: 12
   percent: 100
 ---
 
@@ -18,16 +18,16 @@ progress:
 ## Project Reference
 
 **Core Value:** HR creates employee data first, provisions login credentials, then employees log in with native PHP sessions to view their own leave data through an enforced, real backend flow.
-**Current Focus:** Phase 22 is verified complete; next work should move employee-side leave viewing and calculator retirement into Phase 23.
+**Current Focus:** Phase 23 is underway with the Wave 0 smoke baseline complete; next work should implement employee self-view warnings and calculator retirement against the new smoke groups.
 **Roadmap:** See `.planning/ROADMAP.md` and `.planning/PROJECT.md`
 
 ## Current Position
 
 **Phase:** 23 - Employee Leave View and Calculator Retirement
-**Plan:** Ready for planning
-**Status:** Phase 22 complete and verified; Phase 23 is the next execution target
+**Plan:** 00 complete, 01 next
+**Status:** Phase 23 execution in progress; smoke baseline and validation map are now in place
 **Progress:** [██████████] 100%
-**Last activity:** 2026-03-09 - Phase 22 verified complete after human approval
+**Last activity:** 2026-03-08 - Completed Phase 23 Plan 00 smoke baseline and validation map
 
 ## Performance Metrics
 
@@ -49,6 +49,7 @@ progress:
 | Phase 22 P01 | 10 min | 2 tasks | 2 files |
 | Phase 22 P02 | 1 min | 2 tasks | 4 files |
 | Phase 22 P03 | 1 min | 2 tasks | 4 files |
+| Phase 23 P00 | 1 min | 2 tasks | 2 files |
 
 ## Accumulated Context
 
@@ -83,6 +84,8 @@ progress:
 | Keep employees.php as the visible CRUD hub with literal Detail, Edit, Delete, and Provision actions instead of hidden row interactions | Matches the beginner-style Absensi-like flow and keeps the list easy to trace line by line | Phase 22 |
 | Keep report source state as a literal from=reports query string so the back flow stays obvious for beginners | Preserves reports-to-detail return context without adding helper abstractions | Phase 22 |
 | Teach the HR review path directly in dashboard copy as dashboard -> employees.php -> employee-detail.php while leaving the calculator visible only as a secondary option | Finishes CRUD-04 with explicit beginner-readable navigation cues instead of generic employee-management wording | Phase 22 |
+| Keep Phase 23 verification as one cheap procedural PHP smoke file with named groups instead of adding PHPUnit or framework tooling | Matches the beginner-style PHP codebase and gives later rewiring plans one fast reusable command | Phase 23 |
+| Add a dedicated missing-data smoke group because Phase 23 must keep employees on their own page with brief HR-contact warnings | Makes the required warning-state behavior explicit before auth-guard and employee-page rewiring begins | Phase 23 |
 
 ### Implementation Guardrails
 - Native procedural PHP only (no OOP/framework)
@@ -101,15 +104,15 @@ progress:
 - [ ] Validate calculator removal, detail-first leave flow, and copy cleanup before milestone closure.
 
 ### Blockers
-- `gsd-tools state advance-plan`, `state add-decision`, and `requirements mark-complete` did not apply cleanly during Phase 22 execution because current planner files no longer match the tool parser assumptions; metadata was updated manually.
+- `gsd-tools state advance-plan` and `state record-session` still do not apply cleanly because current STATE.md layout does not match the tool parser assumptions; metadata was updated manually.
 
 ## Session Continuity
 
 ### Last Session
 - **Date:** 2026-03-09
-- **Activity:** Finished verification for Phase 22 and recorded human approval for the new HR detail-first flow.
-- **Outcome:** Phase 22 is now complete, verified, and ready to hand off to Phase 23 planning.
-- **Next:** Plan and execute Phase 23.
+- **Activity:** Executed Phase 23 Plan 00 and committed the smoke baseline plus validation-map update.
+- **Outcome:** Phase 23 now has reusable smoke groups for employee self-view, navigation cleanup, calculator retirement, and missing-data handling.
+- **Next:** Execute Phase 23 Plan 01 against the new `employee-self-view` and `missing-data` checks.
 
 ### Context for Next Session
 - Phase 21 already left the codebase on grouped `includes/auth/` and `includes/layout/` folders, English HR CRUD routes, and the beginner-readable route -> logic -> view split.
@@ -117,6 +120,7 @@ progress:
 - `hr/views/employees.php`, `hr/views/reports.php`, and `hr/dashboard.php` now all point HR toward employee detail as the normal leave-review destination.
 - `tests/phase22_hr_detail_first_crud_smoke.php --group=navigation` and `--group=crud-flow` are green and now lock the Phase 22 detail-first navigation flow.
 - Phase 23 can focus on employee self-view and calculator retirement because the HR-side replacement path is now complete.
+- `tests/phase23_employee_leave_retirement_smoke.php` now exists and currently goes red on the unresolved sidebar helper, auth-guard logout, and calculator-route behavior gaps that later plans must fix.
 
 ---
 *State initialized: 2026-03-05*

@@ -26,7 +26,7 @@
 |-------|----------------|--------|-----------|
 | 21. Beginner CRUD Structure Foundation | 7/7 | Complete   | 2026-03-08 |
 | 22. HR Detail-First CRUD Flow | 4/4 | Complete   | 2026-03-09 |
-| 23. Employee Leave View and Calculator Retirement | 0/0 | Not started | - |
+| 23. Employee Leave View and Calculator Retirement | 1/3 | In Progress|  |
 | 24. Product Messaging and Final Copy Cleanup | 0/0 | Not started | - |
 
 ## Phase Details
@@ -74,7 +74,11 @@ Plans:
   2. HR and employee users no longer see the calculator in main navigation or as the primary route for checking leave information.
   3. The standalone calculator page is removed only after the direct detail/self-view replacement path is available and working.
   4. Users follow a detail-first leave journey end-to-end without encountering dead calculator links or fallback demo-style routes.
-**Plans**: TBD
+**Plans**: 3 plans
+Plans:
+- [x] 23-00-PLAN.md — Create the Phase 23 smoke-test scaffold and validation baseline for self-view, navigation cleanup, and calculator retirement. (completed 2026-03-08)
+- [ ] 23-01-PLAN.md — Rebuild the employee dashboard into the direct leave self-view page with warning-state handling.
+- [ ] 23-02-PLAN.md — Remove calculator-first navigation and retire the old calculator route into a redirect bridge.
 
 ### Phase 24: Product Messaging and Final Copy Cleanup
 **Goal**: Visitors and authenticated users see product copy that matches the real HR-first leave management app and its new detail-first flow.
@@ -87,4 +91,4 @@ Plans:
 **Plans**: TBD
 
 ---
-*Last updated: 2026-03-09 after Phase 22 verification passed and phase completion was recorded*
+*Last updated: 2026-03-08 after Phase 23 Plan 00 smoke baseline was completed*
