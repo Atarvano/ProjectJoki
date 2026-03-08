@@ -25,7 +25,7 @@ These constraints apply to ALL phases:
 - [x] **Phase 17: Account Provisioning** — HR creates login accounts for employees with auto-generated passwords (completed 2026-03-05)
 - [x] **Phase 18: Data Wiring — Calculator, Reports & Dashboards** — All pages swap from demo/session data to live DB data (completed 2026-03-06)
 - [x] **Phase 19: Auth Session Revalidation & Identity Consistency** — Revalidate live session state after employee delete and normalize persistent identity display (completed 2026-03-08)
-- [ ] **Phase 20: Provisioning E2E Verification & Flash Contract Alignment** — Close milestone runtime verification gaps for auth/provisioning and align credential flash contract
+- [x] **Phase 20: Provisioning E2E Verification & Flash Contract Alignment** — Close milestone runtime verification gaps for auth/provisioning and align credential flash contract (completed 2026-03-08)
 
 ## Phase Details
 
@@ -130,7 +130,7 @@ Plans:
   2. Browser walkthrough proves HR login, logout, role guards, demo-free UI, provisioning, employee login, and employee dashboard access all work end-to-end
   3. Phase 15 and Phase 17 verification artifacts can be updated from `human_needed` to closed milestone-ready evidence
   4. Milestone audit blockers tied to auth/provisioning runtime validation are removed
-**Plans:** 1/2 plans executed
+**Plans:** 2/2 plans complete
 Plans:
 - [ ] 20-01-PLAN.md — Align provisioning flash contract, update provisioning smoke coverage, and create the Phase 20 validation checklist
 - [ ] 20-02-PLAN.md — Run the locked browser walkthrough and update verification/audit artifacts with the approved runtime evidence
@@ -202,7 +202,7 @@ All phases are sequential. Each phase depends on its predecessor. No paralleliza
 | 17. Account Provisioning | 2/2 | Complete    | 2026-03-05 |
 | 18. Data Wiring — Calculator, Reports & Dashboards | 4/4 | Complete    | 2026-03-06 |
 | 19. Auth Session Revalidation & Identity Consistency | 4/4 | Complete    | 2026-03-08 |
-| 20. Provisioning E2E Verification & Flash Contract Alignment | 1/2 | In Progress|  |
+| 20. Provisioning E2E Verification & Flash Contract Alignment | 2/2 | Complete   | 2026-03-08 |
 
 ---
 *Roadmap created: 2026-03-05*

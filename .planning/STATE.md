@@ -2,13 +2,13 @@
 gsd_state_version: 1.0
 milestone: v2.0
 milestone_name: milestone
-status: planning
-last_updated: "2026-03-08T16:03:18.012Z"
+status: Ready for next plan
+last_updated: "2026-03-08T16:15:04.253Z"
 progress:
   total_phases: 7
-  completed_phases: 6
+  completed_phases: 7
   total_plans: 20
-  completed_plans: 19
+  completed_plans: 20
   percent: 100
 ---
 
@@ -23,17 +23,17 @@ progress:
 ## Current Position
 
 **Phase:** 20 — Provisioning E2E Verification & Flash Contract Alignment
-**Plan:** 01 of 02 completed (`20-01-PLAN.md`)
-**Status:** Ready for next plan
-**Progress:** [█████████░] 95%
+**Plan:** 02 of 02 completed (`20-02-PLAN.md`)
+**Status:** Phase complete
+**Progress:** [██████████] 100%
 
 ## Performance Metrics
 
 | Metric | Value |
 |--------|-------|
-| Phases completed | 6/7 |
+| Phases completed | 7/7 |
 | Requirements completed | 36/36 |
-| Plans completed | 19/20 |
+| Plans completed | 20/20 |
 | Current streak | - |
 | Phase 14 P01 | 2 min | 2 tasks | 3 files |
 | Phase 14 P02 | 3 min | 2 tasks | 2 files |
@@ -54,6 +54,7 @@ progress:
 | Phase 19 P02 | 2 min | 2 tasks | 5 files |
 | Phase 19 P03 | 0 min | 1 tasks | 1 files |
 | Phase 20 P01 | 6 min | 2 tasks | 4 files |
+| Phase 20 P02 | 10 min | 2 tasks | 5 files |
 
 ## Accumulated Context
 
@@ -102,6 +103,8 @@ progress:
 | Keep the final browser-only evidence in 19-VALIDATION.md instead of adding more runtime code or test scaffolding | Plan 19-03 hanya checkpoint browser, jadi bukti final paling sederhana adalah approval yang ditulis di artefak validasi phase yang sudah ada | 19 |
 | Keep provisioning success on one structured flash.credentials contract while preserving a generic message fallback | Renderer `hr/karyawan.php` sudah mendukung kontrak ini, jadi endpoint cukup disejajarkan tanpa redesign flash global | 20 |
 | Use one lightweight Phase 20 validation file to lock the final browser walkthrough instead of adding new automation tooling | Gap tersisa adalah bukti runtime, jadi checklist fokus lebih murah dan cocok untuk project PHP prosedural pemula | 20 |
+| Use the approved Phase 20 browser checkpoint as the single runtime source of truth, then propagate closure into older verification artifacts instead of duplicating walkthrough notes. | The walkthrough was already approved, so one canonical evidence ledger avoids drift between Phase 20, Phase 15, and Phase 17 documentation. | 20 |
+| Keep milestone audit history factual: remove auth/provisioning browser debt, but preserve the separate delete-cascade session invalidation blocker. | Phase 20 only closed runtime proof for auth and provisioning; the unrelated integration defect remains open and should stay visible in milestone tracking. | 20 |
 
 ### Implementation Guardrails
 - Native procedural PHP only (no OOP/framework)
@@ -118,7 +121,7 @@ progress:
 - [x] Phase 19 Plan 02 complete — login identity hydration and validation checklist now use saved account identity.
 - [x] Continue with `19-03-PLAN.md` for browser verification evidence.
 - [x] Phase 20 Plan 01 complete — flash contract provisioning sekarang sejajar dan checklist browser final sudah siap.
-- [ ] Continue with `20-02-PLAN.md` for browser walkthrough evidence and verification closure.
+- [x] Continue with `20-02-PLAN.md` for browser walkthrough evidence and verification closure.
 
 ### Blockers
 - None.
@@ -127,14 +130,14 @@ progress:
 
 ### Last Session
 - **Date:** 2026-03-08
-- **Activity:** Completed Phase 20 Plan 01 (flash contract alignment + Phase 20 validation checklist)
-- **Outcome:** `hr/karyawan-provision.php` now writes structured `flash.credentials`, `tests/provisioning_endpoint_test.php` checks that contract, and `20-VALIDATION.md` locks the final browser walkthrough.
-- **Next:** Execute `20-02-PLAN.md` to collect browser evidence and close remaining auth/provisioning verification debt.
+- **Activity:** Completed Phase 20 Plan 02 (approved runtime verification evidence + milestone artifact closure)
+- **Outcome:** `20-VALIDATION.md`, Phase 15/17 verification reports, and the milestone audit now reflect approved browser proof for auth and provisioning closure.
+- **Next:** Milestone execution is complete; only the separate delete-cascade/session invalidation audit blocker remains for future follow-up.
 
 ### Context for Next Session
-- Start from `.planning/phases/20-provisioning-e2e-verification-flash-contract-alignment/20-01-SUMMARY.md` for the exact flash-contract and walkthrough handoff.
-- Keep topbar identity session-driven and reuse the existing Phase 19 smoke baseline during final browser closure.
-- Plan 20-02 should execute the locked walkthrough from `20-VALIDATION.md` and update the remaining verification artifacts.
+- Start from `.planning/phases/20-provisioning-e2e-verification-flash-contract-alignment/20-02-SUMMARY.md` for the final runtime-proof and milestone-audit closure context.
+- Auth and provisioning browser evidence is now closed; do not reopen that debt unless behavior regresses.
+- Remaining milestone risk is isolated to the delete-cascade/session invalidation audit gap.
 
 ---
 *State initialized: 2026-03-05*

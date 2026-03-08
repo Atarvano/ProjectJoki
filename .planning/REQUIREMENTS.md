@@ -25,17 +25,17 @@
 
 ### Authentication & Sessions
 
-- [ ] **AUTH-01**: User can log in with NIK + password via POST form, validated against database with `password_verify()`
-- [ ] **AUTH-02**: User can log out, which destroys the session and redirects to login page
-- [ ] **AUTH-03**: After login, user is redirected to the correct dashboard based on role (HR or Employee)
+- [x] **AUTH-01**: User can log in with NIK + password via POST form, validated against database with `password_verify()`
+- [x] **AUTH-02**: User can log out, which destroys the session and redirects to login page
+- [x] **AUTH-03**: After login, user is redirected to the correct dashboard based on role (HR or Employee)
 
 ### Role-Based Access Control
 
-- [ ] **RBAC-01**: App has a single `auth-guard.php` include file with `cekLogin()` and `cekRole()` functions
-- [ ] **RBAC-02**: All HR pages are protected — only role='hr' can access them
+- [x] **RBAC-01**: App has a single `auth-guard.php` include file with `cekLogin()` and `cekRole()` functions
+- [x] **RBAC-02**: All HR pages are protected — only role='hr' can access them
 - [x] **RBAC-03**: All employee pages are protected — only role='employee' can access them, showing only own data
 - [x] **RBAC-04**: Unauthorized access redirects to login page (not logged in) or own dashboard (wrong role)
-- [ ] **RBAC-05**: All demo badges, "Demo v1" notices, and "Akses demo" labels are removed from the UI
+- [x] **RBAC-05**: All demo badges, "Demo v1" notices, and "Akses demo" labels are removed from the UI
 
 ### HR-First Provisioning
 
@@ -63,7 +63,7 @@
 - [x] **DASH-01**: HR dashboard shows real employee count and stats from DB queries
 - [x] **DASH-02**: Topbar shows logged-in user's real name and role from session/DB
 - [x] **DASH-03**: HR sidebar includes "Kelola Karyawan" navigation link to CRUD pages
-- [ ] **DASH-04**: Sidebar/topbar includes logout ("Keluar") button
+- [x] **DASH-04**: Sidebar/topbar includes logout ("Keluar") button
 - [x] **DASH-05**: All "Demo v1" badges and demo notices are removed from dashboards
 
 ## Future Requirements (Deferred)
@@ -116,14 +116,14 @@
 | DATA-04 | Phase 14 | Complete |
 | DATA-05 | Phase 14 | Complete |
 | DATA-06 | Phase 14 | Complete |
-| AUTH-01 | Phase 20 | Pending |
-| AUTH-02 | Phase 20 | Pending |
-| AUTH-03 | Phase 20 | Pending |
-| RBAC-01 | Phase 20 | Pending |
-| RBAC-02 | Phase 20 | Pending |
+| AUTH-01 | Phase 20 | Complete |
+| AUTH-02 | Phase 20 | Complete |
+| AUTH-03 | Phase 20 | Complete |
+| RBAC-01 | Phase 20 | Complete |
+| RBAC-02 | Phase 20 | Complete |
 | RBAC-03 | Phase 19 | Complete |
 | RBAC-04 | Phase 19 | Complete |
-| RBAC-05 | Phase 20 | Pending |
+| RBAC-05 | Phase 20 | Complete |
 | CRUD-01 | Phase 16 | Complete |
 | CRUD-02 | Phase 16 | Complete |
 | CRUD-03 | Phase 16 | Complete |
@@ -144,7 +144,7 @@
 | DASH-01 | Phase 18 | Complete |
 | DASH-02 | Phase 19 | Complete |
 | DASH-03 | Phase 16 | Complete |
-| DASH-04 | Phase 20 | Pending |
+| DASH-04 | Phase 20 | Complete |
 | DASH-05 | Phase 18 | Complete |
 
 **Coverage:**
