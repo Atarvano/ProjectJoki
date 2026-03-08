@@ -48,6 +48,64 @@ CREATE TABLE IF NOT EXISTS `users` (
 ) ENGINE=InnoDB;
 
 -- =====================================================
+-- 3b) Backfill legacy users schema (safe re-import)
+-- =====================================================
+-- Older local databases may already have `users` without `karyawan_id`.
+-- This block upgrades existing schema so seed import stays idempotent.
+SET @has_karyawan_id := (
+  SELECT COUNT(*)
+  FROM information_schema.COLUMNS
+  WHERE TABLE_SCHEMA = DATABASE()
+    AND TABLE_NAME = 'users'
+    AND COLUMN_NAME = 'karyawan_id'
+);
+
+SET @sql := IF(
+  @has_karyawan_id = 0,
+  'ALTER TABLE `users` ADD COLUMN `karyawan_id` INT UNSIGNED DEFAULT NULL AFTER `id`',
+  'SELECT 1'
+);
+PREPARE stmt FROM @sql;
+EXECUTE stmt;
+DEALLOCATE PREPARE stmt;
+
+SET @has_karyawan_idx := (
+  SELECT COUNT(*)
+  FROM information_schema.STATISTICS
+  WHERE TABLE_SCHEMA = DATABASE()
+    AND TABLE_NAME = 'users'
+    AND INDEX_NAME = 'idx_users_karyawan_id'
+);
+
+SET @sql := IF(
+  @has_karyawan_idx = 0,
+  'ALTER TABLE `users` ADD INDEX `idx_users_karyawan_id` (`karyawan_id`)',
+  'SELECT 1'
+);
+PREPARE stmt FROM @sql;
+EXECUTE stmt;
+DEALLOCATE PREPARE stmt;
+
+SET @has_users_fk := (
+  SELECT COUNT(*)
+  FROM information_schema.KEY_COLUMN_USAGE
+  WHERE TABLE_SCHEMA = DATABASE()
+    AND TABLE_NAME = 'users'
+    AND COLUMN_NAME = 'karyawan_id'
+    AND REFERENCED_TABLE_NAME = 'karyawan'
+    AND REFERENCED_COLUMN_NAME = 'id'
+);
+
+SET @sql := IF(
+  @has_users_fk = 0,
+  'ALTER TABLE `users` ADD CONSTRAINT `fk_users_karyawan` FOREIGN KEY (`karyawan_id`) REFERENCES `karyawan` (`id`) ON DELETE CASCADE',
+  'SELECT 1'
+);
+PREPARE stmt FROM @sql;
+EXECUTE stmt;
+DEALLOCATE PREPARE stmt;
+
+-- =====================================================
 -- 4) Table: schema_migrations (for migration runner)
 -- =====================================================
 CREATE TABLE IF NOT EXISTS `schema_migrations` (
@@ -84,6 +142,25 @@ ON DUPLICATE KEY UPDATE
 INSERT INTO `users` (`karyawan_id`, `username`, `password`, `role`, `is_active`)
 VALUES (NULL, 'HR0001', '$2y$12$moqRBWZKjIcFUeQ1bGviOOeY9QJlLsSU.Qk6u9n038RTILA87KDMy', 'hr', 1)
 ON DUPLICATE KEY UPDATE
+  `password` = VALUES(`password`),
+  `role` = VALUES(`role`),
+  `is_active` = VALUES(`is_active`);
+
+-- =====================================================
+-- 7) Seed data: sample employee users (linked to karyawan)
+-- =====================================================
+-- Sample employee default password: Employee123!
+INSERT INTO `users` (`karyawan_id`, `username`, `password`, `role`, `is_active`)
+SELECT
+  `k`.`id`,
+  `k`.`nik`,
+  '$2y$12$3rg712yKIY4kQ0a9txxO1ua0eUwaOnLSCvCsqar6GFRz30F1.dIOy',
+  'employee',
+  1
+FROM `karyawan` `k`
+WHERE `k`.`nik` IN ('EMP001', 'EMP002', 'EMP003')
+ON DUPLICATE KEY UPDATE
+  `karyawan_id` = VALUES(`karyawan_id`),
   `password` = VALUES(`password`),
   `role` = VALUES(`role`),
   `is_active` = VALUES(`is_active`);

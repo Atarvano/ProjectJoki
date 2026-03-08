@@ -12,14 +12,19 @@ HR creates employee data first, provisions login credentials, then employees log
 
 - **Latest shipped milestone:** `v2.0` - Backend Native PHP + HR-First Employee Onboarding
 - **Shipped on:** 2026-03-08
-- **Product state:** Real database-backed employee CRUD, authentication, role guards, provisioning, live calculator, live reports/export, and live dashboards are in place.
+- **Product state:** Real database-backed employee CRUD, authentication, role guards, provisioning, live reports/export, and live dashboards are in place.
 - **Audit posture:** Functional definition of done is met; milestone archive is accepted with documentation-only tech debt remaining.
 
-## Next Milestone Goals
+## Current Milestone: v3.0 Beginner-Style PHP Rewrite & Structure Cleanup
 
-- Define the next milestone from fresh requirements rather than carrying forward the archived v2.0 list.
-- Decide whether the next priority is workflow expansion (for example leave requests/approvals), admin usability improvements, or technical debt cleanup.
-- Clean up lingering validation-document drift from Phases 15, 16, 17, and 19 if milestone audit hygiene should be restored early.
+**Goal:** Rework the app into a more intentionally beginner-style native PHP CRUD codebase, clean up the folder layout, remove the leave calculator path, and make the landing/admin experience feel less like the earlier demo.
+
+**Target features:**
+- Rewrite the main app flow using plain beginner procedural PHP patterns (`mysqli_connect`, `mysqli_query`, inline page logic, shared includes).
+- Reorganize folders so the project feels tidier even though the implementation style stays simple and non-reusable.
+- Remove the leave calculator flow so employee detail and direct leave data views become the main path.
+- Refresh the landing page so it no longer reads like a leftover v1 demo.
+- Break the milestone into clearer, distinct implementation phases.
 
 ## Requirements
 
@@ -30,19 +35,23 @@ HR creates employee data first, provisions login credentials, then employees log
 
 ### Active
 
-- None yet - define fresh requirements for the next milestone with `/gsd-new-milestone`.
+- [ ] Rewrite app pages into beginner-style procedural PHP CRUD structure.
+- [ ] Remove calculator-driven leave flow and replace it with direct detail-focused flow.
+- [ ] Refresh landing page and shared structure to better match the new milestone direction.
 
 ### Out of Scope
 
 - Framework/OOP refactor (Laravel, class-based architecture).
 - Open employee self-signup.
 - Token/JWT auth migration.
-- Major UI redesign unless a future milestone explicitly targets it.
+- Advanced reusable architecture or helper abstraction cleanup.
+- Workflow expansion like leave requests/approvals in this milestone.
 
 ## Context
 
 - The app has completed the transition from v1 demo mode to a real Laragon-hosted native PHP + MySQL backend.
 - The leave entitlement engine from v1 remains reused as the business-calculation core, now fed by database-backed employee data.
+- The next milestone intentionally moves presentation and code style toward a more beginner-authored PHP CRUD feel while still preserving working database-backed behavior.
 - The current open debt is mostly planning/validation artifact cleanup rather than missing user-facing core functionality.
 
 ## Constraints
@@ -108,6 +117,7 @@ Accepted debt:
 | Hard delete for employees | Permanent removal, no soft-delete complexity | Shipped in v2.0 |
 | Basic beginner-style PHP CRUD code | Match user references - popular patterns, nothing fancy | Shipped in v2.0 |
 | Keep milestone completion despite documentation-only tech debt | Functional DoD is complete; remaining work is audit hygiene, not missing product behavior | Accepted at v2.0 ship |
+| v3.0 focuses on beginner-style rewrite rather than new business workflow expansion | User wants the project to look and feel like early-learning PHP CRUD while keeping the app useful | Active for v3.0 |
 
 ---
-*Last updated: 2026-03-08 after v2.0 milestone completion*
+*Last updated: 2026-03-09 after v3.0 milestone start*
