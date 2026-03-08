@@ -8,8 +8,8 @@ if ($role === 'hr') {
     $nav_items = [
         ['id' => 'dashboard', 'label' => 'Dashboard', 'icon' => 'bi-grid', 'href' => '/hr/dashboard.php'],
         ['id' => 'kelola-karyawan', 'label' => 'Kelola Karyawan', 'icon' => 'bi-people', 'href' => '/hr/employees.php'],
-        ['id' => 'kalkulator', 'label' => 'Kalkulator Cuti', 'icon' => 'bi-calculator', 'href' => '/hr/kalkulator.php'],
         ['id' => 'reports', 'label' => 'Laporan', 'icon' => 'bi-file-earmark-text', 'href' => '/hr/reports.php'],
+        ['id' => 'kalkulator', 'label' => 'Kalkulator Cuti', 'icon' => 'bi-calculator', 'href' => '/hr/kalkulator.php'],
     ];
 } else {
     $nav_items = [

@@ -59,26 +59,29 @@ if ($total_karyawan === 0) {
 
 $siap_cuti_copy = 'Status Tersedia atau Menunggu pada tahun kalender ' . $current_year;
 
-$hero_copy = 'Pantau jumlah karyawan aktif, akun employee yang sudah diprovisikan, dan kesiapan cuti tahun ini dari data yang tersimpan saat ini.';
+$hero_copy = 'Mulai review dari dashboard, buka employees.php, lalu lanjutkan ke employee-detail.php milik satu karyawan untuk melihat profil dan hak cuti tanpa berhenti di kalkulator.';
 
 $helper_cards = [
     [
-        'label' => 'Data Karyawan',
-        'text' => 'Kelola data induk karyawan sebagai dasar seluruh perhitungan dan akses login.',
+        'label' => 'Kelola Data Karyawan',
+        'text' => 'Buka detail karyawan untuk melihat profil dan hak cuti tanpa mulai dari kalkulator. Jalur paling mudah untuk HR adalah dashboard -> employees.php -> employee-detail.php.',
         'link' => 'employees.php',
         'icon' => 'bi-people',
+        'button' => 'Buka employees.php',
     ],
     [
-        'label' => 'Periksa Hak Cuti',
-        'text' => 'Buka kalkulator untuk melihat rincian hak cuti berdasarkan data tanggal bergabung karyawan.',
+        'label' => 'Cek Kalkulator Jika Perlu',
+        'text' => 'Kalkulator masih tersedia di Phase 22, tetapi pakai setelah review utama dari employees.php dan employee-detail.php bila HR butuh perbandingan cepat.',
         'link' => 'kalkulator.php',
         'icon' => 'bi-calendar-check',
+        'button' => 'Buka Kalkulator',
     ],
     [
         'label' => 'Lihat Rekap',
-        'text' => 'Gunakan halaman laporan untuk meninjau ringkasan hak cuti semua karyawan dari database.',
+        'text' => 'Gunakan laporan untuk melihat rekap cepat, lalu buka satu employee-detail.php dari reports.php saat ingin review data per karyawan.',
         'link' => 'reports.php',
         'icon' => 'bi-journal-text',
+        'button' => 'Buka reports.php',
     ],
 ];
 
@@ -117,12 +120,16 @@ ob_start();
                     <p class="hero-subtitle mb-4 text-secondary" style="font-size: 1.125rem;">
                         <?php echo htmlspecialchars($hero_copy); ?>
                     </p>
+                    <p class="text-secondary mb-4">Jalur review HR yang disarankan adalah dashboard -> employees.php -> employee-detail.php supaya profil karyawan dan hak cuti dibaca pada satu halaman detail.</p>
                     <div class="d-flex gap-3 flex-wrap">
-                        <a href="kalkulator.php" class="btn btn-primary btn-lg px-4" style="background: linear-gradient(135deg, var(--color-primary), var(--color-primary-light)); border: none; box-shadow: 0 4px 15px rgba(15, 76, 92, 0.3); font-weight: 700;">
-                            <i class="bi bi-calculator me-2"></i> Hitung Hak Cuti
+                        <a href="employees.php" class="btn btn-primary btn-lg px-4" style="background: linear-gradient(135deg, var(--color-primary), var(--color-primary-light)); border: none; box-shadow: 0 4px 15px rgba(15, 76, 92, 0.3); font-weight: 700;">
+                            <i class="bi bi-people me-2"></i> Kelola Data Karyawan
                         </a>
                         <a href="reports.php" class="btn btn-outline-primary btn-lg px-4 fw-bold">
                             <i class="bi bi-journal-text me-2"></i> Kelola Laporan
+                        </a>
+                        <a href="kalkulator.php" class="btn btn-outline-secondary btn-lg px-4 fw-semibold">
+                            <i class="bi bi-calculator me-2"></i> Buka Kalkulator Sekunder
                         </a>
                     </div>
                 </div>
@@ -213,7 +220,7 @@ ob_start();
                     </div>
                     <p class="text-secondary flex-grow-1 mb-3"><?php echo htmlspecialchars($card['text']); ?></p>
                     <a href="<?php echo htmlspecialchars($card['link']); ?>" class="btn btn-outline-primary fw-semibold align-self-start">
-                        Buka Halaman
+                        <?php echo htmlspecialchars($card['button']); ?>
                     </a>
                 </div>
             </div>
