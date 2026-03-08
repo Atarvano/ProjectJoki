@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . '/../includes/auth-guard.php';
+require_once __DIR__ . '/../includes/auth/auth-guard.php';
 cekLogin();
 cekRole('hr');
 require_once __DIR__ . '/../includes/cuti-calculator.php';
@@ -223,5 +223,5 @@ ob_start();
 
 <?php
 $page_content = ob_get_clean();
-require __DIR__ . '/../includes/dashboard-layout.php';
+require __DIR__ . '/../includes/layout/dashboard-layout.php';
 ?>
