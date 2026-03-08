@@ -3,24 +3,52 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
+if (!defined('AUTH_GUARD_TEST_MODE')) {
+    define('AUTH_GUARD_TEST_MODE', false);
+}
+
+function authGuardRedirect($location)
+{
+    if (AUTH_GUARD_TEST_MODE) {
+        return [
+            'allowed' => false,
+            'redirect' => $location,
+        ];
+    }
+
+    header('Location: ' . $location);
+    exit;
+}
+
 function cekLogin()
 {
     if (!isset($_SESSION['user_id'])) {
-        header('Location: /login.php');
-        exit;
+        return authGuardRedirect('/login.php');
     }
+
+    return [
+        'allowed' => true,
+        'redirect' => null,
+    ];
 }
 
 function cekRole($required_role)
 {
-    cekLogin();
+    $login_check = cekLogin();
+    if (is_array($login_check) && isset($login_check['allowed']) && $login_check['allowed'] === false) {
+        return $login_check;
+    }
 
     if ($_SESSION['role'] !== $required_role) {
         if ($_SESSION['role'] === 'hr') {
-            header('Location: /hr/dashboard.php');
+            return authGuardRedirect('/hr/dashboard.php');
         } else {
-            header('Location: /employee/dashboard.php');
+            return authGuardRedirect('/employee/dashboard.php');
         }
-        exit;
     }
+
+    return [
+        'allowed' => true,
+        'redirect' => null,
+    ];
 }
