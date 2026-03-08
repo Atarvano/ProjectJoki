@@ -143,28 +143,40 @@ function run_names_group()
     $employees_route = phase21_load('hr/employees.php');
     $employee_create_route = phase21_load('hr/employee-create.php');
     $employee_detail_route = phase21_load('hr/employee-detail.php');
+    $reports_route = phase21_load('hr/reports.php');
     $employees_logic = phase21_load('hr/logic/employees.php');
     $employee_create_logic = phase21_load('hr/logic/employee-create.php');
     $employee_detail_logic = phase21_load('hr/logic/employee-detail.php');
+    $reports_logic = phase21_load('hr/logic/reports.php');
     $employees_view = phase21_load('hr/views/employees.php');
     $employee_create_view = phase21_load('hr/views/employee-create.php');
     $employee_detail_view = phase21_load('hr/views/employee-detail.php');
+    $reports_view = phase21_load('hr/views/reports.php');
 
     phase21_assert_contains($employees_route, "require_once __DIR__ . '/logic/employees.php';", 'Route employees harus memanggil logic/employees.php.');
     phase21_assert_contains($employees_route, "require_once __DIR__ . '/../includes/layout/dashboard-layout.php';", 'Route employees harus memanggil dashboard layout grouped.');
     phase21_assert_contains($employee_create_route, "require_once __DIR__ . '/logic/employee-create.php';", 'Route employee-create harus memanggil logic/employee-create.php.');
     phase21_assert_contains($employee_detail_route, "require_once __DIR__ . '/logic/employee-detail.php';", 'Route employee-detail harus memanggil logic/employee-detail.php.');
+    phase21_assert_contains($reports_route, "require_once __DIR__ . '/logic/reports.php';", 'Route reports harus memanggil logic/reports.php.');
+    phase21_assert_contains($reports_route, "require_once __DIR__ . '/../includes/layout/dashboard-layout.php';", 'Route reports harus memanggil dashboard layout grouped.');
 
     phase21_assert_contains($employees_logic, 'LEFT JOIN users u ON u.karyawan_id = k.id', 'Logic employees harus tetap memuat join user untuk status akun login.');
     phase21_assert_contains($employees_logic, "require __DIR__ . '/../views/employees.php';", 'Logic employees harus merender view employees.');
     phase21_assert_contains($employee_create_logic, 'INSERT INTO karyawan', 'Logic employee-create harus menyimpan data karyawan.');
     phase21_assert_contains($employee_create_logic, "header('Location: /hr/employees.php');", 'Logic employee-create harus kembali ke route akhir employees.php.');
     phase21_assert_contains($employee_detail_logic, "require __DIR__ . '/../views/employee-detail.php';", 'Logic employee-detail harus merender view employee-detail.');
+    phase21_assert_contains($reports_logic, "require_once __DIR__ . '/../../includes/cuti-calculator.php';", 'Logic reports harus memuat kalkulator dari logic file.');
+    phase21_assert_contains($reports_logic, 'ORDER BY nik ASC, nama ASC', 'Logic reports harus tetap mengurutkan laporan berdasarkan NIK lalu nama.');
+    phase21_assert_contains($reports_logic, "'active_nav' => 'reports',", 'Logic reports harus menandai nav reports sebagai aktif.');
+    phase21_assert_contains($reports_logic, "require __DIR__ . '/../views/reports.php';", 'Logic reports harus merender view reports.');
 
     phase21_assert_contains($employees_view, '/hr/employee-create.php', 'View employees harus menaut ke route create English.');
     phase21_assert_contains($employees_view, '/hr/employee-detail.php?id=', 'View employees harus menaut ke route detail English.');
     phase21_assert_contains($employee_create_view, 'action="/hr/employee-create.php"', 'View create harus submit ke route create English.');
     phase21_assert_contains($employee_detail_view, 'Detail Karyawan', 'View detail harus tetap memuat judul Detail Karyawan.');
+    phase21_assert_contains($reports_view, 'employee-detail.php?id=', 'View reports harus menaut ke route detail English.');
+    phase21_assert_contains($reports_view, 'href="reports.php"', 'View reports harus memakai route reports.php saat reset filter.');
+    phase21_assert_not_contains($reports_view, 'mysqli_query', 'View reports tidak boleh menyimpan query SQL.');
 
     fwrite(STDOUT, "PASS [names]: route English dan split route/logic/view terdeteksi.\n");
 }
