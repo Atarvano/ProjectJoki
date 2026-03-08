@@ -117,7 +117,7 @@ Plans:
 **Plans:** 4/4 plans complete
 Plans:
 - [ ] 19-01-PLAN.md — Shared auth guard revalidation plus a focused stale-session smoke test
-- [ ] 19-02-PLAN.md — Persistent login identity hydration and a short Phase 19 validation checklist
+- [x] 19-02-PLAN.md — Persistent login identity hydration and a short Phase 19 validation checklist (completed 2026-03-08)
 - [ ] 19-03-PLAN.md — Browser verification for delete redirect and identity consistency
 
 ### Phase 20: Provisioning E2E Verification & Flash Contract Alignment
@@ -130,7 +130,10 @@ Plans:
   2. Browser walkthrough proves HR login, logout, role guards, demo-free UI, provisioning, employee login, and employee dashboard access all work end-to-end
   3. Phase 15 and Phase 17 verification artifacts can be updated from `human_needed` to closed milestone-ready evidence
   4. Milestone audit blockers tied to auth/provisioning runtime validation are removed
-**Plans:** 0/0 plans complete
+**Plans:** 1/2 plans executed
+Plans:
+- [ ] 20-01-PLAN.md — Align provisioning flash contract, update provisioning smoke coverage, and create the Phase 20 validation checklist
+- [ ] 20-02-PLAN.md — Run the locked browser walkthrough and update verification/audit artifacts with the approved runtime evidence
 
 ## Requirement Coverage
 
@@ -198,8 +201,8 @@ All phases are sequential. Each phase depends on its predecessor. No paralleliza
 | 16. Employee CRUD & HR Navigation | 3/3 | Complete    | 2026-03-05 |
 | 17. Account Provisioning | 2/2 | Complete    | 2026-03-05 |
 | 18. Data Wiring — Calculator, Reports & Dashboards | 4/4 | Complete    | 2026-03-06 |
-| 19. Auth Session Revalidation & Identity Consistency | 4/4 | Complete   | 2026-03-08 |
-| 20. Provisioning E2E Verification & Flash Contract Alignment | 0/0 | Planned     | - |
+| 19. Auth Session Revalidation & Identity Consistency | 4/4 | Complete    | 2026-03-08 |
+| 20. Provisioning E2E Verification & Flash Contract Alignment | 1/2 | In Progress|  |
 
 ---
 *Roadmap created: 2026-03-05*

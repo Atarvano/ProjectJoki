@@ -39,10 +39,10 @@
 
 ### HR-First Provisioning
 
-- [ ] **PROV-01**: HR can click "Buat Akun Login" button to create a login account for an existing employee
-- [ ] **PROV-02**: Password is auto-generated from employee data (NIK + birthdate), hashed with `password_hash()`
-- [ ] **PROV-03**: System creates a user record linked to employee via karyawan_id FK, with role='employee'
-- [ ] **PROV-04**: After provisioning, generated credentials (NIK + plaintext password) are shown once via flash message
+- [x] **PROV-01**: HR can click "Buat Akun Login" button to create a login account for an existing employee
+- [x] **PROV-02**: Password is auto-generated from employee data (NIK + birthdate), hashed with `password_hash()`
+- [x] **PROV-03**: System creates a user record linked to employee via karyawan_id FK, with role='employee'
+- [x] **PROV-04**: After provisioning, generated credentials (NIK + plaintext password) are shown once via flash message
 
 ### Calculator Integration
 
@@ -129,10 +129,10 @@
 | CRUD-03 | Phase 16 | Complete |
 | CRUD-04 | Phase 19 | Complete |
 | CRUD-05 | Phase 16 | Complete |
-| PROV-01 | Phase 20 | Pending |
-| PROV-02 | Phase 20 | Pending |
-| PROV-03 | Phase 20 | Pending |
-| PROV-04 | Phase 20 | Pending |
+| PROV-01 | Phase 20 | Complete |
+| PROV-02 | Phase 20 | Complete |
+| PROV-03 | Phase 20 | Complete |
+| PROV-04 | Phase 20 | Complete |
 | CALC-01 | Phase 18 | Complete |
 | CALC-02 | Phase 18 | Complete |
 | CALC-03 | Phase 18 | Complete |
