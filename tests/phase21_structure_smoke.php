@@ -145,10 +145,11 @@ function run_includes_group()
     phase21_assert_not_contains($hr_dashboard, "require __DIR__ . '/../includes/dashboard-layout.php';", 'Dashboard HR tidak boleh kembali ke shim layout lama.');
 
     phase21_assert_contains($hr_calculator, "require_once __DIR__ . '/../includes/auth/auth-guard.php';", 'Kalkulator HR harus memakai auth guard grouped final.');
-    phase21_assert_contains($hr_calculator, "require_once __DIR__ . '/../koneksi.php';", 'Kalkulator HR harus tetap memuat koneksi secara eksplisit.');
-    phase21_assert_contains($hr_calculator, "require __DIR__ . '/../includes/layout/dashboard-layout.php';", 'Kalkulator HR harus memakai layout grouped final.');
+    phase21_assert_contains($hr_calculator, "header('Location: /hr/reports.php');", 'Kalkulator HR harus menjadi bridge redirect ke reports.php.');
+    phase21_assert_contains($hr_calculator, 'exit;', 'Kalkulator HR bridge harus berhenti setelah redirect.');
     phase21_assert_not_contains($hr_calculator, "require_once __DIR__ . '/../includes/auth-guard.php';", 'Kalkulator HR tidak boleh kembali ke shim auth lama.');
     phase21_assert_not_contains($hr_calculator, "require __DIR__ . '/../includes/dashboard-layout.php';", 'Kalkulator HR tidak boleh kembali ke shim layout lama.');
+    phase21_assert_not_contains($hr_calculator, "require_once __DIR__ . '/../koneksi.php';", 'Kalkulator HR bridge tidak perlu lagi memuat koneksi database.');
 
     phase21_assert_contains($hr_export, "require_once __DIR__ . '/../includes/auth/auth-guard.php';", 'Export HR harus memakai auth guard grouped final.');
     phase21_assert_contains($hr_export, "require_once __DIR__ . '/../koneksi.php';", 'Export HR harus tetap memuat koneksi secara eksplisit.');
@@ -235,9 +236,11 @@ function run_bridges_group()
     phase21_assert_contains($old_edit, "/hr/employee-edit.php", 'Bridge karyawan-edit.php harus mengarah ke employee-edit.php.');
     phase21_assert_contains($old_delete, "require_once __DIR__ . '/employee-delete.php';", 'Bridge karyawan-hapus.php harus handoff ke employee-delete.php.');
     phase21_assert_contains($sidebar, "'href' => '/hr/employees.php'", 'Sidebar HR harus memakai route employees.php.');
-    phase21_assert_contains($dashboard, "'link' => 'employees.php'", 'Dashboard HR helper card harus memakai route employees.php.');
-    phase21_assert_contains($calculator, '/hr/employees.php', 'Kalkulator HR harus kembali ke route employees.php.');
-    phase21_assert_contains($calculator, '/hr/employee-detail.php?id=', 'Kalkulator HR harus menaut ke detail English.');
+    phase21_assert_contains($dashboard, "'link' => 'reports.php'", 'Dashboard HR helper card harus memakai route reports.php sebagai jalur review utama.');
+    phase21_assert_contains($calculator, "header('Location: /hr/reports.php');", 'Bridge kalkulator HR harus mengarah ke reports.php.');
+    phase21_assert_contains($calculator, 'exit;', 'Bridge kalkulator HR harus berhenti setelah redirect.');
+    phase21_assert_not_contains($calculator, '/hr/employees.php', 'Bridge kalkulator HR tidak boleh lagi mengarahkan ke employees.php.');
+    phase21_assert_not_contains($calculator, '/hr/employee-detail.php?id=', 'Bridge kalkulator HR tidak boleh lagi merender link detail English.');
     phase21_assert_contains($report, "/hr/reports.php", 'Bridge laporan.php harus mengarah ke reports.php.');
     phase21_assert_contains($provision, "require_once __DIR__ . '/employee-provision.php';", 'Bridge karyawan-provision.php harus handoff ke employee-provision.php.');
     phase21_assert_contains($employees_view, '/hr/employee-provision.php', 'View employees harus submit provision ke route English final.');
