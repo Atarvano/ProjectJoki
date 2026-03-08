@@ -12,7 +12,6 @@ $is_dashboard = isset($page_class) && strpos($page_class, 'page-dashboard') !== 
             </div>
             <div class="mt-2 mt-md-0 d-flex gap-3 flex-wrap justify-content-center">
                 <a href="/hr/dashboard.php" class="text-decoration-none text-muted">HR Dashboard</a>
-                <a href="/hr/kalkulator.php" class="text-decoration-none text-muted">HR Kalkulator</a>
                 <a href="/hr/reports.php" class="text-decoration-none text-muted">HR Laporan</a>
                 <a href="/employee/dashboard.php" class="text-decoration-none text-muted">Portal Karyawan</a>
                 <a href="/logout.php" class="text-decoration-none text-danger">Keluar</a>
@@ -41,7 +40,6 @@ $is_dashboard = isset($page_class) && strpos($page_class, 'page-dashboard') !== 
                 <h6 class="fw-bold mb-3 text-uppercase" style="letter-spacing: 1px;">Quick Links</h6>
                 <ul class="list-unstyled mb-0">
                     <li class="mb-2"><a href="/hr/dashboard.php" class="text-light opacity-75 text-decoration-none small">Dashboard</a></li>
-                    <li class="mb-2"><a href="/hr/kalkulator.php" class="text-light opacity-75 text-decoration-none small">Kalkulator Cuti</a></li>
                     <li class="mb-2"><a href="/hr/reports.php" class="text-light opacity-75 text-decoration-none small">Laporan</a></li>
                     <li class="mb-0"><a href="/employee/dashboard.php" class="text-light opacity-75 text-decoration-none small">Portal Karyawan</a></li>
                 </ul>

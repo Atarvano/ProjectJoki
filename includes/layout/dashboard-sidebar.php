@@ -9,12 +9,11 @@ if ($role === 'hr') {
         ['id' => 'dashboard', 'label' => 'Dashboard', 'icon' => 'bi-grid', 'href' => '/hr/dashboard.php'],
         ['id' => 'kelola-karyawan', 'label' => 'Kelola Karyawan', 'icon' => 'bi-people', 'href' => '/hr/employees.php'],
         ['id' => 'reports', 'label' => 'Laporan', 'icon' => 'bi-file-earmark-text', 'href' => '/hr/reports.php'],
-        ['id' => 'kalkulator', 'label' => 'Kalkulator Cuti', 'icon' => 'bi-calculator', 'href' => '/hr/kalkulator.php'],
     ];
 } else {
     $nav_items = [
         ['id' => 'dashboard', 'label' => 'Dashboard', 'icon' => 'bi-grid', 'href' => '/employee/dashboard.php'],
-        ['id' => 'hak-cuti', 'label' => 'Hak Cuti Saya', 'icon' => 'bi-calendar-check', 'href' => '#', 'is_helper' => true],
+        ['id' => 'hak-cuti', 'label' => 'Hak Cuti Saya', 'icon' => 'bi-calendar-check', 'href' => '/employee/dashboard.php'],
     ];
 }
 ?>
@@ -38,21 +37,13 @@ if ($role === 'hr') {
 
         <ul class="nav flex-column mb-auto px-2">
             <?php foreach ($nav_items as $item): ?>
-                <?php if (isset($item['is_helper']) && $item['is_helper']): ?>
-                    <li class="nav-item mb-1 px-3 mt-3">
-                        <span class="small fw-bold text-uppercase sidebar-helper-label" style="cursor: default;">
-                            <?php echo $item['label']; ?>
-                        </span>
-                    </li>
-                <?php else: ?>
-                    <li class="nav-item mb-1">
-                        <a href="<?php echo $item['href']; ?>"
-                            class="nav-link px-3 py-2 <?php echo $active_nav === $item['id'] ? 'active fw-bold' : ''; ?> rounded d-flex align-items-center">
-                            <i class="bi <?php echo $item['icon']; ?> me-3 fs-5 sidebar-link-icon"></i>
-                            <span class="sidebar-link-label"><?php echo $item['label']; ?></span>
-                        </a>
-                    </li>
-                <?php endif; ?>
+                <li class="nav-item mb-1">
+                    <a href="<?php echo $item['href']; ?>"
+                        class="nav-link px-3 py-2 <?php echo $active_nav === $item['id'] ? 'active fw-bold' : ''; ?> rounded d-flex align-items-center">
+                        <i class="bi <?php echo $item['icon']; ?> me-3 fs-5 sidebar-link-icon"></i>
+                        <span class="sidebar-link-label"><?php echo $item['label']; ?></span>
+                    </a>
+                </li>
             <?php endforeach; ?>
         </ul>
         <div class="p-3 mt-auto border-top">
@@ -78,23 +69,14 @@ if ($role === 'hr') {
 
     <ul class="nav flex-column mb-auto px-2">
         <?php foreach ($nav_items as $item): ?>
-            <?php if (isset($item['is_helper']) && $item['is_helper']): ?>
-                <li class="nav-item mb-1 px-3 mt-3">
-                    <span class="small fw-bold text-uppercase sidebar-nav-text sidebar-helper-label" style="cursor: default;"
-                        title="<?php echo $item['label']; ?>">
-                        <?php echo $item['label']; ?>
-                    </span>
-                </li>
-            <?php else: ?>
-                <li class="nav-item mb-1">
-                    <a href="<?php echo $item['href']; ?>"
-                        class="nav-link px-3 py-2 <?php echo $active_nav === $item['id'] ? 'active fw-bold' : ''; ?> rounded d-flex align-items-center"
-                        title="<?php echo $item['label']; ?>">
-                        <i class="bi <?php echo $item['icon']; ?> me-3 fs-5 sidebar-link-icon"></i>
-                        <span class="sidebar-nav-text sidebar-link-label"><?php echo $item['label']; ?></span>
-                    </a>
-                </li>
-            <?php endif; ?>
+            <li class="nav-item mb-1">
+                <a href="<?php echo $item['href']; ?>"
+                    class="nav-link px-3 py-2 <?php echo $active_nav === $item['id'] ? 'active fw-bold' : ''; ?> rounded d-flex align-items-center"
+                    title="<?php echo $item['label']; ?>">
+                    <i class="bi <?php echo $item['icon']; ?> me-3 fs-5 sidebar-link-icon"></i>
+                    <span class="sidebar-nav-text sidebar-link-label"><?php echo $item['label']; ?></span>
+                </a>
+            </li>
         <?php endforeach; ?>
     </ul>
     <div class="p-3 mt-auto border-top">

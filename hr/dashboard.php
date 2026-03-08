@@ -59,29 +59,29 @@ if ($total_karyawan === 0) {
 
 $siap_cuti_copy = 'Status Tersedia atau Menunggu pada tahun kalender ' . $current_year;
 
-$hero_copy = 'Mulai review dari dashboard, buka employees.php, lalu lanjutkan ke employee-detail.php milik satu karyawan untuk melihat profil dan hak cuti tanpa berhenti di kalkulator.';
+$hero_copy = 'Mulai review dari dashboard, buka reports.php untuk rekap cepat, lalu lanjutkan ke employee-detail.php milik satu karyawan saat ingin memeriksa profil dan hak cuti lebih rinci.';
 
 $helper_cards = [
     [
-        'label' => 'Kelola Data Karyawan',
-        'text' => 'Buka detail karyawan untuk melihat profil dan hak cuti tanpa mulai dari kalkulator. Jalur paling mudah untuk HR adalah dashboard -> employees.php -> employee-detail.php.',
+        'label' => 'Lihat Rekap HR',
+        'text' => 'Mulai dari reports.php untuk melihat rekap hak cuti yang aktif, lalu pilih satu karyawan saat HR perlu review data lebih rinci.',
+        'link' => 'reports.php',
+        'icon' => 'bi-journal-text',
+        'button' => 'Buka reports.php',
+    ],
+    [
+        'label' => 'Review Detail Karyawan',
+        'text' => 'Sesudah melihat rekap, lanjutkan ke employee-detail.php dari laporan atau daftar karyawan supaya profil, data bergabung, dan hak cuti terbaca pada satu layar.',
         'link' => 'employees.php',
         'icon' => 'bi-people',
         'button' => 'Buka employees.php',
     ],
     [
-        'label' => 'Cek Kalkulator Jika Perlu',
-        'text' => 'Kalkulator masih tersedia di Phase 22, tetapi pakai setelah review utama dari employees.php dan employee-detail.php bila HR butuh perbandingan cepat.',
-        'link' => 'kalkulator.php',
+        'label' => 'Portal Karyawan Aktif',
+        'text' => 'Saat HR ingin memastikan jalur pengganti sudah hidup, gunakan employee/dashboard.php sebagai self-view karyawan yang sekarang menjadi tujuan aktif untuk karyawan.',
+        'link' => '/employee/dashboard.php',
         'icon' => 'bi-calendar-check',
-        'button' => 'Buka Kalkulator',
-    ],
-    [
-        'label' => 'Lihat Rekap',
-        'text' => 'Gunakan laporan untuk melihat rekap cepat, lalu buka satu employee-detail.php dari reports.php saat ingin review data per karyawan.',
-        'link' => 'reports.php',
-        'icon' => 'bi-journal-text',
-        'button' => 'Buka reports.php',
+        'button' => 'Buka employee/dashboard.php',
     ],
 ];
 
@@ -120,16 +120,16 @@ ob_start();
                     <p class="hero-subtitle mb-4 text-secondary" style="font-size: 1.125rem;">
                         <?php echo htmlspecialchars($hero_copy); ?>
                     </p>
-                    <p class="text-secondary mb-4">Jalur review HR yang disarankan adalah dashboard -> employees.php -> employee-detail.php supaya profil karyawan dan hak cuti dibaca pada satu halaman detail.</p>
+                    <p class="text-secondary mb-4">Jalur review HR yang disarankan sekarang adalah dashboard -> reports.php -> employee-detail.php supaya rekap dan detail karyawan dibaca berurutan pada alur yang sama.</p>
                     <div class="d-flex gap-3 flex-wrap">
-                        <a href="employees.php" class="btn btn-primary btn-lg px-4" style="background: linear-gradient(135deg, var(--color-primary), var(--color-primary-light)); border: none; box-shadow: 0 4px 15px rgba(15, 76, 92, 0.3); font-weight: 700;">
-                            <i class="bi bi-people me-2"></i> Kelola Data Karyawan
+                        <a href="reports.php" class="btn btn-primary btn-lg px-4" style="background: linear-gradient(135deg, var(--color-primary), var(--color-primary-light)); border: none; box-shadow: 0 4px 15px rgba(15, 76, 92, 0.3); font-weight: 700;">
+                            <i class="bi bi-journal-text me-2"></i> Buka Laporan HR
                         </a>
-                        <a href="reports.php" class="btn btn-outline-primary btn-lg px-4 fw-bold">
-                            <i class="bi bi-journal-text me-2"></i> Kelola Laporan
+                        <a href="employees.php" class="btn btn-outline-primary btn-lg px-4 fw-bold">
+                            <i class="bi bi-people me-2"></i> Buka employees.php
                         </a>
-                        <a href="kalkulator.php" class="btn btn-outline-secondary btn-lg px-4 fw-semibold">
-                            <i class="bi bi-calculator me-2"></i> Buka Kalkulator Sekunder
+                        <a href="/employee/dashboard.php" class="btn btn-outline-secondary btn-lg px-4 fw-semibold">
+                            <i class="bi bi-calendar-check me-2"></i> Lihat Portal Karyawan
                         </a>
                     </div>
                 </div>
