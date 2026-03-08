@@ -2,9 +2,30 @@
 
 $root = dirname(__DIR__);
 
+function phase19_pick_existing_path($root, $paths)
+{
+    foreach ($paths as $path) {
+        if (file_exists($root . '/' . $path)) {
+            return $path;
+        }
+    }
+
+    return $paths[0];
+}
+
 define('AUTH_GUARD_TEST_MODE', true);
 
-require_once $root . '/includes/auth-guard.php';
+$auth_guard_relative_path = phase19_pick_existing_path($root, [
+    'includes/auth/auth-guard.php',
+    'includes/auth-guard.php',
+]);
+
+$dashboard_topbar_relative_path = phase19_pick_existing_path($root, [
+    'includes/layout/dashboard-topbar.php',
+    'includes/dashboard-topbar.php',
+]);
+
+require_once $root . '/' . $auth_guard_relative_path;
 
 function phase19_fail($message)
 {
@@ -30,6 +51,17 @@ function phase19_assert_case_name($content, $case_name)
 function phase19_assert_equals($expected, $actual, $message)
 {
     phase19_assert_true($expected === $actual, $message);
+}
+
+function phase19_assert_contains_any($content, $needles, $message)
+{
+    foreach ($needles as $needle) {
+        if (strpos($content, $needle) !== false) {
+            return;
+        }
+    }
+
+    phase19_fail($message);
 }
 
 function phase19_reset_test_data()
@@ -168,8 +200,10 @@ phase19_assert_case_name($scaffold_text, 'case_missing_employee_link');
 phase19_assert_case_name($scaffold_text, 'case_valid_employee_session');
 phase19_assert_case_name($scaffold_text, 'case_wrong_role_redirect');
 phase19_assert_case_name($scaffold_text, 'case_session_identity_markers');
+phase19_assert_case_name($scaffold_text, 'includes/auth/auth-guard.php');
+phase19_assert_case_name($scaffold_text, 'includes/layout/dashboard-topbar.php');
 
-$auth_guard_text = file_get_contents($root . '/includes/auth-guard.php');
+$auth_guard_text = file_get_contents($root . '/' . $auth_guard_relative_path);
 phase19_assert_true($auth_guard_text !== false, 'File auth guard harus bisa dibaca.');
 phase19_assert_true(strpos($auth_guard_text, 'SELECT id, username, karyawan_id, is_active FROM users WHERE id = ? LIMIT 1') !== false, 'Guard harus query users live setiap request.');
 phase19_assert_true(strpos($auth_guard_text, 'SELECT id FROM karyawan WHERE id = ? LIMIT 1') !== false, 'Guard employee harus cek row karyawan live.');
@@ -189,6 +223,14 @@ phase19_assert_true(strpos($employee_dashboard_text, 'Data karyawan untuk akun i
 phase19_assert_true(strpos($employee_dashboard_text, 'profile_label') !== false, 'Marker profile_label harus tetap ada di dashboard employee.');
 phase19_assert_true(strpos($employee_dashboard_text, 'profile_role') !== false, 'Marker profile_role harus tetap ada di dashboard employee.');
 phase19_assert_true(strpos($employee_dashboard_text, '$_SESSION[\'nama\']') !== false, 'Dashboard employee harus tetap memakai nama dari session.');
+phase19_assert_contains_any(
+    $employee_dashboard_text,
+    [
+        "require_once __DIR__ . '/../includes/auth/auth-guard.php';",
+        "require_once __DIR__ . '/../includes/auth-guard.php';",
+    ],
+    'Dashboard employee harus menerima path auth guard akhir atau bridge lama.'
+);
 
 $hr_dashboard_text = file_get_contents($root . '/hr/dashboard.php');
 phase19_assert_true($hr_dashboard_text !== false, 'File dashboard HR harus bisa dibaca.');
@@ -196,8 +238,18 @@ phase19_assert_true(strpos($hr_dashboard_text, "\$profile_label = trim((string) 
 phase19_assert_true(strpos($hr_dashboard_text, "'profile_label' => \$profile_label") !== false, 'Dashboard HR harus meneruskan profile_label hasil fallback aman ke topbar.');
 phase19_assert_true(strpos($hr_dashboard_text, "'profile_initials' => strtoupper(substr(\$_SESSION['nama'], 0, 2))") === false, 'Dashboard HR harus memakai fallback aman untuk initials, bukan langsung substr session mentah.');
 phase19_assert_true(strpos($hr_dashboard_text, 'profile_initials') !== false, 'Dashboard HR harus tetap kirim profile_initials ke topbar.');
+phase19_assert_contains_any(
+    $hr_dashboard_text,
+    [
+        "require __DIR__ . '/../includes/layout/dashboard-layout.php';",
+        "require __DIR__ . '/../includes/dashboard-layout.php';",
+        "require_once __DIR__ . '/../includes/layout/dashboard-layout.php';",
+        "require_once __DIR__ . '/../includes/dashboard-layout.php';",
+    ],
+    'Dashboard HR harus menerima layout shell akhir atau bridge lama.'
+);
 
-$topbar_text = file_get_contents($root . '/includes/dashboard-topbar.php');
+$topbar_text = file_get_contents($root . '/' . $dashboard_topbar_relative_path);
 phase19_assert_true($topbar_text !== false, 'File topbar harus bisa dibaca.');
 phase19_assert_true(strpos($topbar_text, "\$profile_label = \$dashboard_context['profile_label'] ?? 'Admin HR';") === false, 'Topbar shared tidak boleh lagi default ke Admin HR.');
 phase19_assert_true(strpos($topbar_text, 'Admin HR') === false, 'Topbar shared tidak boleh menyimpan label Admin HR sama sekali.');
